@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    Cash Denomination Form View     -->
+    <record id="cash_denomination_form_view" model="ir.ui.view">
+        <field name="name">cash.denomination.form.view</field>
+        <field name="model">cash.denomination</field>
+        <field name="arch" type="xml">
+            <form string="Cash Denomination">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="number"/>
+                        <field name="company_id" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Cash Denomination Tree View    -->
+    <record id="cash_denomination_tree_view" model="ir.ui.view">
+        <field name="name">cash.denomination.tree.view</field>
+        <field name="model">cash.denomination</field>
+        <field name="arch" type="xml">
+            <tree string="Cash Denomination">
+                <field name="name"/>
+                <field name="number"/>
+                <field name="company_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    Cash Denomination Window Action    -->
+    <record id="cash_denomination_action" model="ir.actions.act_window">
+        <field name="name">Cash Denomination</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cash.denomination</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click to add a new cash denomination.
+            </p>
+        </field>
+    </record>
+
+    <!--    Cash Denomination Menuitem    -->
+    <menuitem id="cash_denomination_menu" name="Cash Denomination" parent="point_of_sale.menu_point_config_product"
+              action="cash_denomination_action" sequence="9" groups="cash_denomination.group_cash_denomination"/>
+
+</odoo>

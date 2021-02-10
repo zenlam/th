@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="cash_denomination_100" model="cash.denomination">
+            <field name="name">100</field>
+            <field name="number">100</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="cash_denomination_50" model="cash.denomination">
+            <field name="name">50</field>
+            <field name="number">50</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="cash_denomination_20" model="cash.denomination">
+            <field name="name">20</field>
+            <field name="number">20</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="cash_denomination_10" model="cash.denomination">
+            <field name="name">10</field>
+            <field name="number">10</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="cash_denomination_5" model="cash.denomination">
+            <field name="name">5</field>
+            <field name="number">5</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="cash_denomination_1" model="cash.denomination">
+            <field name="name">1</field>
+            <field name="number">1</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="cash_denomination_0_5" model="cash.denomination">
+            <field name="name">0.50</field>
+            <field name="number">0.50</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="cash_denomination_0_2" model="cash.denomination">
+            <field name="name">0.20</field>
+            <field name="number">0.20</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="cash_denomination_0_1" model="cash.denomination">
+            <field name="name">0.10</field>
+            <field name="number">0.10</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+        <record id="cash_denomination_0_05" model="cash.denomination">
+            <field name="name">0.05</field>
+            <field name="number">0.05</field>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
+    </data>
+</openerp>

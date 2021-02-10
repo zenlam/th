@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+
+    <record id="group_cash_denomination" model="res.groups">
+        <field name="name">Cash Denomination</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+</data>
+<data noupdate="1">
+
+    <record id="cash_denomination_multi_comp_rule" model="ir.rule">
+        <field name="name" >Cash Denomination Multi Company</field>
+        <field name="model_id" ref="model_cash_denomination"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+</data>
+</odoo>

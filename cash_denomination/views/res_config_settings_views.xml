@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    Res Config Settings Form View Inherit    -->
+    <record id="res_config_settings_view_form_inherit_denomination" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.denomination</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-string='Point of sale']" position="inside">
+                <h2>Cash Denomination</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="group_cash_denomination"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="group_cash_denomination" string="Enable Cash Denomination"/>
+                            <div class="text-muted">
+                                Allow system to manage the opening and closing balance using predefined cash denominations.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
