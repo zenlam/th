@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Purchase Requisition Template -->
+    <record id="view_purchase_request_tree" model="ir.ui.view">
+        <field name="name">purchase.request.tree</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="outlet_id"/>
+                <field name="request_delivery_date"/>
+                <field name="partner_id"/>
+                <field name="eta_on_approval_date" string="ETA"/>
+                <field name="requestor_id"/>
+                <field name="approved_user_id"/>
+                <field name="total" sum="Total"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_purchase_request_form" model="ir.ui.view">
+        <field name="name">purchase.request.form</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <form string="State" duplicate="0">
+                <header>
+                    <button name="button_submit_for_approval" type="object" states="draft" string="Submit for Approval" class="oe_highlight"/>
+                    <button name="button_approve" type="object" states="pending_approval" string="Approve" class="oe_highlight" groups="th_purchase_requisition.group_allow_purchase_request_validate"/>
+                    <button name="button_reject" type="object" states="pending_approval" string="Reject" class="oe_highlight" groups="th_purchase_requisition.group_allow_purchase_request_validate"/>
+                    <button name="button_cancel" type="object" states="draft,pending_approval,mgr_approve" string="Cancel" class="oe_highlight" groups="th_purchase_requisition.group_allow_cancel_purchase_request"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box">
+                        <button type="object"
+                            name="action_view_picking"
+                            class="oe_stat_button"
+                            icon="fa-truck" attrs="{'invisible':[('stock_picking_ids','=',[])]}">
+                            <field name="picking_count" widget="statinfo" string="Receipt" />
+                            <field name="stock_picking_ids" invisible="1"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Template Name" readonly="1" force_save="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="requestor_id" readonly="1" force_save="1"/>
+                            <field name="outlet_id" options="{'no_create': 1, 'no_open': 1}"/>
+                            <field name="partner_id" context="{'default_supplier': True, 'default_customer': False}"/>
+                            <field name="pur_request_tmpl_id"  options="{'no_create': 1}"/>
+                            <field name="request_delivery_date"/>
+
+                        </group>
+                        <group>
+                            <field name="create_date" readonly="1" force_save="1"/>
+                            <field name="submission_date" readonly="1" force_save="1"/>
+                            <field name="approval_date" readonly="1" force_save="1"/>
+                            <field name="stock_coverage_day"/>
+                            <field name="eta_on_submission_date" readonly="1" force_save="1"/>
+                            <field name="eta_on_approval_date" readonly="1" force_save="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Purchase">
+                            <field name="purchase_order_id" readonly="1" force_save="1"/>
+                            <field name="po_raise_user_id" readonly="1" force_save="1"/>
+                            <field name="po_confirm_user_id" readonly="1" force_save="1"/>
+                            <field name="po_cancelled_user_id" readonly="1" force_save="1"/>
+                        </group>
+                        <group string="Request Form">
+                            <field name="cancelled_user_id" readonly="1" force_save="1"/>
+                            <field name="rejected_user_id" readonly="1" force_save="1"/>
+                            <field name="approved_user_id" readonly="1" force_save="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Outlet Receiving">
+                            <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street" readonly="1" force_save="1"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street" readonly="1" force_save="1"/>
+                                <field name="city" placeholder="City" class="o_address_city" readonly="1" force_save="1"/>
+                                <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}' readonly="1" force_save="1"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" readonly="1" force_save="1"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}' readonly="1" force_save="1"/>
+                            </div>
+                        </group>
+                        <group string="Remarks">
+                            <field name="remark" nolabel="1"/>
+                        </group>
+                    </group>
+                    <button name="load_product_lines_from_template" type="object" string="Load Products"  class="btn-primary" attrs="{'invisible': [('state','!=','draft')]}"/>
+                    <notebook>
+                        <page string="Products" id="purchase_request_line_ids">
+                            <field name="purchase_request_line_ids" >
+                                <tree editable="bottom" create='false'>
+                                    <field name="product_id"/>
+                                    <field name="account_analytic_id"/>
+                                    <field name="on_hand_qty" readonly="1" force_save="1"/>
+                                    <field name="suggested_qty"/>
+                                    <field name="increase_or_reduce"/>
+                                    <field name="percentage"/>
+                                    <field name="order_qty"/>
+                                    <field name="order_uom_id" readonly="0" force_save="1" context="{'product_id': product_id, 'type': 'outlet_ordering'}"/>
+                                    <field name="delivered_qty" readonly="1" force_save="1"/>
+                                    <field name="delivered_uom_id" readonly="1" force_save="1"/>
+                                    <field name="unit_price" readonly="1" force_save="1"/>
+                                    <field name="uom_id" readonly="1" force_save="1"/>
+                                    <field name="ratio" readonly="1" force_save="1"/>
+                                    <field name="total_order_price" readonly="1" force_save="1"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="total"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_purchase_request_view_search" model="ir.ui.view">
+        <field name="name">purchase.request.search</field>
+        <field name="model">purchase.request</field>
+        <field name="arch" type="xml">
+            <search string="Search Purchase Request">
+                <field name="name"/>
+                <group expand="0" string="Group By...">
+                    <filter name="group_by_vendor" string="Vendor" domain="[]" context="{'group_by':'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_purchase_request" model="ir.actions.act_window">
+        <field name="name">Purchase Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.request</field>
+        <field name="view_type">form</field>
+        <field name="domain">[('state','in',['draft','pending_approval','cancel'] )]</field>
+        <field name="view_id" ref="view_purchase_request_tree"/>
+        <field name="search_view_id" ref="view_purchase_request_view_search"/>
+    </record>
+
+    <menuitem id="menu_purchase_request_root" name="Purchase Request" parent="purchase.menu_purchase_root" sequence="15"/>
+
+    <menuitem id="menu_purchase_request" name="Purchase Request" parent="menu_purchase_request_root" sequence="10"
+         action="action_purchase_request"/>
+
+
+    <record id="action_validated_purchase_request" model="ir.actions.act_window">
+        <field name="name">Validated Purchase Request</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.request</field>
+        <field name="view_type">form</field>
+        <field name="domain">[('state','in',['mgr_approve','request_reject','po_raised','po_confirm','po_cancel','done'] )]</field>
+        <field name="context">{'search_default_group_by_vendor': True}</field>
+        <field name="view_id" ref="view_purchase_request_tree"/>
+        <field name="search_view_id" ref="view_purchase_request_view_search"/>
+    </record>
+
+    <menuitem id="menu_validated_purchase_request" name="Validated Purchase Request" parent="menu_purchase_request_root" sequence="20"
+         action="action_validated_purchase_request"/>
+
+
+    <!-- Create PO Button in action menu -->
+    <record id="model_account_invoice_action_share" model="ir.actions.server">
+        <field name="name">Create PO</field>
+        <field name="model_id" ref="th_purchase_requisition.model_purchase_request"/>
+        <field name="binding_model_id" ref="th_purchase_requisition.model_purchase_request"/>
+        <field name="state">code</field>
+        <field name="code">records.create_po_from_pr()</field>
+    </record>
+
+
+</odoo>

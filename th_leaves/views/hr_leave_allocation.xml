@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="hr_leave_allocation_view_form_manager_inherit" model="ir.ui.view">
+        <field name="name">hr.leave.allocation.form.manager.inherit</field>
+        <field name="model">hr.leave.allocation</field>
+        <field name="inherit_id" ref="hr_holidays.hr_leave_allocation_view_form_manager"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='employee_id']" position="after">
+                <field name="validity_start"/>
+                <field name="validity_stop"/>
+            </xpath>
+            <xpath expr="//label[@for='date_to']/following::div" position="replace">
+                <div attrs="{'invisible': [('accrual', '=', False)]}">
+                    <div class="o_row">
+                        <span>Add</span>
+                        <field name="number_per_interval" class="ml8"
+                            attrs="{'required': [('accrual', '=', True)]}"/>
+                        <field name="unit_per_interval"
+                            attrs="{'required': [('accrual', '=', True)]}"/>
+                        <span class="ml8">of leaves next year.</span>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View : Time Range -->
+    <record id="th_time_range_tree_view" model="ir.ui.view">
+        <field name="name">th.time.range.tree</field>
+        <field name="model">th.time.range</field>
+        <field name="arch" type="xml">
+            <tree string="Time Range" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="start_time" widget="float_time"/>
+                <field name="end_time" widget="float_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action : Time Range -->
+    <record id="menu_th_time_range_action" model="ir.actions.act_window">
+        <field name="name">Time Range</field>
+        <field name="res_model">th.time.range</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+</odoo>

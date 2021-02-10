@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <record id="store_management_tree_view" model="ir.ui.view">
+            <field name="name">stock.warehouse.tree.view</field>
+            <field name="model">stock.warehouse</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <tree string="Outlet Management">
+                    <field name="name" string="Outlet Name"/>
+                    <field name="code" string="Outlet Code"/>
+                    <field name="analytic_account_id"/>
+                    <field name="fiscal_position_id"/>
+                    <!--<field name="warehouse_id"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="store_management_form_view" model="ir.ui.view">
+            <field name="name">stock.warehouse.form.view</field>
+            <field name="model">stock.warehouse</field>
+            <field name="arch" type="xml">
+                <form string="Outlet Management">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <div class="oe_title">
+                                <label class="oe_edit_only" for="name" string="Outlet Name"/>
+                                <h1><field name="name" required="1"/></h1>
+                            </div>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="code" required="1" string="Code"/>
+                                <field name="analytic_account_id" options="{'no_create': 1, 'no_open': 1}"/>
+                            </group>
+                            <group>
+                                <!--<field name="warehouse_id" readonly="1"/>-->
+                                <field name="fiscal_position_id" options="{'no_create': 1, 'no_open': 1}"/>
+                                <field name="available_pricelist_ids" groups="product.group_sale_pricelist"
+                                       widget="many2many_tags" options="{'no_create': 1}"/>
+                                <field name="wholesaler" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="information" string="Information">
+                                <group string="General Information">
+                                    <group name="general_info">
+                                        <field name="area_id" required="1" options="{'no_create': 1, 'no_open': 1}"/>
+                                        <field name="ttype" required="1"/>
+                                        <field name="size" required="1"/>
+                                        <field name="number_of_seat" required="1"/>
+                                        <field name="rental_percent" required="1"/>
+                                    </group>
+                                    <group name="state_info">
+                                        <field name="state" required="1"/>
+                                        <field name="date_open" />
+                                        <field name="date_close"/>
+                                        <field name="operation_hours" required="1"/>
+                                        <field name="company_id" groups="base.group_multi_company"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group name="contact" string="Contact Information">
+                                        <field name="phone"/>
+                                        <field name="mobile"/>
+                                        <field name="fax"/>
+                                        <field name="email"/>
+                                    </group>
+                                    <group name="address" string="Address">
+                                        <label for="street" string="Address"/>
+                                        <div class="o_address_format">
+                                            <field name="street" placeholder="Street..." class="o_address_street"/>
+                                            <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                            <field name="city" placeholder="City" class="o_address_city"/>
+                                            <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                            <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                            <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                        </div>
+                                    </group>
+                                    <!-- Need to confirm whether TH want to use 'other shipping address' or not -->
+                                    <!--<group name="other_address" string="Other Address">-->
+                                        <!--<field name="shipping_to_other_address" />-->
+                                        <!--<label for="other_street" string="Other Address"-->
+                                               <!--attrs="{'invisible': [('shipping_to_other_address', '=', False)]}"/>-->
+                                        <!--<div class="o_address_format" attrs="{'invisible': [('shipping_to_other_address', '=', False)]}">-->
+                                            <!--<field name="other_street" placeholder="Street..." class="o_address_street"/>-->
+                                            <!--<field name="other_street2" placeholder="Street 2..." class="o_address_street"/>-->
+                                            <!--<field name="other_city" placeholder="City" class="o_address_city"/>-->
+                                            <!--<field name="other_state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>-->
+                                            <!--<field name="other_zip" placeholder="ZIP" class="o_address_zip"/>-->
+                                            <!--<field name="other_country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>-->
+                                        <!--</div>-->
+                                    <!--</group>-->
+                                </group>
+
+                            </page>
+                            <page name="user" string="Users">
+                                <group>
+                                    <field name="users" widget="many2many_tags"/>
+                                    <field name="store_managers" widget="many2many_tags"/>
+                                    <field name="authorizer" widget="many2many_tags" invisible="1"/>
+                                </group>
+                            </page>
+                            <page name="receipt" string="Receipt">
+                                <group>
+                                    <field name="receipt_header"/>
+                                    <field name="receipt_footer"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="store_management_action" model="ir.actions.act_window">
+            <field name="name">Outlet Management</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.warehouse</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'tree', 'view_id': ref('store_management_tree_view')}), (0, 0, {'view_mode': 'form', 'view_id': ref('store_management_form_view')})]"/>
+            <field name="view_type">form</field>
+            <field name="domain">[('create_from', '=', 'outlet')]</field>
+            <field name="target">current</field>
+            <field name="context">{'default_create_from': 'outlet'}</field>
+            <field name="search_view_id=" ref="stock.stock_warehouse_view_search"/>
+        </record>
+
+        <menuitem id="store_management_main_menu" name="Outlet Management"
+                  parent="point_of_sale.menu_point_config_product"
+                  action="store_management_action"
+                  sequence="1"/>
+    </data>
+</openerp>

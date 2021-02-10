@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="file_transfer_log_view_tree" model="ir.ui.view">
+            <field name="name">file.transfer.log.view.tree</field>
+            <field name="model">th.file.transfer.log</field>
+            <field name="arch" type="xml">
+                <tree string="File Transfer Log" create="false">
+                    <field name="file_name" />
+                    <field name="date_transfer" />
+                    <field name="state" />
+                    <field name="note" />
+                    <field name="outlet_id" />
+                    <field name="file" widget="binary" filename="file_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="file_transfer_log_view_form" model="ir.ui.view">
+            <field name="name">file.transfer.log.view.form</field>
+            <field name="model">th.file.transfer.log</field>
+            <field name="arch" type="xml">
+                <form string="File Transfer Log" create="false" edit="false">
+                    <group>
+                        <field name="note"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="outlet_id"/>
+                            <field name="company_id"/>
+                            <field name="date_transfer"/>
+                        </group>
+                        <group>
+                            <field name="state"/>
+                            <field name="file_name"/>
+                            <field name="file" invisible="1"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_file_transfer_log_view" model="ir.actions.act_window">
+            <field name="name">File Transfer Log</field>
+            <field name="res_model">th.file.transfer.log</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_file_transfer_log" name="File Transfer Log"
+                  parent="menu_mall_integration_root" sequence="7"
+                  action="action_file_transfer_log_view"/>
+    </data>
+</odoo>

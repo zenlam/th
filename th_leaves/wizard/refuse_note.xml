@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<odoo>
+
+    <record id="view_refuse_note" model="ir.ui.view">
+        <field name="name">view.refuse.note</field>
+        <field name="model">refuse.note</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Refuse Note">
+                <group>
+                    <p>
+                        Please key in the reason of refusing this leave request.
+                    </p>
+                    <field name="refuse_note" placeholder="Add a reason..."/>
+                </group>
+                <footer>
+                    <button name="refuse" string="Refuse" type="object" class="oe_highlight"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

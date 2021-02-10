@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View : Orderline Notes -->
+    <record id="th_orderline_note_tree_view" model="ir.ui.view">
+        <field name="name">th.orderline.note.tree</field>
+        <field name="model">th.orderline.note</field>
+        <field name="arch" type="xml">
+            <tree string="Orderline Notes" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action : Orderline Notes -->
+    <record id="menu_th_orderline_note_action" model="ir.actions.act_window">
+        <field name="name">Orderline Notes</field>
+        <field name="res_model">th.orderline.note</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!-- Menu name : Orderline Notes -->
+    <menuitem id="menu_th_orderline_note" name="Orderline Notes"
+              parent="point_of_sale.menu_point_config_product"
+              action="th_pos_orderline_note.menu_th_orderline_note_action"/>
+
+</odoo>

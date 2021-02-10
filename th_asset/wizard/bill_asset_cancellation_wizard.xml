@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="th_bill_cancellation_warning_message" model="ir.ui.view">
+        <field name="name">th.bill.cancellation.warning.message</field>
+        <field name="model">bill.asset.cancellation.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Confirmed Asset Validation">
+                <div>
+                    <span>
+                        This Vendor Bill has asset generated. Please handle the asset generated manually after cancellation of the Vendor Bill.
+                        Refer to the smart button for asset generated related to this Vendor Bill.
+                    </span>
+                </div>
+                <footer>
+                    <button string="Okay" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_th_bill_cancellation_warning_message" model="ir.actions.act_window">
+        <field name="name">Bill Cancellation Validation</field>
+        <field name="res_model">bill.asset.cancellation.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="th_bill_cancellation_warning_message"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

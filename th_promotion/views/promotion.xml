@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="promotion_tree_view" model="ir.ui.view">
+            <field name="name">promotion.tree.view</field>
+            <field name="model">th.promotion</field>
+            <field name="arch" type="xml">
+                <tree string="Promotion Tree">
+                    <field name="name"/>
+                    <field name="internal_name"/>
+                    <field name="code"/>
+                    <field name="category_id"/>
+                    <field name="apply_for"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="promotion_form_view" model="ir.ui.view">
+            <field name="name">promotion.form.view</field>
+            <field name="model">th.promotion</field>
+            <field name="arch" type="xml">
+                <form string="Promotion">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar"
+                               options='{"preview_image": "image", "size": [90, 90]}'/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="internal_name"/>
+                                <field name="code"/>
+                                <field name="category_id"/>
+                                <field name="apply_for"/>
+                                <field name="is_over_promotion" attrs="{'invisible': [('apply_for', '!=', 'bill')]}"/>
+                                <field name="is_voucher"/>
+                                <field name="is_manager_approve"/>
+                            </group>
+                            <group>
+                                <field name="active"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="membership_ids"/>
+                                <field name="is_member_birthday"/>
+                                <field name="birthday_period"
+                                       attrs="{'invisible': [('is_member_birthday', '!=', True)], 'required': [('is_member_birthday', '=', True)]}"/>
+                                <field name="outlet_ids" widget="many2many_tags" domain="[('is_outlet', '=', True)]"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="promotion_rule" string="Promotion Rules">
+                                <field name="promotion_rule_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="apply_menu_ids" widget="many2many_tags"
+                                               attrs="{'column_invisible': [('parent.apply_for', '=', 'bill')]}"/>
+                                        <field name="apply_category_ids" widget="many2many_tags"
+                                               attrs="{'column_invisible': [('parent.apply_for', '=', 'bill')]}"/>
+                                        <field name="exclude_menu_ids" widget="many2many_tags"/>
+                                        <field name="exclude_category_ids" widget="many2many_tags"/>
+                                        <field name="condition"/>
+                                        <field name="condition_value"/>
+                                        <field name="discount_type"/>
+                                        <field name="discount_value"/>
+                                        <field name="max_discount_value"/>
+                                        <field name="is_bundle" attrs="{'column_invisible': [('parent.apply_for', '=', 'bill')]}"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <group>
+                                                <field name="is_bundle"
+                                                       attrs="{'invisible': [('parent.apply_for', '=', 'bill')]}"/>
+                                                <field name="name"/>
+                                                <field name="apply_menu_ids"
+                                                       attrs="{'invisible': [('parent.apply_for', '=', 'bill')]}"
+                                                       widget="many2many_tags"
+                                                       domain="[('is_menu_item', '=', True)]"/>
+                                                <field name="apply_category_ids"
+                                                       attrs="{'invisible': [('parent.apply_for', '=', 'bill')]}"
+                                                       widget="many2many_tags"/>
+                                                <field name="exclude_menu_ids" widget="many2many_tags"
+                                                       domain="[('is_menu_item', '=', True)]"/>
+                                                <field name="exclude_category_ids" widget="many2many_tags"/>
+                                                <field name="condition" required="1"/>
+                                                <field name="condition_value" required="1"/>
+                                                <field name="is_product_group" attrs="{'invisible': [('parent.apply_for', '=', 'bill')]}"/>
+                                            </group>
+                                            <group>
+                                                <field name="discount_type" required="1"/>
+                                                <field name="discount_value" required="1"/>
+                                                <field name="max_discount_value" attrs="{'invisible': [('discount_type', '=', 'amount')]}"/>
+                                            </group>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                            <page name="time" string="Time">
+                                <group col="3" colspan="1">
+                                    <group>
+                                        <field name="recurring"/>
+                                    </group>
+                                </group>
+                                <div attrs="{'invisible': ['|', ('recurring', '!=', 'week'), ('recurring', '=', False)]}">
+                                    <field name="monday"/>
+                                    <label for="monday" style="margin-right:25px"/>
+                                    <field name="tuesday"/>
+                                    <label for="tuesday" style="margin-right:25px"/>
+                                    <field name="wednesday"/>
+                                    <label for="wednesday" style="margin-right:25px"/>
+                                    <field name="thursday"/>
+                                    <label for="thursday" style="margin-right:25px"/>
+                                    <field name="friday"/>
+                                    <label for="friday" style="margin-right:25px"/>
+                                    <field name="saturday"/>
+                                    <label for="saturday" style="margin-right:25px"/>
+                                    <field name="sunday"/>
+                                    <label for="sunday" style="margin-right:25px"/>
+                                </div>
+                                <field name="promotion_time_week_ids" attrs="{'invisible': ['|', ('recurring', '=', False), ('recurring', '!=', 'week')]}">
+                                    <tree string="Time" editable="bottom">
+                                        <field name="start_hour" widget="float_time"/>
+                                        <field name="end_hour" widget="float_time"/>
+                                    </tree>
+                                </field>
+                                <field name="promotion_time_month_ids" attrs="{'invisible': ['|', ('recurring', '=', False), ('recurring', '!=', 'month')]}">
+                                    <tree string="Time" editable="bottom">
+                                        <field name="day_of_month"/>
+                                        <field name="start_hour" widget="float_time"/>
+                                        <field name="end_hour" widget="float_time"/>
+                                    </tree>
+                                </field>
+                                <field name="promotion_time_year_ids" attrs="{'invisible': ['|', ('recurring', '=', False), ('recurring', '!=', 'year')]}">
+                                    <tree string="Time" editable="bottom">
+                                        <field name="date"/>
+                                        <field name="start_hour" widget="float_time"/>
+                                        <field name="end_hour" widget="float_time"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_promotion_view" model="ir.actions.act_window">
+            <field name="name">Promotion</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">th.promotion</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_promotion_menu"
+                  name="Promotion"
+                  parent="menu_promotion_root"
+                  action="action_promotion_view"
+                  sequence="5"/>
+    </data>
+</odoo>

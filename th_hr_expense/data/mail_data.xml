@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="mail_action_expense_approval" model="mail.activity.type">
+            <field name="name">Expense Approval</field>
+            <field name="icon">fa-dollar</field>
+            <field name="res_model_id" ref="hr_expense.model_hr_expense"/>
+        </record>
+
+        <!-- Expense-related subtypes for messaging / Chatter -->
+        <record id="mt_expenses_approved" model="mail.message.subtype">
+            <field name="name">Approved</field>
+            <field name="res_model">hr.expense</field>
+            <field name="default" eval="True"/>
+            <field name="description">Expense approved</field>
+        </record>
+        <record id="mt_expenses_refused" model="mail.message.subtype">
+            <field name="name">Refused</field>
+            <field name="res_model">hr.expense</field>
+            <field name="default" eval="True"/>
+            <field name="description">Expense refused</field>
+        </record>
+        <record id="mt_expenses_paid" model="mail.message.subtype">
+            <field name="name">Paid</field>
+            <field name="res_model">hr.expense</field>
+            <field name="description">Expense paid</field>
+            <field name="default" eval="False"/>
+        </record>
+
+        <!-- Mail Template -->
+        <record id="email_template_finance_approve_required" model="mail.template">
+            <field name="name">Require Expense Approval</field>
+            <field name="email_from">${(object.employee_id.work_email or '')|safe}</field>
+            <field name="reply_to">${(object.employee_id.work_email or '')|safe}</field>
+            <field name="subject">Require Expense Approval</field>
+            <field name="email_to">${object.get_email_to()}</field>
+            <field name="model_id" ref="hr_expense.model_hr_expense"/>
+            <field name="auto_delete" eval="False"/>
+            <field name="body_html">
+                <![CDATA[
+                    <p>Hello, </p>
+                    <p>Expense <strong>${object.name or ''}</strong> requires your approval</p>
+                    <p>Reason : Claim amount exceeded the amount limit of RM${object.expense_category_id.amount} for the expense category <strong>${object.expense_category_id.name}</strong></p>
+                    <p>Thank you</p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

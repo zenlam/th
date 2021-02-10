@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <record id="pos_config_form_view_inherit" model="ir.ui.view">
+            <field name="name">Add Outlet Field</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='title']" position="after">
+                    <!--<div class="row mt16 o_settings_container">-->
+                        <!--<div class="col-xs-12 col-md-6 o_setting_box">-->
+                            <!--<div class="o_setting_right_pane">-->
+                                <!--<label for="outlet_id"/>-->
+                                <!--<field name="outlet_id" required="1" options="{'no_create': 1, 'no_open': 1}"/>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <group>
+                        <group>
+                            <field name="authorizer" widget="many2many_tags" invisible="1"/>
+                            <field name="outlet_id" required="1" options="{'no_create': 1, 'no_open': 1}"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

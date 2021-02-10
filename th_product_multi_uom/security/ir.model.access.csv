@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_product_multi_uom_pos_user,product.multi.uom.pos.user,model_product_multi_uom,point_of_sale.group_pos_user,1,1,1,0
+access_product_multi_uom__pos_manager,product.multi.uom.pos.manager,model_product_multi_uom,point_of_sale.group_pos_manager,1,1,1,0
+access_product_multi_uom_purchase_user,product.multi.uom.purchase.user,model_product_multi_uom,purchase.group_purchase_user,1,1,1,0

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_outlet_ordering_form_view" model="ir.ui.view">
+            <field name="name">TH Outlet Ordering - Form View</field>
+            <field name="model">outlet.ordering</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_submit" type="object" string="Submit to HAVI"
+                                class="btn-primary" states="draft" groups="th_outlet_ordering.th_outlet_ordering_authorizer"/>
+                        <button name="action_transit_data" type="object" string="Transit Data" class="btn-primary" states="submit"/>
+                        <button name="action_done" type="object" string="Mark as Done" class="btn-primary" states="transit"/>
+                        <button name="action_cancel" type="object" string="Cancel" class="btn-default" states="draft,submit,transit"/>
+                        <button name="action_set_to_draft" type="object" string="Set to Draft" class="btn-default" states="cancelled"/>
+                        <button name="test_generate_csv" type="object" groups="base.group_no_one" states="submit" string="Test Generate CSV"/>
+                        <field name="state" widget="statusbar" readonly="1" statusbar_visible="draft,submit,transit,done"/>
+                    </header>
+                    <sheet>
+
+                        <div class="oe_button_box">
+                            <button name="open_order_picking" type="object" class="oe_stat_button" icon="fa-check">
+                                <field name="picking_count" string="Receipts" widget="statinfo"/>
+                            </button>
+                        </div>
+
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="requester_id"/>
+                                <field name="outlet_id"
+                                       context="{'form_view_ref': 'th_outlet.store_management_form_view'}"/>
+                                <field name="template_id"/>
+                                <field name="delivery_cycle_id"/>
+                                <field name="special"/>
+                            </group>
+                            <group>
+                                <field name="date_creation"/>
+                                <field name="date_submission"/>
+                                <field name="date_delivery_request"/>
+                                <field name="stock_coverage_day" invisible="1"/>
+                                <field name="cutoff_1"/>
+                                <field name="cutoff_2"/>
+                                <!--<field name="delay_vendor"/>-->
+                            </group>
+                            <group string="Outlet Receiving" name="outlet_receiving">
+                                <label for="street" string="Address"/>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>
+                                </div>
+                            </group>
+                            <group name="request" string="Request Form">
+                                <field name="user_cancelled_id"/>
+                                <field name="user_rejected_id"/>
+                                <field name="user_approved_id"/>
+                                <field name="csv_data" filename="csv_filename"/>
+                                <field name="csv_filename" invisible="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <label for="remark" style="font-weight: bold"/>
+                            <group colspan="4">
+                                <field name="remark" nolabel="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products" name="products">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="qty_onhand"/>
+                                        <field name="uom_onhand"/>
+                                        <field name="qty_suggested"/>
+                                        <field name="uom_suggested"/>
+                                        <field name="change_type"/>
+                                        <field name="change_percent"/>
+                                        <field name="qty_order"/>
+                                        <field name="uom_order"/>
+                                        <field name="qty_delivery"/>
+                                        <field name="uom_delivery"/>
+                                        <field name="uom_price"/>
+                                        <field name="price_unit"/>
+                                        <field name="ration"/>
+                                        <field name="price_subtotal"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="th_outlet_ordering_tree_view" model="ir.ui.view">
+            <field name="name">TH Outlet Ordering - Tree View</field>
+            <field name="model">outlet.ordering</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="outlet_id"/>
+                    <field name="date_create"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="th_outlet_ordering_view_action" model="ir.actions.act_window">
+            <field name="name">Outlet Ordering to HAVI</field>
+            <field name="res_model">outlet.ordering</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="target">current</field>
+
+        </record>
+
+        <menuitem id="th_oulet_ordering_menuitem"
+                  name="Outlet Ordering to HAVI"
+                  action="th_outlet_ordering_view_action"
+                  parent="outlet_ordering_menu_parent"
+                  sequence="5"/>
+
+    </data>
+</odoo>

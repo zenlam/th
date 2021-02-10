@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    Cash Control Form View   -->
+    <record id="th_cash_control_form_view" model="ir.ui.view">
+        <field name="name">th.cash.control.form.view</field>
+        <field name="model">cash.control</field>
+        <field name="arch" type="xml">
+            <form string="Cash Control">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="action"/>
+                            <field name="company_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="debit_account_id"/>
+                            <field name="credit_account_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Cash Control Tree View   -->
+    <record id="th_cash_control_tree_view" model="ir.ui.view">
+        <field name="name">th.cash.control.tree.view</field>
+        <field name="model">cash.control</field>
+        <field name="arch" type="xml">
+            <tree string="Cash Control">
+                <field name="name"/>
+                <field name="action"/>
+                <field name="debit_account_id"/>
+                <field name="credit_account_id"/>
+                <field name="company_id" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--    Cash Control Window Action   -->
+    <record id="th_cash_control_action" model="ir.actions.act_window">
+        <field name="name">Cash Control</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cash.control</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Click to add a new cash control.
+            </p>
+        </field>
+    </record>
+
+    <!--    Cash Control Menuitem   -->
+    <menuitem id="cash_control_menu" name="Cash Control" parent="point_of_sale.menu_point_config_product"
+              action="th_cash_control_action" sequence="8"/>
+
+</odoo>

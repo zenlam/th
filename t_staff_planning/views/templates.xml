@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="staff_planning_template" name="staff_planning_template templates" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/less" href="/t_staff_planning/static/src/less/form_view.less"/>
+                <link rel="stylesheet" type="text/less" href="/t_staff_planning/static/src/less/time_field.less"/>
+                <script type="text/javascript" src="/t_staff_planning/static/src/js/staff_controller.js"></script>
+                <script type="text/javascript" src="/t_staff_planning/static/src/js/staff_model.js"></script>
+                <script type="text/javascript" src="/t_staff_planning/static/src/js/staff_renderer.js"></script>
+                <script type="text/javascript" src="/t_staff_planning/static/src/js/staff_view.js"></script>
+                <script type="text/javascript" src="/t_staff_planning/static/src/js/fields/color_picker.js"></script>
+                <script type="text/javascript" src="/t_staff_planning/static/src/js/fields/time_field.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

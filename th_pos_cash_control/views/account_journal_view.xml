@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    Add domain to Payment Method menuitem   -->
+    <record id="point_of_sale.action_account_journal_form" model="ir.actions.act_window">
+        <field name="domain">[('journal_user', '=', True)]</field>
+    </record>
+
+    <!--    Allow all user to access Payment Method menuitem   -->
+    <record id="point_of_sale.menu_action_account_journal_form_open" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[])]"/>
+    </record>
+
+</odoo>

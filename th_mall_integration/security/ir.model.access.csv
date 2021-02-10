@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_file_transfer_config_user,file.transfer.config.user,model_th_file_transfer_config,,1,1,1,1
+access_file_transfer_log_user,file.transfer.log.user,model_th_file_transfer_log,,1,1,1,1
+access_file_transfer_summary_user,file.transfer.summary.user,model_th_file_transfer_summary,,1,1,1,1
+
+access_request_config_user,request.config.user,model_th_request_config,,1,1,1,1
+access_request_details_user,request.details.user,model_th_request_details,,1,1,1,1
+access_request_header_user,request.header.user,model_th_request_header,,1,1,1,1
+
+access_request_log_user,request.log.user,model_th_request_log,,1,1,1,1
+access_request_log_details_user,request.log.details.user,model_th_request_log_details,,1,1,1,1

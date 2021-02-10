@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="expense_category_tree_view" model="ir.ui.view">
+            <field name="name">expense.category.tree</field>
+            <field name="model">th.expense.category</field>
+            <field name="arch" type="xml">
+                <tree string="Expense Category">
+                    <field name="name"/>
+                    <field name="parent_category"/>
+                    <field name="is_double_validation"/>
+                    <field name="is_require_attachment"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="expense_category_form_view" model="ir.ui.view">
+            <field name="name">expense.category.form</field>
+            <field name="model">th.expense.category</field>
+            <field name="arch" type="xml">
+                <form string="Expense Category">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="toggle_active" type="object"
+                                    class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button"
+                                       options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="parent_category"/>
+                            </group>
+                            <group>
+                                <field name="claim_valid_days"/>
+                            </group>
+                        </group>
+                        <group string="Validation">
+                            <field name="is_double_validation"/>
+                            <field name="amount"
+                                   attrs="{'invisible': [('is_double_validation', '=', False)], 'required': [('is_double_validation', '=', True)]}"/>
+                        </group>
+                        <group string="Attachment">
+                            <field name="is_require_attachment"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_expense_category_view" model="ir.actions.act_window">
+            <field name="name">Expense Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">th.expense.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_expense_category"
+                  name="Expense Category"
+                  parent="hr_expense.menu_hr_expense_configuration"
+                  action="action_expense_category_view"
+                  groups="hr_expense.group_hr_expense_manager"
+                  sequence="15"/>
+    </data>
+</odoo>

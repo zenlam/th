@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="th_hr_view_hr_job_form_inherit_website_inherit" model="ir.ui.view">
+        <field name="name">th.website.hr.recruitment.form.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="website_hr_recruitment.view_hr_job_form_inherit_website"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="th_hr_view_hr_job_tree_inherit_website_inherit" model="ir.ui.view">
+        <field name="name">th.website.hr.recruitment.tree.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="website_hr_recruitment.view_hr_job_tree_inherit_website"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='website_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="th_hr_view_hr_job_form_website_published_button_inherit" model="ir.ui.view">
+        <field name="name">th.website.hr.recruitment.button.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="website_hr_recruitment.view_hr_job_form_website_published_button"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='website_publish_button']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

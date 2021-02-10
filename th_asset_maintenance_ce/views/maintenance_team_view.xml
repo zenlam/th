@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="department_partner_view" model="ir.ui.view">
+            <field name="name">maintenance.team.form</field>
+            <field name="model">maintenance.team</field>
+            <field name="inherit_id" ref="maintenance.maintenance_team_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='member_ids']" position="after">
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="partner_id"/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="asset_maintenance_team_view_tree" model="ir.ui.view">
+            <field name="name">asset.maintenance.team.list</field>
+            <field name="model">maintenance.team</field>
+            <field name="inherit_id" ref="maintenance.maintenance_team_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="partner_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

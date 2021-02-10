@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+
+    <record model="ir.model.access" id="stock_landed_costs.access_stock_landed_cost">
+        <field name="name">stock.landed.cost</field>
+        <field name="model_id" ref="stock_landed_costs.model_stock_landed_cost"/>
+        <field name="group_id" ref="stock.group_stock_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record model="ir.model.access" id="stock_landed_costs.access_stock_landed_cost_lines">
+        <field name="name">stock.landed.cost.lines</field>
+        <field name="model_id" ref="stock_landed_costs.model_stock_landed_cost_lines"/>
+        <field name="group_id" ref="stock.group_stock_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record model="ir.model.access" id="stock_landed_costs.access_stock_valuation_adjustment_lines">
+        <field name="name">stock.valuation.adjustment.lines</field>
+        <field name="model_id" ref="stock_landed_costs.model_stock_valuation_adjustment_lines"/>
+        <field name="group_id" ref="stock.group_stock_user"/>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+</odoo>

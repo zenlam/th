@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cash_denomination_pos_user,cash.denomination.pos.user,model_cash_denomination,point_of_sale.group_pos_user,1,0,0,0
+access_cash_denomination_pos_manager,cash.denomination.pos.manager,model_cash_denomination,point_of_sale.group_pos_manager,1,1,1,1
+access_cash_control_pos_user,cash.control.pos.user,model_cash_control,point_of_sale.group_pos_user,1,0,0,0
+access_cash_control_pos_manager,cash.control.pos.manager,model_cash_control,point_of_sale.group_pos_manager,1,1,1,1
+access_cash_in_out_log_pos_user,cash.in.out.log.pos.user,model_cash_in_out_log,point_of_sale.group_pos_user,1,1,1,0

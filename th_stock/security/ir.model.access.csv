@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_damage_reason_user,access.damage.reason,model_damage_reason,,1,1,1,1
+access_scrap_picking_user,access.scrap.picking,model_scrap_picking,,1,1,1,1
+access_scrap_picking_line_user,access.scrap.picking.line,model_scrap_picking_line,,1,1,1,1

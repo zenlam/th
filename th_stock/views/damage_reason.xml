@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="damage_reason_view_list" model="ir.ui.view">
+            <field name="name">damage.reason.view.list</field>
+            <field name="model">damage.reason</field>
+            <field name="arch" type="xml">
+                <tree string="Damage Reason" editable="bottom">
+                    <field name="name"/>
+                    <field name="active" widget="boolean_toggle"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_view_damage_reason" model="ir.actions.act_window">
+            <field name="name">Damage Reason</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">damage.reason</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="target"></field>
+        </record>
+
+        <menuitem id="menu_damage_root" parent="stock.menu_stock_config_settings"
+                  name="Damage" sequence="10"/>
+        <menuitem id="menu_damage_reason" parent="menu_damage_root"
+                  name="Damage Reason" sequence="5"
+                  action="action_view_damage_reason"/>
+    </data>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="LockScreenButtonWidget">
+        <div class="oe_status">
+            <div class="js_lock_screen oe_icon">
+                <i class='fa fa-fw fa-lock' role="img" aria-label="Lock Screen" title="Lock Screen"/>
+            </div>
+        </div>
+    </t>
+
+    <t t-name="LockScreenPopupWidget">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup popup-textinput">
+                <div class="header">
+                    <div class="button cancel">
+                        <i class="fa fa-times"/>
+                    </div>
+                </div>
+                <div class="lock-content">
+                    <h3>Lock Screen</h3>
+                    <p>Goodbye, <t t-esc="widget.pos.get_cashier().name"/>.<br/>Are you sure you want to lock pos screen?</p>
+                </div>
+                <div class="oe_icon oe_orange confirm-lock" style="margin-top: 32px; cursor: pointer;">
+                    <i class="fa fa-lock fa-5x" style="width: 200px; border: 1px solid; border-radius: 2px;"/>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

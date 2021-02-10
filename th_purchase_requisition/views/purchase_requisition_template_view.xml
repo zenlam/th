@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Purchase Requisition Template -->
+    <record id="view_purchase_requisition_template_tree" model="ir.ui.view">
+        <field name="name">purchase.requisition.template.tree</field>
+        <field name="model">purchase.requisition.template</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_purchase_requisition_template_form" model="ir.ui.view">
+        <field name="name">purchase.requisition.template.form</field>
+        <field name="model">purchase.requisition.template</field>
+        <field name="arch" type="xml">
+            <form string="State">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Sales History Calculation Template Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="date_type"/>
+                            <label for="last_period" attrs="{'invisible':['|',('date_type','=','specific_date'),('date_type','=',False)]}"/>
+                            <div attrs="{'invisible':['|',('date_type','=','specific_date'),('date_type','=',False)]}" width="100%">
+                                <field name="last_number" attrs="{'required':[('date_type','=','pr_create_date')]}" width="20%"/>
+                                <field name="last_period" attrs="{'required':[('date_type','=','pr_create_date')]}" width="80%"/>
+                            </div>
+                            <field name="start_date" attrs="{'invisible':['|',('date_type','=','pr_create_date'),('date_type','=',False)], 'required':[('date_type','=','specific_date')]}"/>
+                            <field name="end_date" attrs="{'invisible':['|',('date_type','=','pr_create_date'),('date_type','=',False)], 'required':[('date_type','=','specific_date')]}"/>
+                        </group>
+                        <group>
+                            <field name="create_uid" string="Created By" readonly="1"/>
+                            <field name="company_id"  invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Recurring" attrs="{'invisible':['|',('date_type','=','pr_create_date'),('date_type','=',False)], 'required':[('date_type','=','specific_date')]}">
+                        <div>
+                        <label for="" string=""/>
+                        <label for="monday" string="Monday"/> <field name="monday" nolabel="1"/>
+                        <label for="tuesday" string="Tuesday"/> <field name="tuesday" nolabel="1"/>
+                        <label for="wednesday" string="Wednesday"/> <field name="wednesday" nolabel="1"/>
+                        <label for="thursday" string="Thursday"/> <field name="thursday" nolabel="1"/>
+                        <label for="friday" string="Friday"/> <field name="friday" nolabel="1"/>
+                        <label for="saturday" string="Saturday"/> <field name="saturday" nolabel="1"/>
+                        <label for="sunday" string="Sunday"/> <field name="sunday" nolabel="1"/>
+                        </div>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_purchase_requisition_template" model="ir.actions.act_window">
+        <field name="name">Sales History Template</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchase.requisition.template</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="view_purchase_requisition_template_tree"/>
+    </record>
+
+    <menuitem id="menu_purchase_requisition_root" name="Purchase Requisition" parent="purchase.menu_purchase_root" sequence="10"
+        groups="purchase.group_purchase_manager" />
+
+    <menuitem id="menu_purchase_requisition_template" name="Sales History Template" parent="menu_purchase_requisition_root" sequence="10"
+         action="action_purchase_requisition_template"/>
+
+
+</odoo>

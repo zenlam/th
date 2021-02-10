@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_move_operations_temp_qty" model="ir.ui.view">
+        <field name="name">stock.move.operations.nosuggest.form</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_stock_move_operations"/>
+        <field name="arch" type="xml">
+            <field name="product_uom" position="after">
+                <field name="temp_line_qty" invisible="1"/>
+                <field name="has_tracking" invisible="1"/>
+                <field name="delivered_received_qty" invisible="1"/>
+                <field name="delivered_received_uom" invisible="1"/>
+                <field name="is_stock_transfer" invisible="1"/>
+            </field>
+            <xpath expr="//label[@for='product_uom_qty']" position="attributes">
+                <attribute name="string">Initial Demand (Std UOM)</attribute>
+            </xpath>
+            <xpath expr="//label[@for='quantity_done']" position="attributes">
+                <attribute name="string">Quantity Done (Std UOM)</attribute>
+            </xpath>
+            <xpath expr="//group" position="inside">
+                <group attrs="{'invisible':[('has_tracking','=','serial')]}">
+                    <label for="order_todo_qty" string="Initial Demand (To do UOM)"/>
+                    <div class="o_row">
+                        <span><field name="order_todo_qty" readonly="1" nolabel="1"/></span>
+                        <span><field name="order_todo_uom" readonly="1" nolabel="1"/></span>
+                    </div>
+                    <label for="quantity_done" string="Quantity Done (To do UOM)"/>
+                    <div class="o_row">
+                        <span><field name="delivered_received_qty" readonly="1" nolabel="1"/></span>
+                        <span attrs="{'invisible': [('state', '=', 'done')]}"> / </span>
+                        <span><field name="order_todo_qty" nolabel="1" readonly="1" attrs="{'invisible': [('state', '=', 'done')]}" /></span>
+                        <span><field name="delivered_received_uom" readonly="1" nolabel="1"/></span>
+                    </div>
+                </group>
+            </xpath>
+
+            <xpath expr="//field[@name='move_line_ids']" position="attributes">
+                <attribute name="context">{'tree_view_ref': 'stock.view_stock_move_line_operation_tree',
+                                            'default_product_uom_id': product_uom,
+                                            'default_picking_id': picking_id,
+                                            'default_move_id': id,
+                                            'default_product_id': product_id,
+                                            'default_location_id': location_id,
+                                            'default_location_dest_id': location_dest_id,
+                                            'default_qty_done': temp_line_qty,
+                                            'default_delivered_received_uom' : delivered_received_uom,
+                                            'default_delivered_received_uom_initial' : delivered_received_uom
+                                            }
+                </attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_stock_move_line_operation_tree_uom_editable" model="ir.ui.view">
+        <field name="name">stock.move.line.operations.tree</field>
+        <field name="model">stock.move.line</field>
+        <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_id']" position="after">
+                <field name="allow_change_picking_in_uom" invisible="1"/>
+                <field name="move_id" invisible="1"/>
+                <field name="tracking" invisible="1"/>
+            </xpath>
+
+            <xpath expr="//field[@name='product_uom_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='product_uom_qty']" position="before">
+                <field name="delivered_received_qty" attrs="{'column_invisible':[('parent.has_tracking','=','serial')]}"/>
+                <field name="delivered_received_uom" attrs="{'column_invisible': [('parent.has_tracking','=','serial')],
+                                                               'readonly': [('allow_change_picking_in_uom','=',False)]}"
+                       context="{'product_id':product_id}"/>
+                <field name="delivered_received_uom_initial" invisible="1" />
+            </xpath>
+            <xpath expr="//field[@name='qty_done']" position="attributes">
+                <attribute name="attrs">{'readonly': ['|','|', '|',
+                                                                ('tracking','!=','serial'),
+                                                                ('is_initial_demand_editable', '=', True),
+                                                                '&amp;', ('state', '=', 'done'),
+                                                                         ('is_locked', '=', True),
+                                                                '&amp;', ('package_level_id', '!=', False),
+                                                                         ('parent.picking_type_entire_packs', '=', True)
+
+                                                                ]}</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+
+<!--            <xpath expr="//field[@name='removal_date']" position="after">-->
+<!--                <field name="stock_request_lot_id"-->
+<!--                       context="{'default_product_id': parent.product_id, 'active_picking_id': picking_id}"-->
+<!--                       domain="[('product_id', '=', parent.product_id)]"-->
+<!--                       attrs="{'column_invisible': [('parent.is_stock_transfer', '=', False)]}"/>-->
+<!--                <field name="stock_request_removal_date" attrs="{'column_invisible': [('parent.is_stock_transfer', '=', False)]}"/>-->
+<!--            </xpath>-->
+        </field>
+    </record>
+</odoo>

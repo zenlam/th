@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="th_view_pos_pos_form_inherit" model="ir.ui.view">
+        <field name="name">th.pos.order.form.inherit</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[field[@name='lines']]" position="after">
+                <page string="Ingredients">
+                    <field name="ingredient_lines" colspan="4" nolabel="1">
+                        <tree string="Ingredient lines" editable="bottom">
+                            <field name="is_extra" readonly="1"/>
+                            <field name="menu_id" readonly="1"/>
+                            <field name="product_id" string="Ingredient"/>
+                            <field name="qty"/>
+                            <field name="recovery" readonly="1"/>
+                            <field name="inv_deduction_qty"/>
+                            <field name="price_unit" widget="monetary" string="Price"/>
+                            <field name="standard_price" widget="monetary" string="Standard Price"/>
+                        </tree>
+                        <form string="Ingredient lines">
+                            <group col="4">
+                                <field name="is_extra" readonly="1"/>
+                                <field name="menu_id" readonly="1"/>
+                                <field name="product_id" string="Ingredient"/>
+                                <field name="qty"/>
+                                <field name="recovery" readonly="1"/>
+                                <field name="inv_deduction_qty"/>
+                                <field name="price_unit" widget="monetary" string="Price"/>
+                                <field name="standard_price" widget="monetary" string="Standard Price"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+
+            <xpath expr="//notebook/page[field[@name='lines']]" position="attributes">
+                <attribute name="string">Menu Items</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    Inherit the invoice line form view  -->
+    <record id="th_invoice_form_inherit" model="ir.ui.view">
+        <field name="name">th.invoice.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="odoo_account_asset.view_invoice_asset_category"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='asset_category_id']" position="after">
+                <field name="capitalised_later" attrs="{'invisible': [('asset_category_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="th_view_invoice_line_form_inherit" model="ir.ui.view">
+        <field name="name">th.view.invoice.line.form.inherit</field>
+        <field name="model">account.invoice.line</field>
+        <field name="inherit_id" ref="account.view_invoice_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='price_unit']" position="after">
+                <!--                <field name="asset_category_id"/>-->
+                <field name="capitalised_later" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="th_view_invoice_supplier_form" model="ir.ui.view">
+        <field name="name">th.view.invoice.supplier.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet/div[1]" position="before">
+                <div class="oe_button_box">
+                    <button class="oe_stat_button" name="open_asset_product"  type="object" icon="fa-home">
+                        <field string="Asset(s)" name="asset_count" widget="statinfo" />
+                    </button>
+                </div>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

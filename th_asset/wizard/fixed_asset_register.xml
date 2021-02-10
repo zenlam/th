@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- wizard for asset excel report -->
+    <record id="account_asset_popup_form" model="ir.ui.view">
+        <field name="name">Fix Asset Register</field>
+        <field name="model">fixed.asset.register</field>
+        <field name="arch" type="xml">
+            <form string="Form">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="export_fixed_asset_register" string="Print"
+                            class="oe_highlight" type="object"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- action for asset excel report -->
+    <record id="account_asset_excel_action" model="ir.actions.act_window">
+        <field name="name">Fixed Asset Register</field>
+        <field name="res_model">fixed.asset.register</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="account_asset_popup_form"/>
+    </record>
+    <!-- new menu item for asset excel report -->
+    <menuitem id="account_asset_report_menu"
+              name="Excel Report"
+              parent="account.menu_finance_reports"
+              sequence="120"/>
+    <menuitem id="account_asset_excel_report"
+              parent="account_asset_report_menu"
+              name="Fixed Asset Register"
+              action="account_asset_excel_action"
+              sequence="10"/>
+
+</odoo>

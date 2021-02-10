@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <report
+            id="maintenance_request_report" 
+            model="maintenance.request"
+            report_type="qweb-pdf"
+            string="Maintenance Request"
+            name="th_asset_maintenance_ce.maintenance_request_print"
+            file="th_asset_maintenance_ce.maintenance_request_print"
+         />
+
+        <template id="maintenance_request_print">
+             <t t-foreach="docs" t-as="doc">
+               <t t-call="web.external_layout">
+                   <t t-call="web.html_container">
+                <div class="page">
+                    <div class="text-center">
+                        <h2>
+                            <span>Maintenance Request:</span> -  <span t-field="doc.name"/>
+                        </h2>
+                    </div>
+                    <div class="row">
+                            <div class="col-3">
+                                <strong>Requested By:</strong>
+                                <p t-field="doc.owner_user_id.name"/>
+                            </div>
+                            <div class="col-3" t-if="doc.maintenance_team_id">
+                                <strong>Team:</strong>
+                                <p t-field="doc.maintenance_team_id.name"/>
+                            </div>
+                            <div class="col-3" t-if="doc.equipment_id">
+                                <strong>Equipment:</strong>
+                                <p t-field="doc.equipment_id.name"/>
+                            </div>
+                            <div class="col-3" t-if="doc.category_id.technician_user_id">
+                                <strong>Responsible:</strong>
+                                <p t-field="doc.category_id.technician_user_id.name"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3" t-if="doc.category_id">
+                                <strong>Category:</strong>
+                                <p t-field="doc.category_id.name"/>
+                            </div>
+                            <div name="reference" class="col-3" t-if="doc.schedule_date">
+                                <strong>Scheduled Date:</strong>
+                                <p t-field="doc.schedule_date"/>
+                            </div>
+                            <div name="reference" class="col-3" t-if="doc.request_date">
+                                <strong>Request Date:</strong>
+                                <p t-field="doc.request_date"/>
+                            </div>
+                            <div name="reference" class="col-3" t-if="doc.priority">
+                                <strong>Priority:</strong>
+                                <p t-field="doc.priority"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div name="reference" class="col-3" t-if="doc.close_date">
+                                <strong>Close Date:</strong>
+                                <p t-field="doc.close_date"/>
+                            </div>
+                            <div name="reference" class="col-3" t-if="doc.maintenance_type">
+                                <strong>Maintenance Type:</strong>
+                                <p t-field="doc.maintenance_type"/>
+                            </div>
+                        </div>
+                        <table class="table table-condensed">
+                            <thead>
+                                <th>Line Type</th>
+                                <th>Product</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Subtotal</th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.custom_line_ids" t-as="line">
+                                   <tr>
+                                       <td><span t-field="line.line_type"/></td>
+                                       <td><span t-field="line.product_id"/></td>
+                                       <td><span t-field="line.custom_description"/></td>
+                                       <td><span t-field="line.quantity"/> <span t-field="line.uom_id"/></td>
+                                       <td><span t-field="line.price"/></td>
+                                       <td><span t-field="line.sub_total"/></td>
+                                   </tr>
+                               </t>
+                           </tbody>
+                        </table>
+                    </div>
+              </t>
+              </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

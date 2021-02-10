@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    Cash In Out Log Tree View   -->
+    <record id="th_view_cash_in_out_log_tree_view" model="ir.ui.view">
+        <field name="name">th.cash.in.out.log.tree</field>
+        <field name="model">cash.in.out.log</field>
+        <field name="arch" type="xml">
+            <tree string="Cash In Out Log" edit="false" create="false" delete="false">
+                <field name="session_id"/>
+                <field name="user_id"/>
+                <field name="action"/>
+                <field name="amount"/>
+                <field name="reason"/>
+                <field name="date"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

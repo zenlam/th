@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="product_supplier_info_form_view_inherit" model="ir.ui.view">
+            <field name="name">Product Supplier Info - Form View Inherit</field>
+            <field name="model">product.supplierinfo</field>
+            <field name="inherit_id" ref="product.product_supplierinfo_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="/form[1]/group[1]/group[1]" position="inside">
+                    <field name="default"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

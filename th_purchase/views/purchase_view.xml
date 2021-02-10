@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="purchase_order_view_form_inherit_tim_approval" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[@name='button_approve']" position="after">
+                <button name="button_approve" type="object" states="to_third_approve" string="Approve Order" class="oe_highlight" groups="th_purchase.group_purchase_second_approval_manager"/>
+            </xpath>
+            <xpath expr="//header/button[@name='button_cancel']" position="attributes">
+                <attribute name="states">draft,to approve,to_third_approve,sent,purchase</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

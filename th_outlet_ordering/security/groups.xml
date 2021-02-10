@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_outlet_ordering_module_category" model="ir.module.category">
+            <field name="name">Outlet Ordering</field>
+            <field name="description">Outlet Ordering Permission</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <!--<record id="th_outlet_ordering_user" model="res.groups">-->
+            <!--<field name="name">User</field>-->
+            <!--<field name="category_id" ref="th_outlet_ordering_module_category"/>-->
+            <!--<field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>-->
+        <!--</record>-->
+        <record id="th_outlet_ordering_authorizer" model="res.groups">
+            <field name="name">Authorizer</field>
+            <field name="category_id" ref="th_outlet_ordering_module_category"/>
+            <!--<field name="implied_ids" eval="[(4, ref('th_outlet_ordering_user'))]"/>-->
+            <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        </record>
+    </data>
+</odoo>

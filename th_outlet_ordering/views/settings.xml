@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.outlet_ordering</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="180"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[hasclass('settings')]" position="inside">
+                    <div class="app_settings_block" data-string="th_base" string="Tim Hortons Settings"
+                         data-key="th_base" groups="th_outlet_ordering.th_outlet_ordering_authorizer">
+                        <div class="row mt16 o_settings_container">
+                            <group string="Outlet Orderings">
+                                <group>
+                                    <field name="outlet_ordering_cutoff_time_internal" widget="float_time"/>
+                                    <field name="outlet_ordering_cutoff_time_1" widget="float_time"/>
+                                    <field name="outlet_ordering_cutoff_time_2" widget="float_time"/>
+                                </group>
+                            </group>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

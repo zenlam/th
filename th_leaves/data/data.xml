@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="status_single" model="marital.status">
+            <field name="name">Single</field>
+        </record>
+        <record id="status_married" model="marital.status">
+            <field name="name">Married</field>
+        </record>
+        <record id="status_widower" model="marital.status">
+            <field name="name">Widower</field>
+        </record>
+        <record id="status_legal_cohabitant" model="marital.status">
+            <field name="name">Legal Cohabitant</field>
+        </record>
+        <record id="status_divorced" model="marital.status">
+            <field name="name">Divorced</field>
+        </record>
+
+    </data>
+</odoo>

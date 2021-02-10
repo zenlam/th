@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+        <!-- group HQ user see all stores -->
+        <record id="group_see_all_store" model="res.groups">
+	        <field name="name">See All Outlet</field>
+	        <field name="implied_ids" eval="[(5, 0, 0), (4, ref('point_of_sale.group_pos_manager'))]"/>
+            <field name="category_id" ref="base.module_category_point_of_sale"/>
+	    </record>
+
+        <!-- filter record rule with normal user -->
+        <!--<record id="pos_config_rule" model="ir.rule">-->
+            <!--<field name="name">Pos Config Rule</field>-->
+            <!--<field name="model_id" ref="point_of_sale.model_pos_config" />-->
+            <!--<field eval="True" name="global"/>-->
+            <!--<field name="domain_force">['|', '|', ('outlet_id','=',False),('outlet_id.users','child_of',user.id),-->
+                <!--('outlet_id.store_managers','child_of',user.id)]</field>-->
+        <!--</record>-->
+
+        <!-- override record rule with HQ user see all store  -->
+        <!--<record id="pos_config_rule_all_store" model="ir.rule">-->
+            <!--<field name="name">Pos Config Rule See All Outlet</field>-->
+            <!--<field name="model_id" ref="point_of_sale.model_pos_config"/>-->
+            <!--<field name="domain_force">[(1, '=', 1)]</field>-->
+            <!--<field name="groups" eval="[(4, ref('ampm_store_management.group_see_all_store'))]"/>-->
+            <!--<field name="perm_read" eval="True"/>-->
+            <!--<field name="perm_write" eval="True"/>-->
+            <!--<field name="perm_create" eval="True"/>-->
+            <!--<field name="perm_unlink" eval="True"/>-->
+        <!--</record>-->
+
+        <!--<record id="pos_session_rule" model="ir.rule">-->
+            <!--<field name="name">Pos Session Rule</field>-->
+            <!--<field name="model_id" ref="point_of_sale.model_pos_session" />-->
+            <!--<field eval="True" name="global"/>-->
+            <!--<field name="domain_force">['|', '|', ('outlet_id','=',False),('outlet_id.users','child_of',user.id),-->
+                <!--('outlet_id.store_managers','child_of',user.id)]</field>-->
+        <!--</record>-->
+
+        <!-- override record rule with HQ user see all store  -->
+        <!--<record id="pos_session_rule_all_store" model="ir.rule">-->
+            <!--<field name="name">Pos Session Rule See All Outlet</field>-->
+            <!--<field name="model_id" ref="point_of_sale.model_pos_session"/>-->
+            <!--<field name="domain_force">[(1, '=', 1)]</field>-->
+            <!--<field name="groups" eval="[(4, ref('ampm_store_management.group_see_all_store'))]"/>-->
+            <!--&lt;!&ndash;<field name="perm_read" eval="True"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="perm_write" eval="True"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="perm_create" eval="True"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="perm_unlink" eval="True"/>&ndash;&gt;-->
+        <!--</record>-->
+
+        <!--<record id="pos_order_rule" model="ir.rule">-->
+            <!--<field name="name">Pos Order Rule</field>-->
+            <!--<field name="model_id" ref="point_of_sale.model_pos_order" />-->
+            <!--<field eval="True" name="global"/>-->
+            <!--<field name="domain_force">['|', '|', ('outlet_id','=',False),('outlet_id.users','child_of',user.id),-->
+                <!--('outlet_id.store_managers','child_of',user.id)]</field>-->
+        <!--</record>-->
+
+        <!-- override record rule with HQ user see all store  -->
+        <!--<record id="pos_order_rule_all_store" model="ir.rule">-->
+            <!--<field name="name">Pos Order Rule See All Outlet</field>-->
+            <!--<field name="model_id" ref="point_of_sale.model_pos_order"/>-->
+            <!--<field name="domain_force">[(1, '=', 1)]</field>-->
+            <!--<field name="groups" eval="[(4, ref('ampm_store_management.group_see_all_store'))]"/>-->
+            <!--&lt;!&ndash;<field name="perm_read" eval="True"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="perm_write" eval="True"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="perm_create" eval="True"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="perm_unlink" eval="True"/>&ndash;&gt;-->
+        <!--</record>-->
+
+        <!--<record id="pos_order_line_rule" model="ir.rule">-->
+            <!--<field name="name">Pos Order Line Rule</field>-->
+            <!--<field name="model_id" ref="point_of_sale.model_pos_order_line" />-->
+            <!--<field eval="True" name="global"/>-->
+            <!--<field name="domain_force">['|', '|', ('outlet_id','=',False),('order_id.outlet_id.users','child_of',user.id),-->
+                <!--('order_id.outlet_id.store_managers','child_of',user.id)]</field>-->
+        <!--</record>-->
+
+        <!-- override record rule with HQ user see all store  -->
+        <!--<record id="pos_order_line_rule_all_store" model="ir.rule">-->
+            <!--<field name="name">Pos Order Line Rule See All Outlet</field>-->
+            <!--<field name="model_id" ref="point_of_sale.model_pos_order_line"/>-->
+            <!--<field name="domain_force">[(1, '=', 1)]</field>-->
+            <!--<field name="groups" eval="[(4, ref('ampm_store_management.group_see_all_store'))]"/>-->
+            <!--&lt;!&ndash;<field name="perm_read" eval="True"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="perm_write" eval="True"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="perm_create" eval="True"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="perm_unlink" eval="True"/>&ndash;&gt;-->
+        <!--</record>-->
+
+<!--        <record id="purchase_order_rule" model="ir.rule">-->
+<!--            <field name="name">Purchase Order Rule</field>-->
+<!--            <field name="model_id" ref="purchase.model_purchase_order" />-->
+<!--            <field eval="True" name="global"/>-->
+<!--            <field name="domain_force">['|', '|', ('outlet_id','=',False),('outlet_id.users','child_of',user.id),-->
+<!--                ('outlet_id.store_managers','child_of',user.id)]</field>-->
+<!--        </record>-->
+
+<!--        <record id="purchase_order_line_rule" model="ir.rule">-->
+<!--            <field name="name">Purchase Order Line Rule</field>-->
+<!--            <field name="model_id" ref="purchase.model_purchase_order_line" />-->
+<!--            <field eval="True" name="global"/>-->
+<!--            <field name="domain_force">['|', '|', ('order_id.outlet_id','=',False),('order_id.outlet_id.users','child_of',user.id),-->
+<!--                ('order_id.outlet_id.store_managers','child_of',user.id)]</field>-->
+<!--        </record>-->
+
+<!--        <record id="stock_picking_type_rule" model="ir.rule">-->
+<!--            <field name="name">Stock Picking Type Rule</field>-->
+<!--            <field name="model_id" ref="stock.model_stock_picking_type" />-->
+<!--            <field eval="True" name="global"/>-->
+<!--            <field name="domain_force">['|', '|', ('outlet_id','=',False),('outlet_id.users','child_of',user.id),-->
+<!--                ('outlet_id.store_managers','child_of',user.id)]</field>-->
+<!--        </record>-->
+
+<!--        <record id="stock_picking_rule" model="ir.rule">-->
+<!--            <field name="name">Stock Picking Rule</field>-->
+<!--            <field name="model_id" ref="stock.model_stock_picking" />-->
+<!--            <field eval="True" name="global"/>-->
+<!--            <field name="domain_force">['|', '|', ('outlet_id','=',False),('outlet_id.users','child_of',user.id),-->
+<!--                ('outlet_id.store_managers','child_of',user.id)]</field>-->
+<!--        </record>-->
+
+<!--        <record id="stock_move_rule" model="ir.rule">-->
+<!--            <field name="name">Stock Move Rule</field>-->
+<!--            <field name="model_id" ref="stock.model_stock_move" />-->
+<!--            <field eval="True" name="global"/>-->
+<!--            <field name="domain_force">['|', '|', ('outlet_id','=',False),('outlet_id.users','child_of',user.id),-->
+<!--                ('outlet_id.store_managers','child_of',user.id)]</field>-->
+<!--        </record>-->
+    </data>
+</odoo>

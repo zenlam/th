@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="attendance_cron_tree_view" model="ir.ui.view">
+        <field name="name">attendance.cron.tree.view</field>
+        <field name="model">attendance.cron</field>
+        <field name="arch" type="xml">
+            <tree string="Attendance Upload">
+                <field name="name" />
+                <field name="file_path" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="attendance_cron_form_view" model="ir.ui.view">
+         <field name="name">attendance.cron.form.view</field>
+        <field name="model">attendance.cron</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="base.view_server_action_form"/>
+            <field name="arch" type="xml">
+                <div class="oe_title" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"/>
+                        </button>
+                    </div>
+                </div>
+                <xpath expr="//button[@name='create_action']" position="replace">
+                    <button name="test" type="object" string="Run Manually" class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//button[@name='unlink_action']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='model_id']" position="after">
+                    <field name="file_path"/>
+                    <field name="file_name"/>
+                    <field name="file_msg" nolabel="1" colspan="2" readonly="1" style="color: green" attrs="{'invisible': [['file_msg_err', '!=', False]]}"/>
+                    <field name="file_msg_err" nolabel="1" colspan="2" readonly="1" style="color: red" attrs="{'invisible': [['file_msg', '!=', False]]}"/>
+                </xpath>
+                <xpath expr="//group[@name='action_wrapper']" position="inside">
+                    <group>
+                        <field name="user_id"/>
+                        <label for="interval_number" string="Execute Every"/>
+                        <div>
+                            <field name="interval_number" class="oe_inline"/>
+                            <field name="interval_type" class="oe_inline"/>
+                        </div>
+                        <field name="nextcall"/>
+                        <field name="numbercall"/>
+                        <field name="priority"/>
+                        <field name="doall"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+    <record id="attendance_upload_form_view" model="ir.ui.view">
+        <field name="name">attendance.upload.form.view</field>
+        <field name="model">hr.attendance.upload</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="attachment_ids" widget="many2many_binary" colspan="2"
+                               string="Upload Files" nolabel="1"/>
+                </group>
+                <footer>
+                     <button string="Import" name="import_data" type="object" class="oe_highlight"/>
+                     <button string="Cancel" class="btn btn-default" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_attendance_upload" model="ir.actions.act_window">
+        <field name="name">Attendance Upload</field>
+        <field name="res_model">hr.attendance.upload</field>
+        <field name="view_type">form</field>
+        <field name="target">new</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="attendance_upload_form_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+
+    <record id="action_attendance_cron" model="ir.actions.act_window">
+        <field name="name">Attendance Cron</field>
+        <field name="res_model">attendance.cron</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="attendance_cron_tree_view"/>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            </p>
+        </field>
+    </record>
+
+    <record id="th_attendance_action_import" model="ir.actions.client">
+        <field name="name">Upload</field>
+        <field name="tag">form</field>
+        <field name="res_model">hr.attendance.upload</field>
+     </record>
+
+
+
+    <record id="th_attendance_action_save_template" model="ir.actions.client">
+        <field name="name">Import Template</field>
+        <field name="tag">import_save</field>
+        <field name="res_model">hr.attendance</field>
+     </record>
+
+    <menuitem
+        id="th_attendance_menu_import_template"
+        name="Import Template"
+        parent="hr_attendance.menu_hr_attendance_settings"
+        action="th_attendance.th_attendance_action_save_template"
+        sequence="2"/>
+
+    <menuitem
+        id="th_attendance_menu_import"
+        name="Import"
+        parent="hr_attendance.menu_hr_attendance_settings"
+        action="th_attendance.action_attendance_upload"
+        sequence="1"/>
+
+    <menuitem id="menu_attendance_cron_config_1"
+            name="Attendance Cron"
+            parent="hr_attendance.menu_hr_attendance_settings"
+            action="th_attendance.action_attendance_cron"
+            sequence="3"/>
+
+</odoo>

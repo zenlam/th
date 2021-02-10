@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="PromotionScreenWidget1">
+        <div class="promotion-screen screen">
+            Hello
+        </div>
+    </t>
+    <t t-name="PromotionLine">
+        <div class="promotion-line">
+            <t t-if="widget.group == true">
+                <div class="line-header">
+                    <h3><t t-esc="name" /></h3>
+                </div>
+            </t>
+            <div class="line-container"></div>
+        </div>
+    </t>
+    <t t-name="RuleLine">
+        <div class="promotion-line">
+            <div class="line-container"></div>
+        </div>
+    </t>
+
+    <t t-name="PromotionItem">
+        <div class="promotion-item">
+            <div class="wLBNn">
+                <div class="izBNn"></div>
+                <div class="lzBNn"><t t-esc="name" /></div>
+            </div>
+            <div class="wRprO">
+                <div class="rPrOHd">
+                    <t t-esc="name" />
+                </div>
+                <div class="rProCer"></div>
+                <span class="rProExp">Exp:: <t t-esc="exp" /> </span>
+            </div>
+        </div>
+    </t>
+    <t t-name="PromotionHeaderWidget">
+        <div class="promotion-header">
+            <header class='rightpane-header'>
+                <div class="breadcrumbs">
+                    <span class="breadcrumb osHoMee">
+                        <span class="breadcrumb-button breadcrumb-home js-category-switch back-home">
+                            <i class='fa fa-home' role="img" aria-label="Home" title="Home"></i>
+                        </span>
+                    </span>
+                        <span class="breadcrumb btnBack" style="display: none">
+                            <span class="breadcrumb-button btn-back">
+                                Back
+                            </span>
+                        </span>
+                </div>
+                <div class="searchbox">
+                    <input class="inputSearch" t-attr-placeholder="widget.current.label" />
+                    <span class="search-clear"></span>
+                </div>
+            </header>
+        </div>
+    </t>
+    <t t-name="PromotionProductView">
+        <div class='promotion-list-container'>
+            <div class="promotion-list-scroller touch-scrollable">
+                <div class="promotion-list">
+                </div>
+            </div>
+            <span class="placeholder-ScrollbarWidget" />
+        </div>
+    </t>
+    <t t-name="PromotionRuleView">
+        <div class='promotion-list-container'>
+            <div class="promotion-list-scroller touch-scrollable">
+                <div class="promotion-list">
+
+                </div>
+            </div>
+            <span class="placeholder-ScrollbarWidget" />
+        </div>
+    </t>
+    <t t-name="PromotionListWidget">
+        <div class='promotion-list-container'>
+            <div class="promotion-list-scroller touch-scrollable">
+                <div class="promotion-list">
+                </div>
+            </div>
+            <span class="placeholder-ScrollbarWidget" />
+        </div>
+    </t>
+    <t t-name="PromotionScreenWidget">
+        <div class="promotion-screen screen">
+            <div class="leftpane">
+                <div class='window'>
+                    <div class='subwindow'>
+                        <div class='subwindow-container'>
+                            <div class='subwindow-container-fix'>
+                                <div class="placeholder-OrderWidget"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="rightpane">
+                <table class="layout-table">
+
+                    <tr class="header-row">
+                        <td class="header-cell">
+                            <span class="placeholder-PromotionWidget" />
+                        </td>
+                    </tr>
+
+                    <tr class="content-row">
+                        <td class="content-cell oContainer">
+                            <div class="content-container">
+                                <span class="placeholder-PromotionListWidget" />
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </t>
+    <t t-name="PromotionPopupWidget">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup popup-promotion">
+                <div class="header">
+                    <h3>Pls Choose Promotion</h3>
+                </div>
+                <div class="body">
+
+                </div>
+                <div class="footer">
+                    <div class="button back">
+                        Back
+                    </div>
+                    <div class="button cancel">
+                        Ok
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

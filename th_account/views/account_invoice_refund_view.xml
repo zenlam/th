@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    Inherit the credit note wizard view   -->
+    <record id="th_view_account_invoice_refund_debit" model="ir.ui.view">
+        <field name="name">th.account.invoice.refund.form.debit</field>
+        <field name="model">account.invoice.refund</field>
+        <field name="arch" type="xml">
+            <form string="Debit Note">
+                <group>
+                    <group>
+                        <field name="refund_only" invisible="1"/>
+                        <field name="filter_refund" attrs="{'invisible': [('refund_only','=',True)]}" widget="radio" string="Debit Method"/>
+                    </group>
+                    <group>
+                        <div attrs="{'invisible':['|',('refund_only','=',True),('filter_refund','!=','refund')]}" class="oe_grey" colspan="4">
+                            You will be able to edit and validate this
+                            debit note directly or keep it draft,
+                            waiting for the document to be issued by
+                            your supplier/customer.
+                        </div>
+                        <div attrs="{'invisible':['|',('refund_only','=',True),('filter_refund','!=','cancel')]}" class="oe_grey" colspan="4">
+                            Use this option if you want to cancel an invoice you should not
+                            have issued. The debit note will be created, validated and reconciled
+                            with the invoice. You will not be able to modify the debit note.
+                        </div>
+                        <div attrs="{'invisible':['|',('refund_only','=',True),('filter_refund','!=','modify')]}" class="oe_grey" colspan="4">
+                            Use this option if you want to cancel an invoice and create a new
+                            one. The debit note will be created, validated and reconciled
+                            with the current invoice. A new draft invoice will be created
+                            so that you can edit it.
+                        </div>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="date_invoice" string="Debit Note Date"/>
+                        <field name="date" groups="base.group_no_one"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string='Add Debit Note' name="invoice_refund" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--    Create a new action for 'Ask for a debit note' in Vendor Bill   -->
+    <record id="th_action_account_invoice_refund_debit" model="ir.actions.act_window">
+        <field name="name">Debit Note</field>
+        <field name="res_model">account.invoice.refund</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="th_view_account_invoice_refund_debit"/>
+        <field name="context">{'from_vendor_bill': True}</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+    <record id="hr_leave_history_view_tree" model="ir.ui.view">
+        <field name="name">Leave History Tree</field>
+        <field name="model">hr.leave.history</field>
+        <field name="arch" type="xml">
+            <tree create="1" delete="0" edit="0" string="Leave History">
+                    <field name="emp_id"/>
+                    <field name="emp_barcode"/>
+                    <field name="leave_type"/>
+                    <field name="apply_date"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                    <field name="duration"/>
+                    <field name="is_emergency"/>
+                    <field name="description"/>
+                    <field name="approved_by"/>
+                    <field name="state"/>
+                    <field name="remaining_leave"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_hr_leave_history" model="ir.actions.act_window">
+        <field name="name">Leave History</field>
+        <field name="res_model">hr.leave.history</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <menuitem id="menu_leave_history"
+              parent="hr_holidays.menu_hr_holidays_configuration"
+              name="Leave History"
+              action="action_hr_leave_history"
+              groups="hr_holidays.group_hr_holidays_user"/>
+
+</odoo>

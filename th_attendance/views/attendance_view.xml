@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="th_attendance_tree_view_inherit" model="ir.ui.view">
+        <field name="name">th_attendance.hr.attendance.tree.view.inherit</field>
+        <field name="model">hr.attendance</field>
+        <field name="_inherit" ref="hr_attendance.view_attendance_tree" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_out']" position="after">
+                <field name="attendance_wt_id" invisible="1" />
+                <field name="working_time" widget="float_time" />
+                <field name="ot_time" widget="float_time" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

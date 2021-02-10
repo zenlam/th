@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.module.category" id="module_category_purchase_management_tim">
+        <field name="name">Tim Hortons Purchases</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <record id="group_purchase_request_manager" model="res.groups">
+        <field name="name">Allow to Create Purchase Request Template</field>
+        <field name="category_id" ref="module_category_purchase_management_tim"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="group_allow_purchase_request_validate" model="res.groups">
+        <field name="name">Allow Validate Purchase Request</field>
+        <field name="category_id" ref="module_category_purchase_management_tim"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+    <record id="group_allow_cancel_purchase_request" model="res.groups">
+        <field name="name">Allow to Cancel PR</field>
+        <field name="category_id" ref="module_category_purchase_management_tim"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+
+
+    <record id="pur_requisition_tmpl_multi_comp_rule" model="ir.rule">
+        <field name="name">Purchase Requisition multi company rule</field>
+        <field name="model_id" ref="model_purchase_requisition_template"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+    <record id="purchase_request_tmpl_multi_comp_rule" model="ir.rule">
+        <field name="name">Purchase Request multi company rule</field>
+        <field name="model_id" ref="model_purchase_request_tmpl"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+    </record>
+</odoo>

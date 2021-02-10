@@ -1,0 +1,20 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_requisition_template_base_user,purchase.requisition.template,model_purchase_requisition_template,,1,0,0,0
+access_purchase_requisition_template_purchase_user,purchase.requisition.template,model_purchase_requisition_template,purchase.group_purchase_user,1,1,1,0
+access_purchase_requisition_template_purchase_manager,purchase.requisition.template,model_purchase_requisition_template,purchase.group_purchase_manager,1,1,1,1
+
+access_purchase_request_tmpl_base_user,purchase.request.tmple,model_purchase_request_tmpl,,1,0,0,0
+access_purchase_request_tmpl_pr_req_manager,purchase.request.tmple,model_purchase_request_tmpl,th_purchase_requisition.group_purchase_request_manager,1,1,1,1
+
+access_purchase_request_tmpl_line_base_user,purchase.request.tmple.line,model_purchase_request_tmpl_line,,1,0,0,0
+access_purchase_request_tmpl_line_pr_req_manager,purchase.request.tmple.line,model_purchase_request_tmpl_line,th_purchase_requisition.group_purchase_request_manager,1,1,1,1
+
+access_purchase_request_base_user,purchase.request,model_purchase_request,,1,1,1,1
+
+access_purchase_request_line_base_user,purchase.request.line,model_purchase_request_line,,1,1,1,1
+
+access_purchase_request_delivery_cycle_manager,Access PR Delivery Cycle for Manager,model_purchase_request_delivery_cycle,th_purchase_requisition.group_purchase_request_manager,1,1,1,1
+access_purchase_request_delivery_cycle_user,Access PR Delivery Cycle for User,model_purchase_request_delivery_cycle,base.group_user,1,0,0,0
+
+access_purchase_request_delivery_cycle_line_manager,Access PR Delivery Cycle Line for Manager,model_purchase_request_delivery_cycle_line,th_purchase_requisition.group_purchase_request_manager,1,1,1,1
+access_purchase_request_delivery_cycle_line_user,Access PR Delivery Cycle Line for User,model_purchase_request_delivery_cycle_line,base.group_user,1,0,0,0

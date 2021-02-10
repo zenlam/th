@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem 
+            id="asset_Maintenance_sub_top_menu"
+            name="Maintenance" 
+            parent="odoo_account_asset_extend_ce.asset_top_menu"
+            sequence="2"/>
+
+        <menuitem 
+            id="asset_Maintenance_Requests_sub_menu"
+            name="Maintenance Requests" 
+            parent="th_asset_maintenance_ce.asset_Maintenance_sub_top_menu"
+            action="th_asset_maintenance_ce.hr_equipment_request_act"
+            groups="odoo_account_asset_extend_ce.group_asset_employee,odoo_account_asset_extend_ce.group_asset_user,odoo_account_asset_extend_ce.group_asset_manager" />
+
+        <menuitem 
+            id="asset_Maintenance_Calendar_sub_menu"
+            name="Maintenance Calendar" 
+            parent="th_asset_maintenance_ce.asset_Maintenance_sub_top_menu"
+            action="maintenance.hr_equipment_request_action_cal" 
+            groups="odoo_account_asset_extend_ce.group_asset_employee,odoo_account_asset_extend_ce.group_asset_user,odoo_account_asset_extend_ce.group_asset_manager" />
+
+        <menuitem 
+            id="asset_Configuration_custom_asset_types" 
+            name="Asset Categories"
+            parent= "odoo_account_asset_extend_ce.asset_configuration_sub_top_menu" 
+            action="odoo_account_asset.action_account_asset_asset_list_normal_purchase"
+            groups="odoo_account_asset_extend_ce.group_asset_manager" />
+
+        <menuitem
+            id="asset_Configuration_maintenance_diagnosis"
+            name="Maintenance Diagnosis"
+            parent="odoo_account_asset_extend_ce.asset_configuration_sub_top_menu"  
+            action="th_asset_maintenance_ce.action_maintenance_diagnosis"
+            groups="odoo_account_asset_extend_ce.group_asset_manager" />
+
+        <menuitem 
+            id="asset_configuration_menu_maintenance_activity"
+            name="Maintenance Activities" 
+            parent="odoo_account_asset_extend_ce.asset_configuration_sub_top_menu"
+            action="th_asset_maintenance_ce.action_maintenance_activity"
+            groups="odoo_account_asset_extend_ce.group_asset_manager" />
+    </data>
+</odoo>

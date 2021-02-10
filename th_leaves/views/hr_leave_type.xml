@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="hr_leave_type_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.leave.type.form.inherit</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='double_validation']" position="after">
+                <field name="marital_status" widget="many2many_tags"/>
+                <field name="attachment_required"/>
+                <field name="max_days_wo_attachment"
+                       attrs="{'invisible': [('attachment_required', '=', False)]}"/>
+                <field name="apply_advance"/>
+                <field name="employee_type" widget="many2many_tags"/>
+                <field name="gender"/>
+            </xpath>
+            <xpath expr="//group[@name='calendar']" position="attributes">
+                <attribute name="groups"></attribute>
+            </xpath>
+            <xpath expr="//field[@name='validity_stop']" position="after">
+                <field name="allow_carry"/>
+            </xpath>
+            <xpath expr="//field[@name='allocation_type']" position="after">
+                <field name="carry_forward_of" attrs="{'invisible': [('carry_forward_of', '=', False)]}"/>
+                <field name="default_day"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

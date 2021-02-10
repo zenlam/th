@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <menuitem
+            id="top_menu_asset_dashboard"
+            name="Dashboard" 
+            parent="odoo_account_asset_extend_ce.asset_top_menu"
+            action="th_asset_dashboard.asset_dashboard_normal_action"
+            sequence="0"
+        />
+    </data>
+</openerp>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_outlet_product_deny_tree_view" model="ir.ui.view">
+            <field name="name">TH Outlet Product Deny - Tree View</field>
+            <field name="model">outlet.ordering.product.deny</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="type"/>
+                    <field name="applied"/>
+
+                    <!--<field name="outlet_name"/>-->
+                    <!--<field name="outlet_code"/>-->
+                    <!--<field name="product_name"/>-->
+                    <!--<field name="product_code"/>-->
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <!--<field name="th_code"/>-->
+                    <!--<field name="havi_code"/>-->
+                </tree>
+            </field>
+        </record>
+        <record id="th_outlet_product_deny_form_view" model="ir.ui.view">
+            <field name="name">TH Outlet Product Deny - Form View</field>
+            <field name="model">outlet.ordering.product.deny</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="generate_restricted_data" string="Generate Data" type="object" class="btn-primary" />
+                    </header>
+
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="type"/>
+                                <field name="applied"/>
+                                <!--<field name="outlet_id"/>-->
+                                <!--<field name="product_id"/>-->
+                            </group>
+                            <group>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="csv_data" filename="csv_filename"/>
+                                <field name="csv_filename" invisible="1"/>
+                                <!--<field name="th_code"/>-->
+                                <!--<field name="havi_code"/>-->
+                            </group>
+                        </group>
+                        <group>
+                            <field name="outlet_ids" widget="many2many_tags" attrs="{'invisible': [('applied', '!=', 'outlet')], 'required': [('applied', '=', 'outlet')]}"/>
+                            <field name="area_ids" widget="many2many_tags" attrs="{'invisible': [('applied', '!=', 'area')], 'required': [('applied', '=', 'area')]}"/>
+                            <field name="product_ids" widget="many2many_tags"/>
+                            <field name="product_category_ids" widget="many2many_tags"/>
+                        </group>
+                        <!--<field name="ordering_uom_ids" readonly="1">-->
+                            <!--<tree>-->
+                                <!--<field name="name"/>-->
+                                <!--<field name="barcode"/>-->
+                            <!--</tree>-->
+                        <!--</field>-->
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="th_outlet_ordering_product_deny_view_action" model="ir.actions.act_window">
+            <field name="name">Restricted Product</field>
+            <field name="res_model">outlet.ordering.product.deny</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="th_outlet_ordering_product_deny_menuitem"
+                  action="th_outlet_ordering_product_deny_view_action"
+                  name="Restricted Product"
+                  parent="outlet_ordering_menu_parent"
+                  sequence="30"/>
+    </data>
+</odoo>

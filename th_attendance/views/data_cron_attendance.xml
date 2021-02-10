@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_hr_attendance_upload" model="attendance.cron">
+        <field name="name">Attendance Automatically</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model_id" ref="model_hr_attendance"/>
+        <field name="code">model.do()</field>
+        <field name="state">code</field>
+        <field name="file_path">/Users/dungtv/Downloads</field>
+        <field name="file_name">test</field>
+    </record>
+</odoo>

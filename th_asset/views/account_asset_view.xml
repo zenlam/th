@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="th_asset_view_form_inherit" model="ir.ui.view">
+        <field name="name">th.asset.form.inherit</field>
+        <field name="model">account.asset.asset.custom</field>
+        <field name="inherit_id" ref="odoo_account_asset_extend_ce.product_add_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='custom_number']" position="after">
+                <field name="transfer_from_number" attrs="{'invisible': [('transfer_from_number', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//group/group[1]/field[@name='account_analytic_id']" position="after">
+                <field name="product_id"/>
+                <field name="purchase_date"/>
+                <div>
+                    <label for="capitalised_later" style="font-weight: bold;"/>
+                    <field name="capitalised_later" force_save="True" class="oe_inline" attrs="{'readonly': [('capitalised_later', '=', True)]}"/>
+                    <button name="update_capitalized_checkbox" type="object" class="oe_inline oe_link" attrs="{'invisible':[('capitalised_later','=',False)]}"><i class="fa fa-arrow-right"/> Deselect</button>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='value_residual']" position="after">
+                <field name="depreciation_rate"/>
+                <field name="depreciation_base"/>
+                <field name="depreciated_value"/>
+                <field name="quantity"/>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button name="%(stock.action_stock_report)d" icon="fa-arrow-up" class="oe_stat_button" string="Traceability Report" type="action"/>
+                <button class="oe_stat_button" name="open_transfer_posting"  type="object" icon="fa-truck">
+                    <field string="Transfer Posting" name="transfer_posting_count" widget="statinfo" />
+                </button>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="th_product_asset_form_inherit" model="ir.ui.view">
+        <field name="name">th.product.asset.form.inherit</field>
+        <field name="model">account.asset.asset.custom</field>
+        <field name="inherit_id" ref="odoo_account_asset_extend_ce.product_add_view"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='custom_receive_date']" position="after">
+                <field name="asset_id_number"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <menuitem parent="odoo_account_asset_extend_ce.asset_configuration_sub_top_menu"
+              id="th_menu_action_account_asset_asset_list_normal_purchase"
+              action="odoo_account_asset.action_account_asset_asset_list_normal_purchase"
+              sequence="20"/>
+
+    <record id="th_asset_category_form_inherit" model="ir.ui.view">
+        <field name="name">th.asset.category.form.inherit</field>
+        <field name="model">account.asset.category.custom</field>
+        <field name="inherit_id" ref="odoo_account_asset.view_account_asset_category_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//div[hasclass('oe_title')]" position="replace">
+                <group>
+                    <div class="oe_title">
+                        <label for="name" string="Asset Type" class="oe_edit_only" attrs="{'invisible': [('type','!=','purchase')]}"/>
+                        <label for="name" string="Deferred Revenue Type" class="oe_edit_only" attrs="{'invisible': [('type','==','purchase')]}"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. Computers"/>
+                        </h1>
+                    </div>
+                </group>
+            </xpath>
+
+            <xpath expr="//group/group[3]" position="replace">
+                <group string="Journal Entries">
+                    <field name="journal_id"/>
+                    <field name="account_asset_id" attrs="{'invisible': [('type','=', False)]}"/>
+                    <field name="account_depreciation_id"/>
+                    <field name="account_depreciation_expense_id"/>
+                    <field name="account_analytic_id" groups="analytic.group_analytic_accounting"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="th_asset_depreciation_board_posting" model="ir.ui.view">
+        <field name="name">th.asset.depreciation.board.posting</field>
+        <field name="model">account.asset.asset.custom</field>
+        <field name="inherit_id" ref="odoo_account_asset.view_account_asset_asset_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='move_check']" position="after">
+                <field name="move_status"/>
+                <button name="create_move" type="object" icon="fa-cog" string="Create Move"
+                        attrs="{'invisible': ['|', ('move_check', '!=', False), ('parent_state', '!=', 'open')]}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- new user group for expense -->
+        <record id="group_hr_expense_normal_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="base.module_category_hr_expense"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <!-- rename existed user group for expense -->
+        <record id="hr_expense.group_hr_expense_manager" model="res.groups">
+            <field name="name">Finance</field>
+        </record>
+        <record id="hr_expense.group_hr_expense_user" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="implied_ids"
+                   eval="[(4, ref('th_hr_expense.group_hr_expense_normal_user'))]"/>
+        </record>
+
+        <!-- new ir rule for expense - manager group -->
+        <record id="ir_rule_hr_expense_user_extend" model="ir.rule">
+            <field name="name">Officer Expense Extend</field>
+            <field name="model_id" ref="model_hr_expense"/>
+            <field name="domain_force">
+                ['|', '|',
+                ('employee_id.user_id.id', '=', user.id),
+                ('employee_id.parent_id.user_id.id', '=', user.id),
+                ('employee_id.head_of_manager_id.id', '=', user.id)]
+            </field>
+            <field name="groups"
+                   eval="[(4, ref('hr_expense.group_hr_expense_user'))]"/>
+        </record>
+    </data>
+</odoo>

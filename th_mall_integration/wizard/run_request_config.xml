@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- api run config popup form -->
+        <record id="run_request_config_view_form" model="ir.ui.view">
+            <field name="name">run.request.config.view.form</field>
+            <field name="model">th.run.request.config</field>
+            <field name="arch" type="xml">
+                <form string="Run Config">
+                    <group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="run" type="object" string="Run Config"
+                                class="btn-primary"/>
+                        <button string="Cancel" class="btn-default"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_run_request_config_view"
+                model="ir.actions.act_window">
+            <field name="name">Run Config</field>
+            <field name="res_model">th.run.request.config</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="run_request_config_view_form"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

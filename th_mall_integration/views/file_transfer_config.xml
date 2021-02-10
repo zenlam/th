@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="file_transfer_config_view_form" model="ir.ui.view">
+            <field name="name">mall.integration.ftp.config.view.form</field>
+            <field name="model">th.file.transfer.config</field>
+            <field name="arch" type="xml">
+                <form string="Form">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="test_connection" type="object" string="Run Test" class="oe_stat_button oe_inline" icon="fa-cogs"/>
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                                <field name="active" widget="boolean_button" options='{"terminology": "active"}'/>
+                            </button>
+                        </div>
+                        <group>
+                            <!-- server information configuration -->
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="outlet_id"/>
+                                <field name="company_id"/>
+                                <field name="ip" required="1"/>
+                                <field name="machine" required="1"/>
+                                <field name="password" required="1"/>
+                                <field name="type" required="1"/>
+                                <field name="is_passive_mode" attrs="{'invisible': [('type', '=', 'sftp')]}"/>
+                                <field name="port" required="1"/>
+                                <field name="period" required="1"/>
+                            </group>
+                            <group>
+                                <field name="name_file"/>
+                                <field name="filename_date_format"/>
+                                <field name="last_modified_seq"/>
+                                <field name="prefix"/>
+                                <field name="sequence"/>
+                                <field name="next_number"/>
+                                <field name="sequence_padding"/>
+                                <field name="transfer_directory"/>
+                                <field name="is_client_request"/>
+                            </group>
+                        </group>
+                        <!--data content-->
+                        <group col="3" string="Content Data">
+                            <group>
+                                <field name="position"/>
+                                <field name="date_format" col="3"/>
+                                <field name="padding"/>
+                                <field name="gst_padding"/>
+                                <field name="before_gst_padding"/>
+                                <field name="discount_padding"/>
+                                <field name="cash_padding"/>
+                                <field name="other_padding"/>
+                                <field name="ticket_count_padding"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="file_transfer_config_view_tree" model="ir.ui.view">
+            <field name="name">mall.integration.ftp.config.view.form</field>
+            <field name="model">th.file.transfer.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" required="True"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_file_transfer_config_view" model="ir.actions.act_window">
+            <field name="name">File Transfer Configuration</field>
+            <field name="res_model">th.file.transfer.config</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_mall_integration_root" name="Mall Integration"
+                  parent="point_of_sale.menu_point_config_product"
+                  sequence="20"/>
+        <menuitem id="menu_file_transfer_config" name="File Transfer Configuration"
+                  parent="menu_mall_integration_root" sequence="5"
+                  action="action_file_transfer_config_view"/>
+    </data>
+</odoo>

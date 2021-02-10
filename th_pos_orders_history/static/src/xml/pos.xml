@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Extend: FunctionsPopupWidget -->
+    <t t-extend="FunctionsPopupWidget">
+        <t t-jquery="div.pop-more-function-widget" t-operation="append">
+            <div class="button th-function-btn order-history">Order History</div>
+        </t>
+    </t>
+
+    <!-- Extend: OrdersHistoryScreenWidget -->
+    <t t-extend="OrdersHistoryScreenWidget">
+        <t t-jquery="span.filters" t-operation="replace"/>
+    </t>
+
+</templates>

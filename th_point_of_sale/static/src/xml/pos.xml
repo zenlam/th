@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <!-- Extend: CategoryButton (with images) -->
+    <t t-extend="CategoryButton">
+        <t t-jquery='span.category-button.js-category-switch'>
+            this.removeAttr('style');
+            this.attr('t-attf-style', 'background-color:#{category.background_color};');
+        </t>
+        <t t-jquery='div.category-name'>
+            this.removeAttr('style');
+            this.attr('t-attf-style', 'color:#{category.font_color};');
+        </t>
+        <t t-jquery='div.category-name' t-operation="prepend">
+            <i class="fa fa-fw fa-check-circle pos-active-categories oe_hidden" role="img"/>
+        </t>
+    </t>
+
+    <!-- Extend: CategorySimpleButton (without images) -->
+    <t t-extend="CategorySimpleButton">
+        <t t-jquery='span.category-simple-button.js-category-switch'>
+            this.removeAttr('style');
+            this.attr('t-attf-style', 'color:#{category.font_color}; background-color:#{category.background_color};');
+        </t>
+        <t t-jquery='span.category-simple-button.js-category-switch' t-operation="prepend">
+            <i class="fa fa-fw fa-check-circle pos-active-categories oe_hidden" role="img"/>
+        </t>
+    </t>
+
+    <!-- Extend: ProductCategoriesWidget -->
+    <t t-extend="ProductCategoriesWidget">
+        <t t-jquery="t[t-if='widget.subcategories.length > 0']">
+            this.removeAttr('t-if');
+        </t>
+        <t t-jquery="div.category-list" t-operation="after">
+            <div class="category-list-all-sub">
+            </div>
+        </t>
+    </t>
+
+    <!-- Extend: ProductScreenWidget -->
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery="div.subwindow.collapsed" t-operation="replace"/>
+        <t t-jquery="div.subwindow-container-fix">
+            this.addClass('pads-bottom');
+        </t>
+        <t t-jquery="td.content-cell div.content-container">
+            this.attr('style', 'width:51%; float:left;');
+        </t>
+        <t t-jquery="td.content-cell div.content-container" t-operation="prepend">
+            <div class="placeholder-SmartSelectWidget">
+            </div>
+        </t>
+        <t t-jquery="td.content-cell div.content-container" t-operation="append">
+            <div class="placeholder-ComboListWidget product-list">
+            </div>
+        </t>
+        <t t-jquery="td.content-cell" t-operation="append">
+            <div class="content-container modifier-section" style="width:49%; float:right;">
+                <div class="modifier-list-container">
+                    <div class="product-list-scroller touch-scrollable">
+                        <div class="placeholder-ProductScreenWidget-Modifiers">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>
+        <t t-jquery="tr.content-row" t-operation="after">
+            <tr class="content-row">
+                <td class="content-cell">
+                    <div class="content-container pads-top">
+                        <div class="control-buttons oe_hidden" style="width: 60%; float: left; display: none;"></div>
+                        <div class="placeholder-ActionpadWidget"></div>
+                    </div>
+                </td>
+            </tr>
+        </t>
+    </t>
+
+    <!-- TopSelling Template -->
+    <t t-name="TopSellingWidget">
+        <div class="top-selling-section" style="width:35%; float:right;">
+            <t t-foreach="widget.top_selling_menus" t-as="ts_menu">
+                <button class='button top-selling-menu' t-att-data-menu-id="ts_menu.id">
+                    <t t-esc="ts_menu.display_name"/> <strong style="margin-left: 2px;">(<t t-esc="widget.format_currency(ts_menu.get_price(widget.current_pricelist, 1), 'Product Price')"/>)</strong>
+                </button>
+            </t>
+        </div>
+    </t>
+
+    <!-- Extend: ActionpadWidget -->
+    <t t-extend="ActionpadWidget">
+        <t t-jquery="div.actionpad" t-operation="replace">
+            <div class="actionpad" style="width:60%; float:left;">
+                <div class="actionpad-section" style="width:70%; float:left;">
+                    <div>
+                        <button class='button repeat-orderline'>
+                            <!--<i class='fa fa-undo' role="img" aria-label="Repeat" title="Repeat"/>-->
+                            Repeat
+                        </button>
+                        <button t-attf-class='button set-customer #{ ( widget.pos.get_client() and widget.pos.get_client().name.length > 10) ? "decentered" : "" }'
+                                t-att-title="widget.pos.get_client() and widget.pos.get_client().name">
+                            <!--<i class='fa fa-user' role="img" aria-label="Customer" title="Customer"/>-->
+                            <t t-if="widget.pos.get_client()">
+                                <t t-esc="widget.pos.get_client().name"/>
+                            </t>
+                            <t t-if="!widget.pos.get_client()">
+                                Customer
+                            </t>
+                        </button>
+                        <button t-attf-class='button o_pricelist_button_dummy #{ ( widget.widget_pricelist.get_current_pricelist_name().length > 10) ? "decentered" : "" }'
+                                t-att-title="widget.widget_pricelist.get_current_pricelist_name()">
+                            <!--<i class='fa fa-th-list' role="img" aria-label="Price list" title="Price list"/>-->
+                            <t t-esc='widget.widget_pricelist.get_current_pricelist_name()'/>
+                        </button>
+                    </div>
+                    <div>
+                        <button class='button multi-func-pad'>
+                            <!--<i class='fa fa-calculator' role="img" aria-label="Quantity" title="Quantity"/>-->
+                            Quantity
+                        </button>
+                        <button class='button btnViewDiscount'>
+                            <!--<i class='fa fa-tag' role="img" aria-label="Function" title="Function"/>-->
+                            Discount
+                        </button>
+                        <button class='button enables-more-functions'>
+                            <!--<i class='fa fa-info' role="img" aria-label="Function" title="Function"/>-->
+                            Function
+                        </button>
+                    </div>
+                </div>
+                <div class="actionpad-section" style="width:30%; float:right;">
+                    <button class='button pay'>
+                        <i class='fa fa-chevron-right pay-circle-th' role="img" aria-label="Pay" title="Pay"/>
+                        Payment
+                    </button>
+                </div>
+            </div>
+            <div class="placeholder-TopSellingWidget">
+            </div>
+        </t>
+    </t>
+
+    <t t-name="NumPadPopupWidget">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup popup-number">
+                <header class="title"><t t-esc=" widget.options.title || '' " /></header>
+                <div class="numpad pop-numpad-widget">
+                    <!--<div class="placeholder-NumpadWidget"></div>-->
+                    <button class="input-button number-char">1</button>
+                    <button class="input-button number-char">2</button>
+                    <button class="input-button number-char">3</button>
+                    <br />
+                    <button class="input-button number-char">4</button>
+                    <button class="input-button number-char">5</button>
+                    <button class="input-button number-char">6</button>
+                    <br />
+                    <button class="input-button number-char">7</button>
+                    <button class="input-button number-char">8</button>
+                    <button class="input-button number-char">9</button>
+                    <br />
+                    <button class="mode-button" data-mode='quantity'>Qty</button>
+                    <button class="input-button number-char">0</button>
+                    <button class="input-button numpad-backspace">
+                        <img style="pointer-events: none;" src="/point_of_sale/static/src/img/backspace.png" width="24" height="21" alt="Backspace"/>
+                    </button>
+                </div>
+                <footer class="footer centered">
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </t>
+
+    <!-- Extend: Orderline -->
+    <t t-extend="Orderline">
+        <t t-jquery="ul.info-list" t-operation="append">
+            <t t-if="line.is_combo">
+                <!--<t t-set='i' t-value="line.menus.length"/>-->
+                <t t-foreach="line.menus" t-as="menu">
+                    <span t-att-class="menu.default_menu_for_combo and 'info-list-menus info-list-menus-default' or 'info-list-menus'" t-att-data-product-id="menu.product_id[0]">
+                        <t t-esc="menu.product_id[1]"/>
+                    </span>
+                    <t t-foreach="line.ingredients_show" t-as="ingredient">
+                        <p t-if="ingredient.menu_id === menu.product_id[0]" class="info-list-ingredients ingredients-combo" t-att-data-product-id="ingredient.product_id[0]"
+                           t-att-data-modifier-group-ids="ingredient.optional and ingredient.modifier_group_ids">
+                            <t t-if="ingredient.is_extra">
+                                + <t t-esc="ingredient.qty"/> <t t-esc="ingredient.product_id[1]"/> @ <t t-esc="widget.format_currency(ingredient.extra_price)"/>
+                            </t>
+                            <t t-else="">
+                                <t t-if="ingredient.qty == 0">No </t><t t-esc="ingredient.product_id[1]"/>
+                            </t>
+                        </p>
+                    </t>
+                    <!--<t t-if="i != 1">+</t>-->
+                    <!--<t t-set="i" t-value="i - 1"/>-->
+                </t>
+            </t>
+            <t t-else="">
+                <t t-foreach="line.ingredients_show" t-as="ingredient">
+                    <p class="info-list-ingredients" t-att-data-product-id="ingredient.product_id[0]"
+                       t-att-data-modifier-group-ids="ingredient.optional and ingredient.modifier_group_ids">
+                        <t t-if="ingredient.is_extra">
+                            + <t t-esc="ingredient.qty"/> <t t-esc="ingredient.product_id[1]"/> @ <t t-esc="widget.format_currency(ingredient.extra_price)"/>
+                        </t>
+                        <t t-else="">
+                            <t t-if="ingredient.qty == 0">No </t><t t-esc="ingredient.product_id[1]"/>
+                        </t>
+                    </p>
+                </t>
+            </t>
+        </t>
+        <t t-jquery="li.info" t-operation="after">
+            <a class="button th-remove fa fa-trash-o"/>
+        </t>
+        <t t-jquery="ul.info-list" t-operation="after">
+            <span class="make-combo-ala-carte">
+                <a class="button th-ala-carte oe_hidden">À la carte</a>
+                <a class="button th-combo-modify oe_hidden">Modify Combo</a>
+                <a class="button th-combo oe_hidden">Make Combo</a>
+            </span>
+        </t>
+    </t>
+
+    <!-- ComboList Template -->
+    <t t-name="ComboListWidget">
+        <!--<div class="combo-list-container">-->
+        <div class="product-list-scroller touch-scrollable modify-combo-section">
+            <t t-foreach="menu_lst" t-as="menu">
+                <article class='product' t-att-data-menu-id="menu.id" tabindex="0" t-attf-aria-labelledby="article_menu_#{menu.id}">
+                    <div class="product-img">
+                        <img t-att-src='menu.image_url' alt="Menu image"/>
+                    </div>
+                    <div class="product-name" t-attf-id="article_product_#{menu.id}">
+                        <t t-esc="menu.display_name"/>
+                    </div>
+                </article>
+            </t>
+            <br/>
+            <t t-foreach="upsell_ids" t-as="upsell">
+                <div class="upsell-option-selection-title" t-if="upsell.menu_upsell_list.length > 0"><t t-esc="upsell.menu_name"/></div>
+                <t t-foreach="upsell.menu_upsell_list" t-as="menu">
+                    <article class='product product-option' t-att-data-menu-id="menu.id" tabindex="0" t-attf-aria-labelledby="article_menu_#{menu.id}">
+                        <div class="product-img">
+                            <img t-att-src='menu.image_url' alt="Menu image"/>
+                        </div>
+                        <div class="product-name" t-attf-id="article_product_#{menu.id}">
+                            <t t-esc="menu.display_name"/>
+                        </div>
+                    </article>
+                </t>
+            </t>
+        </div>
+        <!--</div>-->
+    </t>
+
+    <!-- Modifier Template -->
+    <t t-name="ProductScreenWidget-Modifiers">
+        <div class="modifier-opt-section">
+            <t t-foreach="widget.modifiers_opts" t-as="opt">
+                <button class="grp-opt-button" t-att-data-id="opt.id" t-att-data-name="opt.name"
+                        t-att-data-qty-multiplier="opt.qty_multiplier"
+                        t-att-data-is-basic="opt.is_basic"
+                        t-att-data-remove-extra="opt.remove_extra"
+                        t-att-data-price-multiplier="opt.price_multiplier">
+                    <t t-esc="opt.name"/>
+                </button>
+            </t>
+        </div>
+
+        <div class="special-modifier-opt-section">
+            <t t-foreach="widget.special_modifiers_opts" t-as="opt">
+                <button class="grp-special-opt-button" t-att-data-id="opt.id"
+                        t-att-data-menu-id="opt.menu_id[0]"
+                        t-att-data-menu-name="opt.menu_id[1]"
+                        t-attf-style="color: #{opt.font_color}; background-color: #{opt.background_color};"
+                        t-att-data-special-option="true">
+                    <t t-esc="opt.modifier_option_id[1]"/>
+                </button>
+            </t>
+        </div>
+
+        <t t-foreach="widget.modifiers_by_grp" t-as="modifier_grp">
+            <div class="modifier-sub-section">
+                <div class="grp-of-modifier"><t t-esc="modifier_grp"/></div>
+                <button t-foreach="modifier_grp_value" t-as="opt"
+                        t-att-data-special-option="false"
+                        t-att-class="opt.is_default and 'button default-ingredient' or 'button'"
+                        t-att-data-product-id="opt.product_id[0]"
+                        t-att-data-product-name="opt.product_id[1]"
+                        t-att-data-modifier-group-id="opt.modifier_id[0]"
+                        t-att-data-qty="opt.qty" t-att-data-default-qty="opt.default_qty"
+                        t-att-data-max-selection-qty="opt.max_selection_qty"
+                        t-att-data-recovery="opt.recovery"
+                        t-att-data-extra-price="opt.extra_price"
+                        t-att-data-modifier-option-ids="opt.modifier_option_ids"
+                        t-att-data-allow-multiple-selection="opt.allow_multiple_selection"
+                        t-att-data-max-selection="opt.max_selection"
+                        t-attf-style="color: #{opt.font_color}; background-color: #{opt.background_color};">
+                    <t t-esc="opt.code_name"/>
+                    <span t-if="opt.is_default" class="fa fa-check-circle-o fa-2x basic-ingredient"/>
+                    <span class="fa fa-times-circle-o fa-2x remove-basic oe_hidden"/>
+                    <span t-att-class="opt.is_default and 'badge-placeholder' or 'badge-placeholder oe_hidden'"><t t-if="opt.is_default">1</t></span>
+                </button>
+            </div>
+        </t>
+    </t>
+
+    <!-- SmartSelect Template -->
+    <t t-name="SmartSelectWidget">
+        <div class="smart-select-buttons">
+            <t t-foreach="widget" t-as="option">
+                <button class="smart-button" t-att-data-product-id="option.product_id[0]" t-attf-style="color: #{option.font_color}; background-color: #{option.background_color};">
+                    <i class="fa fa-fw fa-check-circle active-smart-button oe_hidden" role="img"/><t t-esc="option.smart_label_id[1]"/>
+                </button>
+            </t>
+        </div>
+    </t>
+
+    <!-- Template for Function button -->
+    <t t-name="FunctionsPopupWidget">
+        <div role="dialog" class="modal-dialog">
+            <div class="popup">
+                <div class="pop-more-function-widget">
+                </div>
+                <footer class="footer centered">
+                    <div class="button cancel">
+                        Cancel
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </t>
+
+</templates>

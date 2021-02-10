@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="scrap_picking_warn_insufficient_qty_view_form" model="ir.ui.view">
+            <field name="name">scrap.picking.warn.insufficient.qty.view.form</field>
+            <field name="model">scrap.picking.warn.insufficient.qty</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div>
+                        Below product(s) do not have sufficient quantity to do
+                        damage transfer for
+                        <strong>
+                            <field name="location_id" readonly="True"/>
+                            <field name="scrap_picking_id" readonly="True" invisible="1"/>
+                        </strong>.
+                    </div>
+                    <div>
+                        <br/>
+                        <strong>Here is your scraping product: </strong>
+                        <field name="scrap_ids" style="margin-top: 10px;">
+                            <tree>
+                                <field name="menu_id"/>
+                                <field name="product_id"/>
+                                <field name="lot_id" groups="stock.group_production_lot"/>
+                                <field name="scrap_qty"/>
+                                <field name="state" invisible="1"/>
+                            </tree>
+                        </field>
+                    </div>
+                    <div>
+                        Are you sure you want to confirm this operation? This
+                        may lead to inconsistencies in your inventory.
+                    </div>
+                    <footer>
+                        <button string="Cancel" class="btn-primary" special="cancel"/>
+                        <button string="Confirm" name="action_done" type="object" class="btn-secondary"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

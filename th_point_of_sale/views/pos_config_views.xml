@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Hide the Product Template Menu -->
+    <record model="ir.ui.menu" id="point_of_sale.pos_config_menu_action_product_product">
+        <field name="action" eval="False"/>
+    </record>
+
+    <!-- Change the root menu name -->
+    <record model="ir.ui.menu" id="point_of_sale.pos_config_menu_catalog">
+        <field name="name">Menu</field>
+    </record>
+
+    <!-- Change the Name of Product Variants Menu & Action -->
+    <record model="ir.ui.menu" id="point_of_sale.menu_pos_products">
+        <field name="name">Ingredients</field>
+    </record>
+    <record id="point_of_sale.product_template_action_pos_product" model="ir.actions.act_window">
+        <field name="name">Ingredients</field>
+        <field name="domain">[('is_menu_item','=',False)]</field>
+    </record>
+
+    <!-- Menu name : Menu Items -->
+    <menuitem id="menu_th_menu_item"
+              action="th_point_of_sale.menu_th_menu_item_action"
+              parent="point_of_sale.pos_config_menu_catalog" sequence="2"/>
+
+    <!-- Menu name : Menus -->
+    <menuitem id="menu_th_menus" name="Menus"
+              parent="point_of_sale.menu_point_config_product"/>
+
+    <!-- Menu name : Menu Categories -->
+    <menuitem id="menu_th_menu_category"
+              action="th_point_of_sale.menu_th_menu_category_action"
+              parent="th_point_of_sale.menu_th_menus" sequence="10"/>
+
+    <!-- Menu name : PoS Categories rename to Menu Categories -->
+    <menuitem id="point_of_sale.menu_products_pos_category"
+              action="point_of_sale.product_pos_category_action"
+              parent="th_point_of_sale.menu_th_menus"
+              name="Menu Categories"
+              sequence="20"/>
+    <record id="point_of_sale.product_pos_category_action" model="ir.actions.act_window">
+        <field name="name">Menu Categories</field>
+    </record>
+
+    <!-- Menu name : Modifier Categories -->
+    <menuitem id="menu_th_modifier_group"
+              action="th_point_of_sale.menu_th_modifier_group_action"
+              parent="th_point_of_sale.menu_th_menus" sequence="30"/>
+
+    <!-- Menu name : Modifier Options -->
+    <menuitem id="menu_th_modifier_options"
+              action="th_point_of_sale.menu_th_modifier_options_action"
+              parent="th_point_of_sale.menu_th_menus" sequence="40"/>
+
+    <!-- Menu name : Smart Select (Parent) -->
+    <menuitem id="menu_th_smart_select" name="Smart Select"
+              parent="point_of_sale.menu_point_config_product"/>
+
+    <!-- Menu name : Smart Select Label -->
+    <menuitem id="menu_th_smart_select_label"
+              action="th_point_of_sale.menu_th_smart_select_label_action"
+              parent="th_point_of_sale.menu_th_smart_select" sequence="10"/>
+
+    <!-- Menu name : Smart Select -->
+    <menuitem id="menu_th_smart_select_config"
+              action="th_point_of_sale.menu_th_smart_select_config_action"
+              parent="th_point_of_sale.menu_th_smart_select" sequence="20"/>
+
+    <!-- Menu name : Time Range -->
+    <menuitem id="menu_th_time_range" name="Time Range"
+              parent="point_of_sale.menu_point_config_product"
+              action="th_point_of_sale.menu_th_time_range_action"/>
+
+</odoo>

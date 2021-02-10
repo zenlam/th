@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    Store Management Form View Inherit  -->
+    <record id="th_store_management_form_view_inherit" model="ir.ui.view">
+        <field name="name">th.store.management.form.view.inherit</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="th_outlet.store_management_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='available_pricelist_ids']" position="after">
+                <field name="cash_control"/>
+                <field name="default_opening_balance"
+                       attrs="{'invisible': [('cash_control', '=', False)],
+                       'required': [('cash_control', '=', True)]}"/>
+                <field name="default_cash_denominations"
+                       groups="cash_denomination.group_cash_denomination"
+                       attrs="{'invisible': [('cash_control', '=', False)]}"
+                       widget="many2many_tags"/>
+                <field name="default_payment_methods" widget="many2many_tags"
+                       attrs="{'invisible': [('cash_control', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit the stock scrap form view -->
+        <record id="th_stock_scrap_form_view_inherit" model="ir.ui.view">
+            <field name="name">th.stock.scrap.form.view.inherit</field>
+            <field name="model">stock.scrap</field>
+            <field name="inherit_id" ref="stock.stock_scrap_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='scrap_location_id']" position="after">
+                    <field name="account_analytic_id"/>
+                </xpath>
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_validate']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_get_stock_move_lines']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[hasclass('oe_title')]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit the stock scrap form view2 -->
+        <record id="th_stock_scrap_form_view2_inherit" model="ir.ui.view">
+            <field name="name">th.stock.scrap.form.view2.inherit</field>
+            <field name="model">stock.scrap</field>
+            <field name="inherit_id" ref="stock.stock_scrap_form_view2"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='scrap_location_id']" position="after">
+                    <field name="account_analytic_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Inherit the stock scrap tree view -->
+        <record id="th_stock_scrap_tree_view_inherit" model="ir.ui.view">
+            <field name="name">th.stock.scrap.tree.view.inherit</field>
+            <field name="model">stock.scrap</field>
+            <field name="inherit_id" ref="stock.stock_scrap_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='scrap_location_id']" position="after">
+                    <field name="account_analytic_id"/>
+                </xpath>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">false</attribute>
+                    <attribute name="edit">false</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

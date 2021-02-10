@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="pos_config_view_form_th_pos_lock_screen" model="ir.ui.view">
+        <field name="name">pos.config.form.view.th.point.of.sale</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <h2>Time to Auto Lock POS Screen</h2>
+                <div class="row mt16 o_settings_container" id="inventory_location">
+                    <div class="col-12 col-lg-6 o_setting_box" title="Operation types show up in the Inventory dashboard.">
+                        <div class="o_setting_right_pane">
+                            <label for="auto_lock_time" string="Time"/>
+                            <div class="text-muted">
+                                in Minute(s)
+                            </div>
+                            <div class="content-group mt16">
+                                <field name="auto_lock_time" nolabel="1"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

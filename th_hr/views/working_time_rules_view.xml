@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="working_time_rules_form_view">
+            <field name="name">working.time.rules.form.view</field>
+            <field name="model">working.time.rules</field>
+            <field name="arch" type="xml">
+                <form string="Planning Role">
+                    <sheet>
+                        <group>
+                            <group>
+                                <div style="padding-top: 10px">
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="company_id"/>
+                                    </group>
+                                </div>
+                            </group>
+                            <group>
+                                <b></b>
+                                <b style="margin: 10px">In hours</b>
+                                <field name="sd_working_t" widget="float_time" />
+                                <field name="sd_break_time" widget="float_time" />
+                                <field name="ot_break_time" widget="float_time" />
+                                <field name="max_ot" widget="float_time" />
+                                <field name="ph_working_time" widget="float_time" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="working_time_rules_tree_view" model="ir.ui.view">
+            <field name="name">working.time.rules.list</field>
+            <field name="model">working.time.rules</field>
+            <field name="arch" type="xml">
+                <tree string="Working Time Rules" >
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_working_time_rules_form" model="ir.actions.act_window">
+            <field name="name">Working Time Rules</field>
+            <field name="res_model">working.time.rules</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="working_time_rules_tree_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p><p>
+            </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_working_time_rules_config"
+            name="Working Time Rules"
+            parent="hr.menu_human_resources_configuration"
+            action="th_hr.action_working_time_rules_form"
+            sequence="2"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_havi_ordering_picking_type" model="stock.picking.type">
+            <field name="name">HAVI Internal Transfer</field>
+            <field name="sequence_id" ref="th_havi_delivery_picking_sequence"/>
+            <field name="code">internal</field>
+            <field name="warehouse_id" eval="False"/>
+            <field name="default_location_src_id" ref="th_havi_location"/>
+        </record>
+    </data>
+</odoo>

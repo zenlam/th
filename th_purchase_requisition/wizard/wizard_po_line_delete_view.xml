@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_wizard_po_line_delete_form" model="ir.ui.view">
+            <field name="name">wizard.po.line.delete.form</field>
+            <field name="model">wizard.po.line.delete</field>
+            <field name="arch" type="xml">
+                <form string="Delete Purchase Line">
+                    <group >
+                        <field name="po_line_id" invisible="1"/>
+                        <h6>Are you sure ?</h6>
+                        <newline/>
+                        <p>
+                            This Purchase order is generated from the Purchase Request(s).
+                        </p>
+                        <newline/>
+                        <p>
+                            So, If you delete line with product '<field name="product_id" readonly="1"/>',
+                            Then it will delete all product lines from all PR which link with this PO.
+                        </p>
+                    </group>
+                    <footer>
+                        <button string="Delete" name="delete_all_related_po_line" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+               </form>
+            </field>
+        </record>
+
+
+        <record id="action_wizard_po_line_delete" model="ir.actions.act_window">
+            <field name="name">Delete Purchase Line</field>
+            <field name="res_model">wizard.po.line.delete</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_wizard_po_line_delete_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

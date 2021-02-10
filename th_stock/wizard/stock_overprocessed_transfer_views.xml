@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_overprocessed_transfer_all_product" model="ir.ui.view">
+        <field name="name">stock.overprocessed.transfer.view.form</field>
+        <field name="model">stock.overprocessed.transfer</field>
+        <field name="inherit_id" ref="stock.view_overprocessed_transfer"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='overprocessed_product_name']" position="replace">
+
+            </xpath>
+            <xpath expr="//p[last()]" position="before">
+                <field name="overprocessed_product_name" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

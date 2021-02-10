@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="th_assets_common" inherit_id="web.assets_common" name="Web Editor Common Assets (used in backend interface and website)">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/th_point_of_sale/static/src/js/form_renderer.js"/>
+        </xpath>
+    </template>
+
+    <template id="assets_th_point_of_sale" name="assets_th_point_of_sale" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/th_point_of_sale/static/src/css/pos.css"/>
+
+            <script type="text/javascript" src="/th_point_of_sale/static/src/js/db.js"/>
+            <script type="text/javascript" src="/th_point_of_sale/static/src/js/models.js"/>
+            <script type="text/javascript" src="/th_point_of_sale/static/src/js/chrome.js"/>
+            <script type="text/javascript" src="/th_point_of_sale/static/src/js/popups.js"/>
+            <script type="text/javascript" src="/th_point_of_sale/static/src/js/screens.js"/>
+        </xpath>
+    </template>
+
+</odoo>

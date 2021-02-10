@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- wizard for outlet opening checklist report -->
+    <record id="th_outlet_opening_checklist_report" model="ir.ui.view">
+        <field name="name">Outlet Opening Checklist Report</field>
+        <field name="model">opening.checklist.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Print Opening Checklist">
+                <group>
+                    <group>
+                        <field name="all_location"/>
+                        <field name="report_type"/>
+                        <field name="loc_ids" widget="many2many_tags"
+                               attrs="{'required' : [('all_location', '!=', True)], 'readonly' : [('all_location', '=', True)]}"
+                               options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_outlet_opening_checklist_report" string="Print" type="object" default_focus="1" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!--    Action in More menu-->
+    <act_window name="Print Checklist"
+                res_model="opening.checklist.wizard"
+                src_model="outlet.opening.checklist"
+                view_mode="form"
+                key2="client_action_multi"
+                target="new"
+                id="th_print_checklist_menu"/>
+
+</odoo>

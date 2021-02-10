@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_outlet_ordering_name_sequence" model="ir.sequence">
+            <field name="name">TH Outlet Ordering Name Sequence</field>
+            <field name="implementation">no_gap</field>
+            <field name="active" eval="True"/>
+            <field name="prefix">ORDER/OUTLET/</field>
+            <field name="padding" eval="5"/>
+            <field name="number_increment" eval="1"/>
+        </record>
+        <record id="th_havi_delivery_picking_sequence" model="ir.sequence">
+            <field name="name">TH HAVI Delivery Picking Sequence</field>
+            <field name="implementation">no_gap</field>
+            <field name="active" eval="True"/>
+            <field name="prefix">HAVI/</field>
+            <field name="padding" eval="5"/>
+            <field name="number_increment" eval="1"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="staff_planning_role_form_view">
+            <field name="name">planning.role.form.view</field>
+            <field name="model">planning.role</field>
+            <field name="arch" type="xml">
+                <form string="Planning Role">
+                    <group>
+                        <field name="name" />
+                        <field name="colour" widget="field_color" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="staff_planning_role_tree_view" model="ir.ui.view">
+            <field name="name">planning.role.list</field>
+            <field name="model">planning.role</field>
+            <field name="arch" type="xml">
+                <tree string="Category" >
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="staff_planning_form_view">
+            <field name="name">staff.planning.form.view</field>
+            <field name="model">staff.planning</field>
+            <field name="arch" type="xml">
+                <form string="Staff Planning">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="employee_id" context="{'outlet_id': context.get('outlet', False)}" />
+                                <field name="role_id" />
+                                <field name="company_id" />
+                                <field name="role_id" />
+                                <field name="user_id" invisible="1" />
+                                <field name="outlet_id" invisible="1" />
+                                <field name="colour" invisible="1" />
+                                <field name="image_small" invisible="1" />
+                            </group>
+                            <group>
+                                <field name="start_date" />
+                                <field name="end_date" />
+                                <field name="allocated_hours" widget="float_time" />
+                                <field name="checked" invisible="1" />
+                                <field name="sd_working_time" invisible="1" />
+                            </group>
+                        </group>
+                    </sheet>
+                    <!--<footer>
+                        <button special="save" string="Save"
+                                class="btn btn-primary" type="object" />
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                        <button name="unlink" string="Delete" type="object" class="btn-primary"/>
+                     </footer>-->
+                </form>
+            </field>
+        </record>
+
+        <record id="staff_planning_list_view" model="ir.ui.view">
+            <field name="name">staff.planning.list</field>
+            <field name="model">staff.planning</field>
+            <field name="arch" type="xml">
+                <tree string="Category" >
+                    <field name="employee_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="planing_schedule_staff">
+            <field name="name">staff.planning.staff</field>
+            <field name="model">staff.planning</field>
+            <field name="type">staff</field>
+            <field name="arch" type="xml">
+                <kanban string="Sales Orders">
+                    <field name="employee_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="company_id" />
+                </kanban>
+            </field>
+        </record>
+
+        <record id="view_staff_planning_filter" model="ir.ui.view">
+            <field name="name">staff.planning.search.view</field>
+            <field name="model">staff.planning</field>
+            <field name="arch" type="xml">
+                <search string="Search Schedule">
+                    <filter string="Open Shifts" name="employee_id" context="{'open_shift': 1}" domain="[('employee_id', '=', False)]"/>
+                    <filter string="My Shifts" name="user_id" context="{'my_shift': 1}" domain="[('user_id', '=', uid)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Employee" name="employee_id" context="{'group_by': 'employee_id'}"/>
+                        <filter string="Role" name="role_id" context="{'group_by': 'role_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_staff_planning_role_form" model="ir.actions.act_window">
+            <field name="name">Role</field>
+            <field name="res_model">planning.role</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="staff_planning_role_tree_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p><p>
+            </p>
+            </field>
+        </record>
+
+        <record id="action_staff_planning_form" model="ir.actions.act_window">
+            <field name="name">Planning</field>
+            <field name="res_model">staff.planning</field>
+            <field name="view_type">form</field>
+            <field name="sequence">1</field>
+            <field name="view_mode">staff,form</field>
+            <field name="context">{'search_default_user_id': uid}</field>
+            <field name="search_view_id" ref="t_staff_planning.view_staff_planning_filter"/>
+            <field name="view_id" ref="planing_schedule_staff"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p><p>
+            </p>
+            </field>
+        </record>
+
+        <record id="planing_schedule_staff_action_view" model="ir.actions.act_window.view">
+            <field name="sequence">10</field>
+            <field name="view_mode">staff</field>
+            <field name="act_window_id" ref="t_staff_planning.action_staff_planning_form"/>
+            <field name="view_id" ref="t_staff_planning.planing_schedule_staff"/>
+        </record>
+
+        <menuitem id="planning_menu_root"
+            name="Planning"
+            active="True"
+            sequence="7"/>
+
+        <menuitem id="planning_schedule"
+            name="Schedule"
+            parent="planning_menu_root"
+            action="t_staff_planning.action_staff_planning_form"
+            sequence="3"/>
+
+        <menuitem id="staff_planning_config"
+            name="Configuration"
+            parent="planning_menu_root"
+            sequence="4"/>
+
+        <menuitem id="menu_role_config"
+            name="Roles"
+            parent="staff_planning_config"
+            action="t_staff_planning.action_staff_planning_role_form"
+            sequence="1"/>
+
+    </data>
+</odoo>

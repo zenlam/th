@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    POS Session Form View Inherit  -->
+    <record id="th_view_pos_session_form_inherit" model="ir.ui.view">
+        <field name="name">th.pos.session.form.view.inherit</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='open_cashbox']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_stock_picking']" position="after">
+                <button class="oe_stat_button" name="view_cash_in_out" type="object" icon="fa-inbox"
+                        string="Cash Drawer Open History"/>
+            </xpath>
+            <xpath expr="//field[@name='cash_register_balance_end_real']" position="after">
+                <field name="cash_register_balance_end_actual"
+                       string="Real Closing Balance"
+                       class="oe_subtotal_footer_separator"
+                       widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+            </xpath>
+            <xpath expr="//field[@name='cash_register_balance_end_real']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='cash_register_difference']" position="after">
+                <field name="cash_register_difference_actual"
+                       string="Difference"
+                       class="oe_subtotal_footer_separator oe_right oe_pos_total oe_pos_difference"
+                       widget="monetary"
+                       options="{'currency_field': 'currency_id'}"/>
+            </xpath>
+            <xpath expr="//field[@name='cash_register_difference']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

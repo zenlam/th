@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_picking_form_inherit_havi_extend" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.havi.extend</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="origin" position="after">
+                <field name="havi_origin"/>
+                <field name="havi_delivery_file"/>
+                <field name="is_from_po" invisible="1"/>
+            </field>
+
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="groups">th_stock.group_allow_cancel_stock_picking</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_scrap']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_id']" position="after">
+                <field name="barcode" readonly="1"
+                       attrs="{'column_invisible': [('parent.is_from_po', '=', False)]}"/>
+                <field name="allow_change_picking_in_uom" invisible="1"/>
+                <field name="has_tracking"  invisible="1"/>
+                <field name="adn_qty" attrs="{'column_invisible': [('parent.is_from_po', '=', False)]}"/>
+                <field name="adn_uom" context="{'product_id':product_id}"
+                       attrs="{'column_invisible': [('parent.is_from_po', '=', False)]}"/>
+                <field name="order_todo_qty"/>
+                <field name="order_todo_uom" context="{'product_id':product_id}"/>
+                <field name="delivered_received_qty" attrs="{'readonly':[('has_tracking','!=','none')]}" force_save="1"/>
+                <field name="delivered_received_uom" attrs="{'readonly':[('has_tracking','!=','none')]}" force_save="1" context="{'product_id':product_id}"/>
+                <field name="remark"/>
+            </xpath>
+
+            <!-- bellow field is odoo base "initial demand" field we rename it -->
+            <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_uom_qty']" position="attributes">
+                <attribute name="string">Order Qty Std. Qty</attribute>
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_uom']" position="attributes">
+                <attribute name="readonly">1</attribute>
+                <attribute name="force_save">1</attribute>
+            </xpath>
+
+
+            <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='quantity_done']" position="attributes">
+                <attribute name="string">Delivered / Received Qty standard Qty</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='product_uom']" position="attributes">
+                <attribute name="string">Standard UOM</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_picking_type_form_inherit_no_backorder" model="ir.ui.view">
+        <field name="name">Operation Types</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.view_picking_type_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='barcode']" position="after">
+                <field name="no_backorder"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

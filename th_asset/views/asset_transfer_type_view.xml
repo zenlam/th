@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="th_asset_transfer_type_view_form" model="ir.ui.view">
+            <field name="name">th.asset.transfer.type.view.form</field>
+            <field name="model">asset.transfer.type</field>
+            <field name="inherit_id" ref="odoo_asset_transfer_ce.asset_transfer_type_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//group[@name='asset_info']" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                   options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

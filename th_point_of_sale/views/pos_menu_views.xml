@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View: Menu Items -->
+    <record id="th_menu_item_tree_view" model="ir.ui.view">
+        <field name="name">th.menu.item.tree</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <tree string="Menu Items">
+                <field name="sequence" widget="handle"/>
+                <field name="default_code" invisible="1"/>
+                <field name="name"/>
+                <field name="type" invisible="1"/>
+                <field name="barcode"/>
+                <field name="is_menu_combo"/>
+                <field name="product_tmpl_id" invisible="1"/>
+                <field name="active" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View: Menu Items -->
+    <record id="th_menu_item_form_view" model="ir.ui.view">
+        <field name="name">th.menu.item.form</field>
+        <field name="model">product.product</field>
+        <field name="arch" type="xml">
+            <form string="Menu Items">
+                <sheet>
+                    <field name="id" invisible="1"/>
+                    <field name="is_product_variant" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <field name="image_medium" widget="image" class="oe_avatar"/>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Menu Name"/>
+                        <h1><field name="name" placeholder="Menu Name"/></h1>
+                        <div name="options" groups="base.group_user">
+                            <div invisible="1">
+                                <field name="is_menu_item"/>
+                                <label for="is_menu_item"/>
+                            </div>
+                            <div>
+                                <field name="is_menu_combo"/>
+                                <label for="is_menu_combo"/>
+                            </div>
+                        </div>
+                    </div>
+                    <notebook>
+                        <page string="General Information" name="general_information">
+                            <group>
+                                <group name="group_general">
+                                    <field name="uom_id" invisible="1"/>
+                                    <field name="uom_po_id" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="default_code" invisible="1"/>
+                                    <field name="barcode"/>
+                                    <field name="categ_id" string="Product Category" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="output_tax_conf" invisible="1"/>
+                                    <field name="taxes_id" widget="many2many_tags"
+                                           attrs="{'required': [('output_tax_conf', '=', True)]}"/>
+                                    <field name="void_require_approval"/>
+                                    <field name="smart_select_id"/>
+                                    <field name="primary_menu_in_combo_ids" widget="many2many_tags"
+                                           invisible="1"/>
+                                </group>
+                                <group name="pos" string="Point of Sale">
+                                    <field name="available_in_pos"/>
+                                    <field name="pos_categ_id" attrs="{'invisible': [('available_in_pos', '=', False)]}"
+                                           string="Menu Category"/>
+                                    <field name="menu_categ_id" attrs="{'invisible': [('is_menu_item', '=', False)]}"/>
+                                    <field name="modifier_group_id" attrs="{'invisible': [('is_menu_item', '=', True)]}"/>
+                                    <field name="sequence" invisible="1"/>
+                                </group>
+                            </group>
+                            <group string="Internal Notes">
+                                <field name="description" nolabel="1"
+                                       placeholder="This note is only for internal purposes."/>
+                            </group>
+                        </page>
+                        <page string="Ingredients" name="ingredient_information" attrs="{'invisible': [('is_menu_combo', '=', True)]}">
+                            <field name="product_ingredient_ids" widget="one2many_list">
+                                <tree string="Ingredients" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="qty"/>
+                                    <field name="recovery"/>
+                                    <field name="inv_deduction_qty"/>
+                                    <field name="uom_id"/>
+                                    <field name="show_in_cart"/>
+                                    <field name="optional"/>
+                                    <field name="modifier_group_ids" attrs="{'required': [('optional', '=', True)]}"
+                                           widget="many2many_tags" options="{'no_create': True}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Menus" name="menu_information" attrs="{'invisible': [('is_menu_combo', '=', False)]}">
+                            <field name="combo_menu_ids" widget="one2many_list">
+                                <tree string="Menus" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="default_menu_for_combo"/>
+                                    <field name="pos_categ_id" attrs="{'invisible': [('default_menu_for_combo', '=', True)]}"
+                                           options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="min_selection"/>
+                                    <field name="max_selection"/>
+                                    <field name="allow_substitution" attrs="{'invisible': [('default_menu_for_combo', '=', True)]}"/>
+                                    <field name="cheaper_substitution" attrs="{'invisible': [('allow_substitution', '=', False)]}"/>
+                                    <field name="auto_compute_surcharge" attrs="{'invisible': [('allow_substitution', '=', False)]}"/>
+                                    <field name="fixed_surcharge" attrs="{'invisible': ['|', ('allow_substitution', '=', False), ('auto_compute_surcharge', '=', True)]}"/>
+                                    <button name="action_menu_upsell" string="Upsell" type="object"
+                                            attrs="{'invisible': [('allow_substitution', '=', False)]}"/>
+                                </tree>
+                                <form string="Menus">
+                                    <group col="4">
+                                        <field name="sequence" invisible="1"/>
+                                        <field name="default_menu_for_combo"/>
+                                        <field name="pos_categ_id" attrs="{'invisible': [('default_menu_for_combo', '=', True)]}"
+                                               options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="min_selection"/>
+                                        <field name="max_selection"/>
+                                        <field name="allow_substitution" attrs="{'invisible': [('default_menu_for_combo', '=', True)]}"/>
+                                        <field name="cheaper_substitution" attrs="{'invisible': [('allow_substitution', '=', False)]}"/>
+                                        <field name="auto_compute_surcharge" attrs="{'invisible': [('allow_substitution', '=', False)]}"/>
+                                        <field name="fixed_surcharge" attrs="{'invisible': ['|', ('allow_substitution', '=', False), ('auto_compute_surcharge', '=', True)]}"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Pricelists" name="pricelist_information">
+                            <field name="pricelist_item_ids" widget="many2many">
+                                <tree string="Pricelist Items">
+                                    <field name="pricelist_id"/>
+                                    <field name="name" string="Applicable On"/>
+                                    <field name="min_quantity"/>
+                                    <field name="date_start"/>
+                                    <field name="date_end"/>
+                                    <field name="price" string="Price"/>
+                                    <field name="base" invisible="1"/>
+                                    <field name="price_discount" invisible="1"/>
+                                    <field name="applied_on" invisible="1"/>
+                                    <field name="compute_price" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Special Modifiers" name="special_modifier_information" attrs="{'invisible': [('is_menu_combo', '=', True)]}">
+                            <field name="special_modifier_ids" widget="one2many_list">
+                                <tree string="Special Modifier Options" editable="bottom">
+                                    <field name="modifier_option_id" options="{'no_create': True}"/>
+                                    <field name="font_color" widget="color"/>
+                                    <field name="background_color" widget="color"/>
+                                    <field name="modifier_product_ids"/>
+                                    <button name="special_modifier_conf" string="Modify" type="object"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action: Menu Items -->
+    <record id="menu_th_menu_item_action" model="ir.actions.act_window">
+        <field name="name">Menu Items</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.product</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context" eval="{'search_default_filter_to_is_menu_item': 1,
+        'default_is_menu_item': True, 'default_available_in_pos': True,
+        'default_uom_id': ref('uom.product_uom_categ_unit'),
+        'default_uom_po_id': ref('uom.product_uom_categ_unit'),
+        'default_type': 'service',
+        'default_categ_id': ref('th_point_of_sale.product_category_menu_all')}"/>
+        <field name="domain">[('is_menu_item', '=', True)]</field>
+        <field name="search_view_id" eval="False"/> <!-- Force empty -->
+        <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('th_point_of_sale.th_menu_item_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('th_point_of_sale.th_menu_item_form_view')})]"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new menu item.
+            </p>
+        </field>
+    </record>
+
+</odoo>

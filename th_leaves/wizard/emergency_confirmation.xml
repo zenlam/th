@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="emergency_confirmation_view" model="ir.ui.view">
+        <field name="name">emergency.leave.confirmation</field>
+        <field name="model">emergency.confirmation</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Emergency Leave Confirmation">
+                <group>
+                    <p>
+                        Requesting date is lesser than the given apply in
+                        advance days,do you wish to make it as emergency leave
+                        instead?
+                    </p>
+                </group>
+                <footer>
+                    <button name="apply_emergency" string="Yes" type="object" class="oe_highlight"/>
+                    <button string="No" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

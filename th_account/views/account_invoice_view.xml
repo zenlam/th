@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit the account invoice form view -->
+    <record id="th_invoice_form_inherit" model="ir.ui.view">
+        <field name="name">th.invoice.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="account_analytic_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!--    Inherit the supplier invoice form view  -->
+    <record id="th_invoice_supplier_form_inherit" model="ir.ui.view">
+        <field name="name">th.invoice.supplier.form.inherit</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <button name="%(account.action_account_invoice_refund)d" position="replace">
+                <button name="%(th_account.th_action_account_invoice_refund_debit)d" type='action' string='Ask for a Debit Note'
+                        groups="account.group_account_invoice"
+                        attrs="{'invisible': ['|',('type', 'in', ['in_refund','out_refund']),('state','not in',('open','in_payment','paid'))]}"/>
+            </button>
+            <xpath expr="//sheet/div/span[3]" position="replace">
+                <span class="o_form_label" attrs="{'invisible': ['|',('state','!=','draft'), ('type','!=','in_refund')]}">Draft Debit Note</span>
+            </xpath>
+            <xpath expr="//sheet/div/span[5]" position="replace">
+                <span class="o_form_label" attrs="{'invisible': ['|',('state', '=', 'draft'), ('type','!=','in_refund')]}">Debit Note</span>
+            </xpath>
+            <xpath expr="//field[@name='reference']" position="after">
+                <field name="account_analytic_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

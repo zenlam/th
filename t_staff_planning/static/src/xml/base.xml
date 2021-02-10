@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <div t-name="StaffPlanning" class="o_staff">
+
+    </div>
+    <t t-name="StaffPlanning.buttons">
+        <t t-if="outlet_manager">
+            <div class="btn-group" role="toolbar" aria-label="Main actions">
+                <button class="btn btn_sp o_staff_add">
+                    ADD
+                </button>
+            </div>
+        </t>
+        <div class="btn-group" role="toolbar">
+            <button class="btn btn_sp fa fa-long-arrow-left o_staff_prev" title="Previous" aria-label="Previous">
+            </button>
+            <button class="btn btn_sp fa o_staff_today btn_staff" title="Today" aria-label="Today">
+                TODAY
+            </button>
+            <button class="btn btn_sp fa fa-long-arrow-right o_staff_next" title="Next" aria-label="Next">
+            </button>
+        </div>
+        <div class="btn-group" role="toolbar">
+            <button class="btn btn-secondary btn-t o_staff_day" title="Day" aria-label="Day">
+                Day
+            </button>
+            <button class="btn btn-secondary btn-t o_staff_week" title="Week" aria-label="Week">
+                Week
+            </button>
+            <button class="btn btn-secondary btn-t o_staff_month" title="Month" aria-label="Month">
+                Month
+            </button>
+        </div>
+        <div class="btn-group" role="toolbar">
+            <button class="btn btn-secondary btn-s o_staff_employee" title="By Employee" aria-label="By Employee">
+                By Employee
+            </button>
+            <button class="btn btn-secondary btn-s o_staff_role" title="By Role" aria-label="By Role">
+                By Role
+            </button>
+        </div>
+        <div class="btn-group expand">
+            <button class="o_staff_expand_rows btn btn-t btn-expand" title="Expand rows">
+                <i class="fa fa-expand"></i>
+            </button>
+            <button class="o_staff_button_collapse_rows btn btn-t btn-expand" title="Collapse rows">
+                <i class="fa fa-compress"></i>
+            </button>
+        </div>
+        <t t-if="isManager">
+            <div class="btn-group last-gr" style="max-height: 32px">
+                <button class="o_staff_copy_week btn btn-t" style="display: none" title="Copy previous week">
+                    Copy previous week
+                </button>
+                <button class="o_staff_send_schedule btn btn_sp" title="Send schedule">
+                    Send schedule
+                </button>
+            </div>
+        </t>
+    </t>
+</templates>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    POS Config Form View Inherit  -->
+    <record id="th_pos_config_view_form_inherit" model="ir.ui.view">
+        <field name="name">th.pos.config.form.view.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_cashbox_lines_ids']" position="after">
+                <field name="default_opening_balance"/>
+            </xpath>
+            <xpath expr="//field[@name='default_cashbox_lines_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <button name="%(point_of_sale.account_journal_action_point_of_sale)d" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+            <button name="%(point_of_sale.account_cashbox_line_action)d" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </button>
+        </field>
+    </record>
+
+    <!--    POS Config Form View Inherit: Cash Denomination   -->
+    <record id="th_pos_config_view_cash_form_inherit" model="ir.ui.view">
+        <field name="name">th.pos.config.cash.form.view.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="groups_id" eval="[(4, ref('cash_denomination.group_cash_denomination'))]"/>
+        <field name="inherit_id" ref="cash_denomination.pos_config_view_form_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_cash_denominations']" position="before">
+                <label string="Cash Denominations" for="proxy_ip" class="col-lg-3 o_light_label"/>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
+
+</odoo>

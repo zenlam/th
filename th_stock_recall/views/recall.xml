@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_stock_recall_form_view" model="ir.ui.view">
+            <field name="name">TH Stock recall form view</field>
+            <field name="model">stock.recall</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="button_generate_pickings" type="object"
+                                string="Generate Picking" class="btn-primary"
+                                states="draft"/>
+                        <button name="button_cancel" type="object"
+                                string="Cancel" states="draft,pending"/>
+                        <button name="button_setto_draft" type="object"
+                                string="Set to Draft" states="cancelled"/>
+                        <field name="state" widget="statusbar" readonly="1" statusbar_visible="draft,pending,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box">
+                            <button name="button_view_pickings" type="object" class="oe_stat_button" icon="fa-list-alt"
+                                attrs="{'invisible': [('state', '=', 'draft')]}">
+                                <field name="picking_count" widget="statinfo" string="Pickings"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <h1><field name="name" required="1" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="create_uid" readonly="1"/>
+                                <field name="reason_id"/>
+
+                            </group>
+                            <group>
+                                <field name="date_create"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="remark"/>
+                        </group>
+                        <notebook>
+                            <page name="product" string="Products">
+                                <field name="product_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="lot_id"/>
+                                        <field name="life_date"/>
+                                        <field name="uom_id" context="{'product_ordering_uom': product_id}"/>
+                                        <field name="qty_received_recall" readonly="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="outlet" string="Outlets">
+                                <field name="all_outlet"/>
+                                <field name="outlet_ids" attrs="{'invisible': [('all_outlet', '=', True)]}">
+                                    <tree>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="th_recall_product_form_view" model="ir.ui.view">
+            <field name="name">TH Recall Product Form View</field>
+            <field name="model">stock.recall.product</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="uom_id"/>
+                            <field name="lot_id"/>
+                        </group>
+                        <group>
+                            <field name="life_date"/>
+                            <field name="qty_received_recall"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="th_stock_recall_tree_view" model="ir.ui.view">
+            <field name="name">TH Recall tree view</field>
+            <field name="model">stock.recall</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date_create"/>
+                    <field name="reason_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="th_stock_recall_view_action" model="ir.actions.act_window">
+            <field name="name">Recall Request</field>
+            <field name="res_model">stock.recall</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="th_stock_recall_parent_menu"
+                  name="Recall"
+                  parent="stock.menu_stock_root"
+                  sequence="16"/>
+        <menuitem id="th_stock_recall_menuitem"
+                  action="th_stock_recall_view_action"
+                  name="Recall Request"
+                  parent="th_stock_recall_parent_menu"
+                  sequence="5"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="maintenance_diagnosis_view" model="ir.ui.view">
+            <field name="name">maintenance.diagnosis.form.view</field>
+            <field name="model">maintenance.diagnosis</field>
+            <field name="arch" type="xml">
+            <form>
+                 <group>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                 </group>
+            </form>
+            </field>
+        </record>
+
+        <record id="pet_type_tree_view" model="ir.ui.view">
+            <field name="name">maintenance.diagnosis.tree</field>
+            <field name="model">maintenance.diagnosis</field>
+            <field name="arch" type="xml">
+                 <tree>
+                    <field name="name"/>
+                 </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_maintenance_diagnosis">
+            <field name="name">Diagnosis</field>
+            <field name="res_model">maintenance.diagnosis</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_type">form</field>
+        </record>
+
+        <menuitem id="menu_maintenance_diagnosis" name="Maintenance Diagnosis" parent="maintenance.menu_maintenance_configuration" action="action_maintenance_diagnosis"/>
+
+           </data>
+        </odoo>

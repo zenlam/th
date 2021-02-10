@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="promotion_category_tree_view" model="ir.ui.view">
+            <field name="name">promotion.category.tree</field>
+            <field name="model">th.promotion.category</field>
+            <field name="arch" type="xml">
+                <tree string="Promotion Category">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="parent_category"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="promotion_category_form_view" model="ir.ui.view">
+            <field name="name">promotion.category.form</field>
+            <field name="model">th.promotion.category</field>
+            <field name="arch" type="xml">
+                <form string="Promotion Category">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="parent_category"/>
+                            <field name="active"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_promotion_category_view" model="ir.actions.act_window">
+            <field name="name">Promotion Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">th.promotion.category</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="menu_promotion_root"
+                  name="Promotions"
+                  parent="point_of_sale.menu_point_config_product"
+                  sequence="15"/>
+        <menuitem id="menu_promotion_category_menu"
+                  name="Promotion Category"
+                  parent="menu_promotion_root"
+                  action="action_promotion_category_view"
+                  sequence="10"/>
+    </data>
+</odoo>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="th_order_template_tree_view" model="ir.ui.view">
+            <field name="name">TH Order Template - Tree View</field>
+            <field name="model">outlet.ordering.template</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="create_uid"/>
+                </tree>
+            </field>
+
+        </record>
+
+        <record id="th_order_template_form_view" model="ir.ui.view">
+            <field name="name">TH Ordering Template - Form View</field>
+            <field name="model">outlet.ordering.template</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <h1>
+                            <field name="name" placeholder="Template Name"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                            </group>
+                            <group>
+                                <field name="create_uid"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Products" name="products">
+                                <field name="product_ids">
+                                    <tree editable="bottom">
+                                        <field name="product_id"/>
+                                        <field name="history_template_id"/>
+                                        <field name="deny_outlet_ids" widget="many2many_tags"/>
+                                        <field name="outlet_ids" widget="many2many_tags" />
+                                        <field name="area_id" />
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="th_outlet_ordering_template_product_form_view" model="ir.ui.view">
+            <field name="name">TH Outlet Ordering Template Product Form View</field>
+            <field name="model">outlet.ordering.template.product</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="outlet_ids" widget="many2many_tags" attrs="{'invisible': [('area_id', '!=', False)]}"/>
+                            <field name="area_id" attrs="{'invisible': [('outlet_ids', '!=', False)]}"/>
+                        </group>
+                        <group>
+                            <field name="deny_outlet_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="th_outlet_ordering_template_view_action" model="ir.actions.act_window">
+            <field name="name">Outlet Ordering Template</field>
+            <field name="res_model">outlet.ordering.template</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem name="Outlet Ordering Template"
+                  id="th_outlet_ordering_template_menuitem"
+                  action="th_outlet_ordering_template_view_action"
+                  parent="outlet_ordering_menu_parent"
+                  sequence="15"/>
+
+
+    </data>
+</odoo>

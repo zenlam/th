@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_promotion_category_pos_user,promotion.category.pos.user,model_th_promotion_category,,1,1,1,0
+access_promotion_pos_user,promotion.pos.user,model_th_promotion,,1,1,1,0
+access_promotion_time_pos_user,promotion.time.pos.user,model_th_promotion_time,,1,1,1,1
+access_promotion_rule_pos_user,promotion.rule.pos.user,model_th_promotion_rule,,1,1,1,1

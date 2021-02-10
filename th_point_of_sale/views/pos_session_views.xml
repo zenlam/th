@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--    POS Session Form View Inherit  -->
+    <record id="th_view_pos_session_form_inherit" model="ir.ui.view">
+        <field name="name">th.pos.session.form.view.inherit</field>
+        <field name="model">pos.session</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='config_id']" position="after">
+                <field name="picking_id"/>
+                <field name="refund_picking_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

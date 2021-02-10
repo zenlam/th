@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!--TODO add this group inside TH purcahse category after all task merge into master-->
+    <record id="group_purchase_second_approval_manager" model="res.groups">
+        <field name="name">Second Level PO Approval</field>
+<!--        <field name="category_id" ref="module_category_purchase_management_tim"/>-->
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>

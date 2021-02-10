@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_staff_planning,staff.planning,model_staff_planning,base.group_user,1,1,1,1
+access_planning_role,planning.role,model_planning_role,base.group_user,1,1,1,1
+access_planning_send,planning.send,model_planning_send,base.group_user,1,1,1,1
+

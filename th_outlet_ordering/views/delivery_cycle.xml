@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_delivery_cycle_search_view" model="ir.ui.view">
+            <field name="name">TH Delivery Cycle Search View</field>
+            <field name="model">outlet.ordering.delivery_cycle</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" filter_domain="[('name', 'ilike', self)]" string="Search by Name"/>
+                    <field name="code" filter_domain="[('code', '=', self)]" string="Search by Code"/>
+                </search>
+            </field>
+        </record>
+        <record id="th_delivery_cycle_tree_view" model="ir.ui.view">
+            <field name="name">TH Delivery Cycle Tree View</field>
+            <field name="model">outlet.ordering.delivery_cycle</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="apply_type" invisible="1"/>
+                    <field name="outlet_id" attrs="{'invisible': [('apply_type', '!=', 'outlet')]}"/>
+                    <field name="area_id" attrs="{'invisible': [('apply_type', '!=', 'area')]}"/>
+                </tree>
+            </field>
+        </record>
+        <record id="th_delivery_cycle_form_view" model="ir.ui.view">
+            <field name="name">TH Delivery Cycle Form View</field>
+            <field name="model">outlet.ordering.delivery_cycle</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <h1>
+                            <field name="name" placeholder="Delivery Cycle Name"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="code"/>
+                                <field name="apply_type"/>
+                                <field name="outlet_id" context="{'form_view_ref': 'th_outlet.store_management_form_view'}"
+                                       attrs="{'invisible': [('apply_type', '!=', 'outlet')], 'required': [('apply_type', '=', 'outlet')]}"/>
+                                <field name="area_id" attrs="{'invisible': [('apply_type', '!=', 'area')], 'required': [('apply_type', '=', 'area')]}"/>
+                            </group>
+                            <group>
+                                <field name="date_start"/>
+                                <field name="date_end"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                            <group>
+                                <field name="cutoff_time_internal" widget="float_time"/>
+                                <field name="cutoff_time_1" widget="float_time"/>
+                                <field name="cutoff_time_2" widget="float_time"/>
+                            </group>
+                            <group>
+                                <field name="remark"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Details" name="detail">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="delivery_day"/>
+                                        <field name="cutoff_day"/>
+                                        <field name="cutoff_time_internal" widget="float_time"/>
+                                        <field name="cutoff_time_1" widget="float_time"/>
+                                        <field name="cutoff_time_2" widget="float_time"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="th_delivery_cycle_view_action" model="ir.actions.act_window">
+            <field name="name">Delivery Cycle</field>
+            <field name="res_model">outlet.ordering.delivery_cycle</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="target">current</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="th_delivery_cycle_menuitem"
+                  name="Delivery Cycle"
+                  action="th_delivery_cycle_view_action"
+                  groups="base.group_user"
+                  parent="outlet_ordering_menu_parent"
+                  sequence="5"/>
+    </data>
+</odoo>

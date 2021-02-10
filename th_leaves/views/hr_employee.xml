@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<odoo>
+
+    <record id="hr_employee_view_form_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='marital']" position="after">
+                <field name="marital_status" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='department_id']" position="before">
+                <field name="outlet_id"/>
+            </xpath>
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button string="Check Overtaken Leave" type="object" name="check_overtaken_leave" class="oe_highlight" attrs="{'invisible': [('service_termination_date', '=', False)]}"/>
+                    <button string="Allocate Leave" type="object" name="allocate_leave" class="oe_highlight" confirm="Allocate leave to this employee?" attrs="{'invisible': [('service_start_date', '=', False)]}"/>
+                </header>
+            </xpath>
+        </field>
+    </record>
+
+    <!--Marital Status Form View-->
+    <record id="marital_status_form_view" model="ir.ui.view">
+        <field name="name">Marital Status Form View</field>
+        <field name="model">marital.status</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Marital Status Form">
+                <group>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!--Marital Status Tree View-->
+    <record id="marital_status_tree_view" model="ir.ui.view">
+        <field name="name">Marital Status Tree View</field>
+        <field name="model">marital.status</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Marital Status Tree">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!--Marital Status Action-->
+    <record id="marital_status_action" model="ir.actions.act_window">
+        <field name="name">Marital Status</field>
+        <field name="res_model">marital.status</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Marital Status" action="marital_status_action" id="menu_employee_marital_status" parent="hr.menu_human_resources_configuration" sequence="4"/>
+
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="th_product_pricelist_item_form_view" model="ir.ui.view">
+        <field name="name">th.product.pricelist.item.form.inherit.product</field>
+        <field name="model">product.pricelist.item</field>
+        <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_id']" position="replace"/>
+
+            <xpath expr="//field[@name='product_tmpl_id']" position="after">
+                <div class="o_td_switch_label">
+                    <label for="product_id" string="Menu Name" attrs="{'invisible': [('applied_on', '!=', '4_pos_menu')]}"/>
+                    <label for="product_id" string="Product Variant" attrs="{'invisible': [('applied_on', '!=', '0_product_variant')]}"/>
+                </div>
+                <div>
+                    <field name="product_id" attrs="{'invisible':[('applied_on', 'not in', ['0_product_variant', '4_pos_menu'])],
+                        'required':[('applied_on', 'in', ['0_product_variant', '4_pos_menu'])]}"
+                           options="{'no_create': True}" nolabel="1"/>
+                </div>
+            </xpath>
+
+            <xpath expr="//field[@name='compute_price']" position="attributes">
+                <attribute name="attrs">{'readonly': [('applied_on', '=', '4_pos_menu')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_start']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_end']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='min_quantity']" position="attributes">
+                <attribute name="attrs">{'invisible': [('applied_on', '=', '4_pos_menu')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_end']" position="after">
+                <field name="time_range_ids" widget="many2many_tags" options="{'no_create': True}"
+                       attrs="{'invisible': [('applied_on', '!=', '4_pos_menu')]}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

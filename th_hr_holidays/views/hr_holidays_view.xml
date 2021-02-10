@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_holidays_form_view">
+            <field name="name">hr.holidays.form.view</field>
+            <field name="model">hr.holidays</field>
+            <field name="arch" type="xml">
+                <form string="Public Holidays">
+                    <header>
+                        <button name="action_confirm" groups="hr.group_hr_manager,hr_holidays.group_hr_holidays_manager" type="object" string="Confirm" attrs="{'invisible': [('state', '!=', 'draft')]}" />
+                        <button name="action_validate" groups="hr.group_hr_manager,hr_holidays.group_hr_holidays_manager" type="object" class="btn-primary" string="Validate" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,validated"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" />
+                            </group>
+                            <group>
+                                <label for="start_date" string="Duration"/>
+                                <div>
+                                    <div class="o_row o_row_readonly">
+                                        <field name="start_date" class="oe_inline"/>
+                                        <span class="oe_inline" >
+                                            To
+                                        </span>
+                                        <field name="end_date" class="oe_inline" />
+                                    </div>
+                                </div>
+                                <field name="company_id" />
+                            </group>
+                        </group>
+                        <notebook>
+                        <page string="Holidays">
+                            <field name="holidays_item">
+                                <tree string="Holidays" editable="bottom">
+                                    <field name="date"/>
+                                    <field name="day"/>
+                                    <field name="reason"/>
+                                    <field name="region_id"/>
+                                    <field name="holiday_id" invisible="True"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="hr_holidays_tree_view" model="ir.ui.view">
+            <field name="name">hr.holidays.tree.view</field>
+            <field name="model">hr.holidays</field>
+            <field name="arch" type="xml">
+                <tree string="Public Holidays" >
+                    <field name="name"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_hr_holidays_form" model="ir.actions.act_window">
+            <field name="name">Public Holidays</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="hr_holidays_tree_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p><p>
+            </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_hr_holidays_config"
+            name="Public Holidays"
+            parent="hr_holidays.menu_hr_holidays_configuration"
+            action="th_hr_holidays.action_hr_holidays_form"
+            sequence="3"/>
+
+    </data>
+</odoo>

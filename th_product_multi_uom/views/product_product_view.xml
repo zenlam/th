@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<!-- Only Product Variants customize  -->
+        <record model="ir.ui.view" id="uom_product_normal_form_customize_view">
+            <field name="name">uom.product.product.customize</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='inventory']" position="after">
+					<page string="UOMs">
+						<group>
+                        	<field name="uom_id"/>
+						</group>
+	                    <field name="multi_uom_ids" readonly="1">
+	                    	<tree string="UOM" editable="bottom">
+		                    	<field name="sequence" string="Seq"/>
+								<field name="is_default" />
+		                    	<field name="name" required="1" attrs="{'readonly': ['|', ('id', '>', 0), ('is_default', '=', True)]}"/>
+		                    	<field name="factor_inv" attrs="{'readonly': [('is_default', '=', True)]}" force_save="1"/>
+		                    	<field name="factor" invisible="1" />
+		                    	<field name="barcode" attrs="{'required': [('parent.is_asset', '=', False)]}"/>
+								<field name="vendor_id"/>
+		                    	<field name="distribution" />
+		                    	<!--<field name="default_distribution" />-->
+								<field name="purchase" string="Pur. UOM"/>
+								<field name="storage" />
+								<field name="outlet_ordering" />
+                                <button name="button_deactivate" type="object" icon="fa fa-low-vision" string="Archive"/>
+								<field name="description" />
+	                    	</tree>
+	                    </field>
+				 	</page>
+				 </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

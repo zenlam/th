@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_store_management_pos_user,.pos.user,model_stock_warehouse,point_of_sale.group_pos_user,1,0,0,0
+access_store_management_pos_manager,.pos.manager,model_stock_warehouse,point_of_sale.group_pos_manager,1,1,1,1
+
+access_model_res_country_area_pos_user,res.country.area.pos.user,model_res_country_area,point_of_sale.group_pos_user,1,0,0,0
+access_rmodel_res_country_area_product_manager,res.country.area.product.management,model_res_country_area,th_product.group_product_management,1,1,1,1

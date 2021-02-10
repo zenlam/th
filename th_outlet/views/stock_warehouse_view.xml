@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <record id="stock_warehouse_search_view_inherit" model="ir.ui.view">
+            <field name="name">Stock Warehouse - Search View inherit</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.stock_warehouse_view_search"/>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[1]" position="after">
+                    <group expand="0" string="Group By">
+                        <filter string="Created From" name="group_create_from" context="{'group_by': 'create_from'}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+        <record id="warehouse_form_view_inherit" model="ir.ui.view">
+            <field name="name">Add Outlet Field</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reception_steps']" position="before">
+                    <field name="default_resupply" />
+                </xpath>
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="is_hq" />
+                    <field name="analytic_account_id"/>
+                    <!--<field name="outlet_id" />-->
+                </xpath>
+            </field>
+        </record>
+
+        <record id="warehouse_tree_view_inherit" model="ir.ui.view">
+            <field name="name">Warehouse List View Inherit</field>
+            <field name="model">stock.warehouse</field>
+            <field name="inherit_id" ref="stock.view_warehouse_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock.action_warehouse_form" model="ir.actions.act_window">
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="stock_warehouse_search_view_inherit"/>
+        </record>
+    </data>
+</openerp>

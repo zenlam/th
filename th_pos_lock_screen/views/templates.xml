@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="assets_th_pos_lock_screen" name="assets_th_pos_lock_screen" inherit_id="point_of_sale.assets">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/th_pos_lock_screen/static/src/js/models.js"/>
+            <script type="text/javascript" src="/th_pos_lock_screen/static/src/js/chrome.js"/>
+            <script type="text/javascript" src="/th_pos_lock_screen/static/src/js/gui.js"/>
+            <script type="text/javascript" src="/th_pos_lock_screen/static/src/js/popups.js"/>
+        </xpath>
+    </template>
+
+</odoo>

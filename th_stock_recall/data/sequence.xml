@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_stock_recall_sequence" model="ir.sequence">
+            <field name="name">Stock Recall Sequence</field>
+            <field name="implementation">no_gap</field>
+            <field name="active" eval="True"/>
+            <field name="prefix">RECALL/</field>
+            <field name="padding" eval="5"/>
+            <field name="number_increment" eval="1"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View : Smart Select Label -->
+    <record id="th_smart_select_label_tree_view" model="ir.ui.view">
+        <field name="name">th.smart.select.label.tree</field>
+        <field name="model">th.smart.select.label</field>
+        <field name="arch" type="xml">
+            <tree string="Smart Select Label" editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Action : Smart Select Label -->
+    <record id="menu_th_smart_select_label_action" model="ir.actions.act_window">
+        <field name="name">Labels</field>
+        <field name="res_model">th.smart.select.label</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+
+    <!-- Tree View : Smart Select Config -->
+    <record id="th_smart_select_tree_view" model="ir.ui.view">
+        <field name="name">th.smart.select.tree</field>
+        <field name="model">th.smart.select</field>
+        <field name="arch" type="xml">
+            <tree string="Smart Select">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View : Smart Select Config -->
+    <record id="th_smart_select_form_view" model="ir.ui.view">
+        <field name="name">th.smart.select.form</field>
+        <field name="model">th.smart.select</field>
+        <field name="arch" type="xml">
+            <form string="Smart Select">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Smart Select Name"/>
+                        <h1><field name="name" placeholder="Name"/></h1>
+                    </div>
+                    <notebook>
+                        <page string="Information" name="information">
+                            <field name="smart_menu_ids">
+                                <tree string="Menus" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="smart_label_id" options="{'no_create': true}"/>
+                                    <field name="product_id" options="{'no_create': true}"/>
+                                    <field name="show_in_pos"/>
+                                    <field name="font_color" widget="color"/>
+                                    <field name="background_color" widget="color"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View: Smart Select Config -->
+    <record id="th_smart_select_search_view" model="ir.ui.view">
+        <field name="name">th.smart.select.search</field>
+        <field name="model">th.smart.select</field>
+        <field name="arch" type="xml">
+            <search string="Search Modifiers">
+                <field name="name"/>
+                <field name="active"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action : Smart Select Config -->
+    <record id="menu_th_smart_select_config_action" model="ir.actions.act_window">
+        <field name="name">Smart Select</field>
+        <field name="res_model">th.smart.select</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

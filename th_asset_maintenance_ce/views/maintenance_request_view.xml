@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="asset_info_form" model="ir.ui.view">
+            <field name="name">maintenance.request.form</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button string="Submit to Manager" name="submit_to_manager" type="object" groups="base.group_user" states="draft" class="oe_highlight"/>
+                    <button string="Approve" name="approve_maintenance" type="object" states="submit" groups="hr.group_hr_manager" class="oe_highlight"/>
+                    <button string="Cancel" name="act_cancel_maintenance" type="object" states="submit" groups="hr.group_hr_manager"/>
+                    <button string="Receive Request" name="receive_request" type="object" states="approve" groups="maintenance.group_equipment_manager" class="oe_highlight"/>
+                    <button string="Start Maintnance" name="start_maintenance" type="object" states="todo" groups="maintenance.group_equipment_manager" class="oe_highlight"/>
+                    <button string="Maintnance Complete" name="maintenance_complete" type="object" states="inprogress" groups="maintenance.group_equipment_manager" class="oe_highlight"/>
+<!--                    <button string="Create Requisition" name="create_order" type="object" states="approve, todo,inprogress" class="oe_highlight"/>-->
+                    <button string="Cancel" name="act_cancel_maintenance_manager" type="object" states="approve,todo,inprogress" groups="maintenance.group_equipment_manager"/>
+                     <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve,todo,inprogress,done,cancel" readonly="1" invisible="True"/>
+                </xpath>
+                
+                <xpath expr="//button[@name='archive_equipment_request']" position="attributes">
+                    <attribute name="groups">base.group_user</attribute>
+                    <attribute name="attrs">{'invisible': ['|',('archive', '=', True),('state','!=','draft')]}</attribute>
+                </xpath>
+
+                <xpath expr="//h1/field[@name='name']" position="before">
+                    <field name="custom_number"/>
+                </xpath>
+
+                <xpath expr="//field[@name='maintenance_team_id']" position="before">
+                    <field name="is_asset_maintenance"/>
+                    <field name="custom_asset_id" attrs="{'readonly': [('custom_is_approve', '!=', False)], 'invisible': [('is_asset_maintenance', '=', False)], 'required':[('is_asset_maintenance', '=', True)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='description']" position="after">
+                    <notebook>
+                        <page name="Maintenance Lines" string="Maintenance Lines">
+                            <group>
+                                <field name="custom_line_ids" nolabel="1">
+                                    <tree editable='bottom'>
+                                        <field name="line_type"/>
+                                        <field name="product_id"/>
+                                        <field name="custom_description"/>
+                                        <field name="quantity" sum="Quantity"/>
+                                        <field name="uom_id"/>
+                                        <field name="price" sum="Price"/>
+                                        <field name="partner_id" widget="many2many_tags"/>
+                                        <field name="sub_total" sum="Total"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    <page name="other information" string="Asset Information" attrs="{'invisible': [('is_asset_maintenance', '=', False)]}" groups="odoo_account_asset_extend_ce.group_asset_employee,odoo_account_asset_extend_ce.group_asset_manager">
+                        <group>
+                            <group name="asset_grp">
+                                <field name="custom_subject" attrs="{'readonly': [('custom_is_approve', '!=', False)]}"/>
+                                <field name="custom_detail" attrs="{'readonly': [('custom_is_approve', '!=', False)]}"/>
+<!--                                <field name="days_overdue"/>-->
+                                <field name="custom_is_contract" attrs="{'invisible': [('maintenance_type', '!=', 'preventive')], 'readonly': [('custom_is_approve', '!=', False)]}"/>
+                                <field name="custom_maintenance_analytic_account_id" attrs="{'invisible': ['|',('maintenance_type', '!=', 'preventive'),('custom_is_contract', '=', False)]}"/>
+                            </group>
+                            <group name="estimate_completions_grp">
+                                <field name="custom_estimate_completion_days" attrs="{'invisible': [('maintenance_type', '!=', 'preventive')], 'readonly': [('custom_is_approve', '!=', False)]}"/>
+                                <field name="custom_estimate_completion_date"/>
+                            </group>
+                            <group name="user_team_grp">
+                                <field name="custom_employee_id" attrs="{'invisible': [('maintenance_type', '!=', 'preventive')], 'readonly': [('custom_is_approve', '!=', False)]}"/>
+                                <field name="custom_department_id" attrs="{'invisible': [('maintenance_type', '!=', 'preventive')], 'readonly': [('custom_is_approve', '!=', False)]}"/>
+                            </group>
+                            <group name="frequency_grp">
+                                <field name="custom_maintenance_frequence" attrs="{'invisible': [('maintenance_type', '!=', 'preventive')], 'readonly': [('custom_is_approve', '!=', False)]}"/>
+                                <field name="custom_frequency_start_date" attrs="{'invisible': [('maintenance_type', '!=', 'preventive')], 'readonly': [('custom_is_approve', '!=', False)]}"/>
+                                <field name="custom_frequency_next_date" attrs="{'invisible': [('maintenance_type', '!=', 'preventive')], 'readonly': [('custom_is_approve', '!=', False)]}"/>
+                                <field name="custom_days_not_acted"/>
+                            </group>
+                            <group name="diagnosis">
+                                <field name="custom_diagnosis_id" attrs="{'readonly': [('custom_is_approve', '!=', False)]}"/>
+                                <field name="custom_activity_id" attrs="{'readonly': [('custom_is_approve', '!=', False)]}"/>
+                                <field name="custom_is_approve" invisible="True"/>
+                                <field name="custom_maintenance_completion_date"/>
+                                <field name="custom_previous_maintenance_id"/>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button name="show_requisition" type="object" class="oe_stat_button" icon="fa-pencil-square-o" string="Requisition"/>
+                    </div>
+                </xpath>
+<!--                <xpath expr="//button[@name='archive_equipment_request']" position="attributes">-->
+<!--                        <attribute name="attrs">{'invisible': ['|', ('archive', '=', True), ('state', '=', 'done')]}</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//button[@name='reset_equipment_request']" position="attributes">
+                        <attribute name="attrs">{'invisible': ['|', ('archive', '=', False), ('state', '=', 'done')]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="asset_info_search_view" model="ir.ui.view">
+            <field name="name">equipment.request.search</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr = "//search" position="inside">
+                        <field name="custom_asset_id"/>
+                        <field name="custom_employee_id"/>
+                        <field name="custom_department_id"/>
+                        <field name="custom_diagnosis_id"/>
+                        <field name="custom_activity_id"/>
+                        <field name="custom_maintenance_completion_date"/>
+                        <field name="custom_previous_maintenance_id"/>
+                        <field name="custom_frequency_start_date"/>
+                        <field name="custom_frequency_next_date"/>
+                        <filter string="Employee" name="employee" domain="[]" context="{'group_by': 'custom_employee_id'}"/>
+                        <filter string="Department" name="department" domain="[]" context="{'group_by': 'custom_department_id'}"/>
+                        <filter string="Activity" name="activity" domain="[]" context="{'group_by': 'custom_activity_id'}"/>
+                        <filter string="Maintenance Completion Date" name="maintenance_completion_date" domain="[]" context="{'group_by': 'custom_maintenance_completion_date'}"/>
+                        <filter string="Asset" name="asset" domain="[('custom_asset_id', '!=', False)]"/>
+                    </xpath>
+            </field>
+        </record>
+
+        <record id="hr_equipment_request_asset_inherit_view_pivot" model="ir.ui.view">
+            <field name="name">maintenance.request.asset.pivot</field>
+            <field name="model">maintenance.request</field>
+            <field name="inherit_id" ref="maintenance.hr_equipment_request_view_pivot"/>
+            <field name="arch" type="xml">
+                <xpath expr = "//field[@name='stage_id']" position="after">
+                    <field name="custom_days_overdue" type="measure"/>
+                    <field name="custom_total_cost" type="measure"/>
+                    <field name="custom_number_of_lines" type="measure"/>
+                    <field name="custom_number_of_qty" type="measure"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- equiment.request : actions -->
+        <record id="hr_equipment_request_act" model="ir.actions.act_window">
+            <field name="name">Maintenance Requests</field>
+            <field name="res_model">maintenance.request</field>
+            <field name="view_mode">kanban,tree,form,pivot,graph,calendar</field>
+            <field name="view_id" ref="maintenance.hr_equipment_request_view_kanban"/>
+            <field name="context">{'default_technician_custom_user_id': uid, 'search_default_asset': 1}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new maintenance request.
+                </p><p>
+                    Follow the process of the request and communicate with the collaborator.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_custom_asset_types" name="Asset Categories" parent="maintenance.menu_maintenance_configuration" action="odoo_account_asset.action_account_asset_asset_list_normal_purchase"/>
+
+    </data>
+</odoo>

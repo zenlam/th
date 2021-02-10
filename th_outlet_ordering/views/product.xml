@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_product_form_view_inherit" model="ir.ui.view">
+            <field name="name">TH Product - Form View Inherit</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='purchase']" position="after">
+                    <page name="havi_settings" string="HAVI Settings">
+                        <group string="Outlets which not allowed to order from HAVI">
+                            <field name="deny_outlet_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id" invisible="1"/>
+                                    <field name="product_code" invisible="1"/>
+                                    <field name="outlet_id"/>
+                                    <field name="outlet_code"/>
+                                    <field name="date_start"/>
+                                    <field name="date_end"/>
+                                    <field name="th_code"/>
+                                    <!--<field name="havi_code"/>-->
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

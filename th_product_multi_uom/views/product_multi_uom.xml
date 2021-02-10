@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="inactive_multi_uom_tree_view" model="ir.ui.view">
+            <field name="name">product.multi.uom</field>
+            <field name="model">product.multi.uom</field>
+            <field name="arch" type="xml">
+                <tree string="">
+                    <field name="name"/>
+                    <field name="vendor_id"/>
+                    <field name="barcode"/>
+                    <field name="factor_inv" />
+                    <!--<field name="standard_price" />-->
+                    <!--<field name="base_price"/>-->
+                    <button name="button_activate" type="object" icon="fa-refresh" string="Active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="inactive_multi_uom_action" model="ir.actions.act_window">
+            <field name="name">UOM Deactive</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.multi.uom</field>
+            <field name="view_mode">tree</field>
+            <field name="target">new</field>
+            <field name="domain">[('active', '=', False), ('product_tmpl_id', '=', active_id)]</field>
+        </record>
+    </data>
+</odoo>

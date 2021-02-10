@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="th_asset_form_change_capitalised_checkbox" model="ir.ui.view">
+        <field name="name">th.asset.capitalised.checkbox</field>
+        <field name="model">asset.form.capitalised.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Deselect Capitalised Later Checkbox">
+                <div>
+                    In Vendor Bill: <field name="code" readonly="1" options="{'no_open': True}"/>, you capitalize this asset.<br/>
+                    <span>Are you sure that you do not want to capitalized this asset?</span>
+                </div>
+                <footer>
+                    <button string="Yes" name="update_capitalized_checkbox" type="object" default_focus="1" class="btn-primary"/>
+                    <button string="No" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_th_asset_capitalized_wizard" model="ir.actions.act_window">
+        <field name="name">Asset Capitalized Confirmation</field>
+        <field name="res_model">asset.form.capitalised.wizard</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="th_asset_form_change_capitalised_checkbox"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

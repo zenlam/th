@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="th_store_management_form_view_inherit_top_selling" model="ir.ui.view">
+        <field name="name">th.stock.warehouse.form.view.inherit.top.selling</field>
+        <field name="model">stock.warehouse</field>
+        <field name="inherit_id" ref="th_outlet.store_management_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="top_selling_menu_ids" widget="many2many_tags"
+                       options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

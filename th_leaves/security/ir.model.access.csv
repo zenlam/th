@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_marital_status,marital.status,model_marital_status,,1,1,1,1
+access_leave_entitled,hr.leave.entitled,model_hr_leave_entitled,,1,1,1,1
+access_leave_history,hr.leave.history,model_hr_leave_history,,1,1,1,1

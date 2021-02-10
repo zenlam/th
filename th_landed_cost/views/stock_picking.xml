@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_picking_form_inherit_landed_cost">
+        <field name="name">view.picking.form.inherit.landed.cost</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="is_caln_factor" string="Landed Cost Applied" attrs="{'invisible': [('is_stock_transfer', '=', True)]}"/>
+                <field name="landed_cost_type" attrs="{'invisible': [('is_caln_factor', '=', False)]}"/>
+                <label for="caln_factor" string="Landed Cost Factor" attrs="{'invisible': [('is_caln_factor', '=', False)]}"/>
+                <div>
+                    <div attrs="{'invisible': [('is_caln_factor', '=', False)]}">
+                        <field name="caln_factor" nolabel="1" class="oe_inline"/>
+                        <span class="ml8" attrs="{'invisible': ['|', ('landed_cost_type', '=', 'amount'), ('landed_cost_type', '=', False)]}">%</span>
+                        <span class="ml8" attrs="{'invisible': ['|', ('landed_cost_type', '=', 'percentage'), ('landed_cost_type', '=', False)]}">
+                            <field name="currency_id" readonly="1"/>
+                        </span>
+                    </div>
+                </div>
+                <label for="lc_amount_apply" string="Final Landed Cost Amount" attrs="{'invisible': [('is_caln_factor', '=', False)]}"/>
+                <div>
+                    <div attrs="{'invisible': [('is_caln_factor', '=', False)]}">
+                        <field name="lc_amount_apply" nolabel="1" class="oe_inline"/>
+                        <span class="ml8">
+                            <field name="currency_id" readonly="1"/>
+                        </span>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button type="object" string="Journal Items" name="action_view_journal_item" class="oe_stat_button" icon="fa-book" groups="stock.group_stock_manager"/>
+                <button type="object" name="action_view_landed_cost" class="oe_stat_button" icon="fa-plane" attrs="{'invisible': [('is_stock_transfer', '=', True)]}" groups="stock.group_stock_manager">
+                    <field name="landed_cost_count" widget="statinfo" string="Landed Cost"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_stock_recall_user,Access Stock Recall for User,model_stock_recall,base.group_user,1,1,1,1
+access_stock_recall_reason_user,Access Stock Recall Reason for User,model_stock_recall_reason,base.group_user,1,1,1,1
+access_stock_recall_product_user,Access Stock Recall Product for User,model_stock_recall_product,base.group_user,1,1,1,1

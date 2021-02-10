@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- customize expense tree view -->
+        <record id="hr_expense_view_tree_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.view.tree.inherit</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_expenses_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="attributes">
+                    <attribute name="string">Submission Date</attribute>
+                </xpath>
+                <xpath expr="//field[@name='analytic_tag_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- customize expense form view -->
+        <record id="hr_expense_view_form_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.view.form.inherit</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">draft,reported,validated,approved,posted,done</attribute>
+                </xpath>
+
+                <!-- customize buttons -->
+                <xpath expr="//button[@name='action_submit_expenses'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_submit_expenses'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//widget[@name='attach_document'][1]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', ('attachment_number', '&lt;', 1), ('id','=',False), ('state', '!=', 'draft')]}</attribute>
+                </xpath>
+                <xpath expr="//widget[@name='attach_document'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', '|', ('attachment_number', '&gt;=', 1), ('id','=',False), ('state', '!=', 'draft')]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_view_sheet']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//widget[@name='attach_document'][2]" position="after">
+                    <button name="action_submit_expense_to_manager" string="Submit to Manager"
+                            type="object" class="oe_highlight"
+                            groups="th_hr_expense.group_hr_expense_normal_user"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_validate_expense" string="Validate"
+                            type="object" class="oe_highlight"
+                            groups="hr_expense.group_hr_expense_user"
+                            attrs="{'invisible': ['|', ('state', '!=', 'reported'), ('is_double_validation', '=', False)]}"/>
+                    <button name="action_approve_expense" string="Approve"
+                            type="object" class="oe_highlight"
+                            groups="hr_expense.group_hr_expense_user"
+                            attrs="{'invisible': ['|', '&amp;', ('is_double_validation', '!=', False), ('state', '!=', 'validated'), '&amp;', ('is_double_validation', '!=', True), ('state', '!=', 'reported')]}"/>
+                    <button name="action_post_journal_entries" string="Post Journal Entries"
+                            type="object" class="oe_highlight"
+                            groups="hr_expense.group_hr_expense_manager"
+                            attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                    <button name="%(hr_expense.hr_expense_sheet_register_payment_wizard_action)d"
+                            type="action" string="Register Payment"
+                            class="oe_highlight"
+                            context="{'default_amount': base_currency_total, 'default_analytic_account_id': analytic_account_id}"
+                            groups="hr_expense.group_hr_expense_manager"
+                            attrs="{'invisible': [('state', '!=', 'posted')]}"/>
+                    <button name="action_reset_expense" type="object"
+                            string="Reset to Draft"
+                            groups="hr_expense.group_hr_expense_user"
+                            attrs="{'invisible': [('state', 'not in', ['reported', 'refused'])]}"/>
+                    <button name="%(hr_expense.hr_expense_refuse_wizard_action)d"
+                            states="reported,approved"
+                            context="{'hr_expense_refuse_model':'hr.expense'}"
+                            string="Refuse" type="action"
+                            groups="hr_expense.group_hr_expense_user" />
+                </xpath>
+
+                <!-- customize fields -->
+                <xpath expr="//field[@name='product_id']" position="before">
+                    <field name="expense_category_id"/>
+                    <field name="is_double_validation" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="attributes">
+                    <attribute name="string">Submission Date</attribute>
+                    <attribute name="readonly">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="actual_date"/>
+                </xpath>
+                <xpath expr="//field[@name='total_amount']" position="after">
+                    <field name="show_base_currency" invisible="1"/>
+                    <field name="base_currency_id" invisible="1"/>
+                    <field name="base_currency_total" widget="monetary"
+                           attrs="{'invisible': [('show_base_currency', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='analytic_tag_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- customize expense search filter -->
+        <record id="hr_expense_view_filter_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.view.filter.inherit</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='no_report']" position="after">
+                    <filter domain="[('state', 'in', ('reported', 'validated'))]" string="To Approve"
+                            name="submitted_validated" help="Submitted and Validated Expenses"/>
+                    <filter domain="[('state', '=', 'approved')]" string="To Post"
+                            name="to_post" help="Approved Expenses"/>
+                    <filter domain="[('state', '=', 'posted')]" string="To Pay"
+                            name="to_pay" help="Expenses to Invoice"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- make "Activity Types" menu invisible -->
+        <record model="ir.ui.menu" id="hr_expense.hr_expense_menu_config_activity_type">
+            <field name="action" eval="False"/>
+        </record>
+        <!-- remove all report related menu -->
+        <record model="ir.ui.menu" id="hr_expense.menu_hr_expense_sheet_my_reports">
+            <field name="action" eval="False"/>
+        </record>
+        <record model="ir.ui.menu" id="hr_expense.menu_hr_expense_sheet_all_to_approve">
+            <field name="action" eval="False"/>
+        </record>
+        <record model="ir.ui.menu" id="hr_expense.menu_hr_expense_sheet_all_to_post">
+            <field name="action" eval="False"/>
+        </record>
+        <record model="ir.ui.menu" id="hr_expense.menu_hr_expense_sheet_all_to_pay">
+            <field name="action" eval="False"/>
+        </record>
+
+
+        <!-- add To Approve, To Post, To Pay action -->
+        <record id="action_hr_expense_to_approve" model="ir.actions.act_window">
+            <field name="name">Expenses to Approve</field>
+            <field name="res_model">hr.expense</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot,activity</field>
+            <field name="search_view_id" ref="hr_expense.view_hr_expense_filter"/>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_submitted_validated': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    No expenses to approve
+                </p>
+            </field>
+        </record>
+        <record id="action_hr_expense_to_post" model="ir.actions.act_window">
+            <field name="name">Expenses to Post</field>
+            <field name="res_model">hr.expense</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot,activity</field>
+            <field name="search_view_id" ref="hr_expense.view_hr_expense_filter"/>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_to_post': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    No expenses to post
+                </p>
+            </field>
+        </record>
+        <record id="action_hr_expense_to_pay" model="ir.actions.act_window">
+            <field name="name">Expenses to Pay</field>
+            <field name="res_model">hr.expense</field>
+            <field name="view_mode">tree,kanban,form,graph,pivot,activity</field>
+            <field name="search_view_id" ref="hr_expense.view_hr_expense_filter"/>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_to_pay': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_empty_folder">
+                    No expenses to pay
+                </p>
+            </field>
+        </record>
+
+        <!-- add To Approve, To Post, To Pay menu -->
+        <menuitem id="menu_hr_expense_to_approve" name="To Approve" sequence="5"
+                  parent="hr_expense.menu_hr_expense_my_expenses"
+                  action="action_hr_expense_to_approve"
+                  groups="hr_expense.group_hr_expense_user"/>
+        <menuitem id="menu_hr_expense_to_post" name="To Post" sequence="7"
+                  parent="hr_expense.menu_hr_expense_my_expenses"
+                  action="action_hr_expense_to_post"
+                  groups="hr_expense.group_hr_expense_manager"/>
+        <menuitem id="menu_hr_expense_to_pay" name="To Pay" sequence="10"
+                  parent="hr_expense.menu_hr_expense_my_expenses"
+                  action="action_hr_expense_to_pay"
+                  groups="hr_expense.group_hr_expense_manager"/>
+    </data>
+</odoo>

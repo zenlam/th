@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="th_hr_job_survey" model="ir.ui.view">
+        <field name="name">th.hr.job.form.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='set_open']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//label[@for='name']" position="attributes">
+                <attribute name="string">Employee Position</attribute>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">Employee Position</attribute>
+            </xpath>
+            <xpath expr="//field[@name='no_of_recruitment']" position="after">
+                <field name="default_labour_cost" />
+            </xpath>
+            <xpath expr="//group[@name='recruitment']" position="after">
+                <group string="Offer" name="wkr">
+                    <field name="working_time_rule_id"/>
+                    <field name="employee_type"/>
+                </group>
+            </xpath>
+        </field>
+     </record>
+
+     <record id="hr.action_hr_job" model="ir.actions.act_window">
+         <field name="name">Employee Position</field>
+     </record>
+
+    <record id="th_hr_job_tree_inherit" model="ir.ui.view">
+        <field name="name">th.hr.job.tree.inherit</field>
+        <field name="model">hr.job</field>
+        <field name="inherit_id" ref="hr.view_hr_job_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="string">Employee Positions</attribute>
+            </xpath>
+            <xpath expr="//field[@name='no_of_recruitment']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='expected_employees']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='no_of_hired_employee']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="menu_view_employee_position_form"
+            action="hr.action_hr_job"
+            parent="hr.menu_human_resources_configuration"
+            name="Employee Position"
+            sequence="3"/>
+
+</odoo>

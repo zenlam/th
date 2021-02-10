@@ -1,0 +1,29 @@
+/* *** Part of Onnet Consulting Sdn Bhd *** */
+.pos .modifier-section .special-btn-note {
+    color: #000000;
+    background-color: #ff4443;
+}
+
+.pos .popups .quick-note-header {
+    margin-bottom: 5px;
+}
+
+.pos .popups .section-quick-notes {
+    margin-bottom: 5px;
+    margin-left: 11px;
+}
+
+.pos .popups .section-quick-notes .quick-note {
+    float: left;
+}
+
+/* *** Part of Odoo S.A. *** */
+/* ------ ORDER NOTES ------- */
+
+.pos .order .orderline-note {
+    margin: 4px;
+}
+.orderline-note .fa {
+    opacity: 0.5;
+    margin-right: 4px;
+}

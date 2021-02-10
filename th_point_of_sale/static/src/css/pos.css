@@ -1,0 +1,387 @@
+.pos .leftpane {
+    width: 250px;
+}
+
+.pos .rightpane {
+    left: 250px;
+}
+
+.pos .product {
+    width: 82px;
+    height: 70px;
+    font-size: 11px;
+    line-height: 70px;
+    margin: 4px !important;
+}
+
+.pos .pos-sale-ticket {
+    font-size: 10px;
+    font-family: "Arial";
+    width: 80mm;
+}
+
+.pos .product .product-img {
+    width: 82px;
+    height: 70px;
+}
+
+.pos .product .product-img img {
+    max-height: 50px;
+    max-width:  60px;
+}
+
+.pos .modifier-list-container,
+.pos .combo-list-container {
+    position:absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+.pos .category-simple-button{
+    line-height: 30px;
+}
+
+.pos .category-list-sub {
+    text-align: left;
+    padding: 10px;
+    background: rgb(229, 229, 229);
+    border-bottom: 1px solid #cecece;
+}
+
+.pos .category-list-sub.simple {
+    padding: 0;
+    background: #cecece;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    border-bottom: none;
+}
+
+.pos .pos-active-categories {
+    color: #00a700;
+    font-size: 18px;
+}
+
+.pos .pads-bottom {
+    border-bottom: solid 3px rgb(110, 200, 155);
+}
+
+.pos .pads-top {
+    border-top: solid 3px rgb(110, 200, 155);
+}
+
+.pos .pop-numpad-widget {
+    display: inline-block;
+    float: none;
+    text-align: center;
+    width: 216px;
+    margin: 30px 16px 16px;
+    border: 1px solid #bfbfbf;
+    border-radius: 0 4px 0 0;
+}
+
+.pos .pop-numpad-widget button {
+    height: 60px;
+    width: 72px;
+}
+
+.pos .pop-more-function-widget {
+    margin: 20px;
+    text-align: left;
+}
+
+.pos .pop-more-function-widget .th-function-btn {
+    float: left;
+    height: 45px;
+    line-height: 45px;
+    margin: 10px;
+    width: 45%;
+}
+
+.pos .actionpad {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin: 0;
+    width: 100%;
+    border-top: 0;
+    border-left: 0;
+    border-color: #bfbfbf;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 6px 16px 0 0;
+}
+
+.pos .actionpad .actionpad-section button {
+    width: 30%;
+}
+
+.pos .actionpad .button {
+    border-radius: 4px;
+    border: 1px solid #bfbfbf;
+    margin-left: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: normal;
+    height: 45px;
+}
+
+.pos .actionpad .button .fa {
+    margin-right: 8px;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.5);
+    line-height: 30px;
+    width: 30px;
+    border-radius: 100%;
+}
+
+.pos .actionpad .button.pay {
+    font-size: 18px;
+    height: 98px;
+    width: 90%;
+    color: red;
+    margin-left: 0;
+}
+
+.pos .actionpad .button.pay .fa {
+    line-height: 40px;
+    width: 40px;
+}
+
+.pos .actionpad .button.set-customer{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.pos .actionpad .button.set-customer.decentered {
+    padding-left: 7px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    padding-right: 7px;
+}
+
+.pos .actionpad .button.o_pricelist_button_dummy.decentered {
+    padding-left: 7px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    padding-right: 7px;
+}
+
+.pos .actionpad .button .fa-user {
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+.pos .control-buttons {
+    padding: 8px 16px 0 0;
+}
+
+.pos .control-button {
+    line-height: 50px;
+    min-width: 120px;
+    margin-left: 8px;
+    margin-bottom: 10px;
+}
+
+.pos .control-button .fa {
+    margin-right: 8px;
+    font-size: 18px;
+    background: rgba(255, 255, 255, 0.5);
+    line-height: 30px;
+    width: 30px;
+    border-radius: 100%;
+}
+
+.pos .order .orderline {
+    font-size: 14px;
+}
+
+.pos .order .orderline .product-name {
+    width: 70%;
+}
+
+.pos .order .orderline li.info {
+    font-size: 12px;
+    width: 85%;
+    display: inline-block;
+}
+
+.pos .order .summary .total {
+    font-size: 18px;
+}
+
+.pos .order .orderline .info-list-ingredients,
+.pos .order .orderline .info-list-menus {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-size: 11px;
+}
+
+.pos .order .orderline .ingredients-combo {
+    margin-left: 7px;
+}
+
+.pos .order .orderline .info-list-menus-default {
+    font-weight: bold;
+}
+
+.pos .modifier-section {
+    text-align: left;
+}
+
+.pos .modifier-section .grp-of-modifier,
+.pos .upsell-option-selection-title {
+    margin: 4px;
+    font-weight: bold;
+}
+
+.pos .modifier-section .grp-opt-button,
+.pos .modifier-section .grp-special-opt-button {
+    margin: 2px;
+    background: #717171;
+    line-height: 32px;
+    font-size: 11px;
+    border: solid 1px rgb(202, 202, 202);
+    text-align: center;
+    color: #FFFFFF;
+    min-width: 60px;
+    font-weight: bold;
+}
+
+.pos .modifier-section .button,
+.pos .smart-select-buttons .smart-button {
+    margin: 2px;
+    background: #e2e2e2;
+    line-height: 32px;
+    font-size: 11px;
+    border: solid 1px rgb(202, 202, 202);
+    cursor: pointer;
+    text-align: center;
+    color: #555555;
+    min-width: 60px;
+}
+
+.pos .smart-select-buttons .smart-button {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.pos .smart-select-buttons .active-smart-button {
+    vertical-align: middle;
+    margin-right: 2px;
+    color: green;
+    font-size: 15px;
+}
+
+.pos .modifier-section .modifier-sub-section,
+.pos .modifier-section .modifier-opt-section,
+.pos .modifier-section .special-modifier-opt-section {
+    margin: 4px 4px 4px 10px;
+}
+
+.pos .modifier-section .grp-opt-button.active-opt,
+.pos .modifier-section .grp-special-opt-button.active-opt {
+    border: solid 3px rgb(110, 200, 155);
+    color: rgb(110, 200, 155);
+}
+
+.pos .badge-placeholder {
+    display: inline-block;
+    min-width: 7px;
+    padding: 3px 6px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin-left: 2px;
+}
+
+.pos .remove-basic {
+    vertical-align: middle;
+    margin-left: 2px;
+    color: red;
+}
+
+.pos .basic-ingredient {
+    vertical-align: middle;
+    margin-left: 2px;
+    color: green;
+}
+
+.pos .order .orderline .button.th-remove {
+    display: inline-block;
+    padding: 4px 7px;
+}
+
+.pos .order .orderline .make-combo-ala-carte {
+    font-weight: bold;
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.pos .order .orderline .make-combo-ala-carte .button {
+    width: 35%;
+    padding: 7px 10px;
+    margin-right: 7px;
+}
+
+.pos article.menu-active {
+    border: solid 3px rgb(110, 200, 155);
+}
+
+.pos .orderline .menu-active-cart {
+    border: solid 1px rgb(110, 200, 155);
+    padding-right: 30px;
+}
+
+.pos .top-selling-section {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    margin: 0;
+    width: 100%;
+    padding: 6px 16px 0 0;
+}
+
+.pos .top-selling-section .button {
+    border: 1px solid #bfbfbf;
+    border-radius: 4px;
+    margin-left: 8px;
+    margin-bottom: 8px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: normal;
+    height: 45px;
+    position: relative;
+    width: 40%;
+    vertical-align: middle;
+    color: #FFFFFF;
+    background: #717171;
+    transition: all 150ms linear;
+}
+
+.pos .modifier-section .button:active,
+.pos .modifier-section .grp-opt-button:active,
+.pos .modifier-section .grp-special-opt-button:active,
+.pos .order .orderline .button.th-remove:active,
+.pos .order .orderline .make-combo-ala-carte .button:active,
+.pos .smart-select-buttons .smart-button:active,
+.pos .top-selling-section .button:active {
+    background: black;
+    border-color: black;
+    color: white;
+}

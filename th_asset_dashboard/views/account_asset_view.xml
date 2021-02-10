@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="th_asset_dashboard_kanban_view" model="ir.ui.view">
+            <field name="name">Asset Kanban</field>
+            <field name="model">account.asset.asset.custom</field>
+            <field name="arch" type="xml">
+                <kanban create="0">
+                    <field name="id"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click" style="background-color: powderblue;">
+                                <div class="oe_kanban_content">
+                                    <div>
+                                        <b><h2><field name="name"/></h2></b>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_details">
+                                        <div class="row">
+                                        	<div class="col-6">
+                                                <button class="btn btn-link o_kanban_manage_toggle_button" name="open_asset_depreciations"
+                                            type="object">
+                                                   <i class="fa fa-caret-square-o-down"></i><span> Depreciation</span>
+                                                </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn btn-link" name="open_entries"
+                                            type="object">
+                                                    <i class="fa fa-bars"></i> <span> Depreciation Entry</span>
+                                                </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn btn-link o_kanban_manage_toggle_button" name="open_asset_disposal_entries"
+                                            type="object">
+                                                   <i class="fa fa-close"></i> <span>Disposal</span>
+                                                </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn btn-link o_kanban_manage_toggle_button" name="action_view_asset_transfer"
+                                            type="object">
+                                                   <i class="fa fa-exchange"></i> <span>Transfer</span>
+                                                </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn btn-link o_kanban_manage_toggle_button" name="show_next_maintenance"
+                                            type="object">
+                                                   <i class="fa fa-cogs" /> <span> Maintenance Requests </span>
+                                                </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn btn-link o_kanban_manage_toggle_button" name="open_material_requisitions"
+                                            type="object">
+                                                   <i class="fa fa-wpforms"></i> <span> Requistions </span>
+                                                </button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button class="btn btn-link o_kanban_manage_toggle_button" name="open_asset_invoice"
+                                            type="object">
+                                                   <i class="fa fa-pencil-square-o"></i><span> Invoices</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+        
+        <record id="asset_dashboard_normal_action" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.asset.asset.custom</field>
+            <field name="view_mode">kanban</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="th_asset_dashboard.th_asset_dashboard_kanban_view"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new asset
+              </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <record id="res_user_form_view_inherit" model="ir.ui.view">
+            <field name="name">Add Outlet Field</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pos_security_pin']" position="after">
+                    <field name="see_all" />
+                    <field name="user_outlet_ids" widget="many2many_tags" attrs="{'invisible': [('see_all', '=', True)]}" readonly="1"/>
+                    <field name="manager_outlet_ids" widget="many2many_tags" attrs="{'invisible': [('see_all', '=', True)]}" readonly="1"/>
+                    <field name="other_outlet_ids" widget="many2many_tags" invisible="1" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

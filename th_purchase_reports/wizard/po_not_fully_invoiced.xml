@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="po_not_fully_invoiced_wizard" model="ir.ui.view">
+        <field name="name">PO Not Fully Invoiced Wizard</field>
+        <field name="model">po.not.fully.invoiced</field>
+        <field name="arch" type="xml">
+            <form string="PO Not Fully Invoiced">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="partner_ids" widget="many2many_tags"/>
+                        <field name="report_type"/>
+                    </group>
+                    <group>
+                        <label for="type_stockable" string="Product Type"/>
+							<div name="product_type">
+
+								<field name="type_stockable"/>
+								Stockable
+								<br/>
+
+								<field name="type_consumable"/>
+								Consumable
+								<br/>
+
+								<field name="type_service"/>
+								Service
+							</div>
+                        <field name="product_categ_ids" widget="many2many_tags"/>
+                        <field name="product_ids" widget="many2many_tags"/>
+                        <field name="invoice_type"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print" string="Print" class="oe_highlight" type="object"/>
+                    <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_po_not_fully_invoiced" model="ir.actions.act_window">
+        <field name="name">PO Not Fully Invoiced</field>
+        <field name="res_model">po.not.fully.invoiced</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="po_not_fully_invoiced_wizard"/>
+    </record>
+
+    <menuitem id="menu_po_not_fully_invoiced"
+              parent="purchase.purchase_report"
+              name="PO Not Fully Invoiced"
+              action="action_po_not_fully_invoiced"/>
+</odoo>

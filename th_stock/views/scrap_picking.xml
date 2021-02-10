@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- new sequence for scrap picking -->
+        <record id="sequence_damage_transfer" model="ir.sequence">
+            <field name="name">Damage Transfer Sequence</field>
+            <field name="code">scrap.picking</field>
+            <field name="prefix">DT/</field>
+            <field name="padding">5</field>
+            <field eval="1" name="number_increment"/>
+            <field eval="1" name="number_next"/>
+        </record>
+    </data>
+    <data>
+        <record id="scrap_picking_view_tree" model="ir.ui.view">
+            <field name="name">scrap.picking.view.tree</field>
+            <field name="model">scrap.picking</field>
+            <field name="arch" type="xml">
+                <tree string="Damage Transfer">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="outlet_id"/>
+                    <field name="source_loc_id"/>
+                    <field name="damage_loc_id"/>
+                    <field name="analytic_account_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="scrap_picking_view_form" model="ir.ui.view">
+            <field name="name">scrap.picking.view.form</field>
+            <field name="model">scrap.picking</field>
+            <field name="arch" type="xml">
+                <form string="Damage Transfer">
+                    <header>
+                        <button name="button_submit" states="draft" string="Submit"
+                                type="object" class="oe_highlight" groups="stock.group_stock_user"/>
+                        <button name="button_validate" states="submit" string="Validate"
+                                type="object" class="oe_highlight" groups="stock.group_stock_manager"/>
+                        <button name="button_cancel" states="submit" string="Cancel" type="object"
+                                groups="stock.group_stock_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="action_get_stock_move_lines"
+                                    string="Product Move" type="object"
+                                    attrs="{'invisible': [('state', '!=', 'done')]}" icon="fa-arrows-v"/>
+                        </div>
+                        <div class="oe_title">
+                            <h1><field name="name" nolabel="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="outlet_id"/>
+                                <field name="source_loc_id"/>
+                                <field name="damage_loc_id"/>
+                                <field name="analytic_account_id"/>
+                                <field name="remark"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="origin"/>
+                                <field name="damage_reason_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="scrap_product" string="Menu">
+                                <field name="scrap_line_ids" attrs="{'readonly': [('state', '!=', 'draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="menu_id" options="{'no_create': True}"/>
+                                        <field name="ingredient_id" options="{'no_create': True}"/>
+                                        <field name="quantity"/>
+                                        <field name="product_uom"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="scrap_details" string="Ingredients">
+                                <field name="stock_scrap_ids" readonly="1">
+                                    <tree>
+                                        <field name="menu_id" string="Menu"/>
+                                        <field name="product_id" string="Ingredients"/>
+                                        <field name="lot_id"/>
+                                        <field name="product_desc"/>
+                                        <field name="scrap_qty"/>
+                                        <field name="product_uom_id"/>
+                                        <field name="state" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_scrap_picking_view" model="ir.actions.act_window">
+            <field name="name">Damage Transfer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">scrap.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Damage Transfer
+                </p>
+                <p>
+                    Transfer damage product and remove it from your stock. The
+                    product will end up in a scrap location that can be used
+                    for reporting purpose.
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_scrap_picking"
+                  parent="stock.menu_stock_warehouse_mgmt"
+                  name="Damage Transfer"
+                  action="action_scrap_picking_view"
+                  groups="stock.group_stock_user"
+                  sequence="40"/>
+    </data>
+</odoo>

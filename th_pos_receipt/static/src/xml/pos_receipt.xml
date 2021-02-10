@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="template" inherit_id="point_of_sale.template">
+
+    <t t-extend="PosTicket">
+        <t t-jquery="div[class*='pos-sale-ticket']" t-operation="replace">
+            <div class="pos-sale-ticket">
+
+                <!-- company logo -->
+                <div class="pos-center-align">
+                    <img src='/th_pos_receipt/static/src/img/tim-hortons-logo.png' alt="Logo" height="40px"/>
+                </div>
+
+                <!-- store address -->
+                <div class="pos-center-align">
+                    <t t-esc="pos.config.outlet_street or ''"/>
+                    <t t-if="pos.config.outlet_street and pos.config.outlet_street2">,</t>
+                    <t t-esc="pos.config.outlet_street2 or ''"/>
+                    <br/>
+                    <t t-esc="pos.config.outlet_state_name or ''"/>
+                    <t t-if="pos.config.outlet_state_name and pos.config.outlet_country_name">,</t>
+                    <t t-esc="pos.config.outlet_country_name or ''"/> - <t t-esc="pos.config.outlet_zip or ''"/>
+                    <br/>
+                    <t t-esc="pos.config.outlet_mobile or ''"/>
+                </div>
+
+                <br/>
+                <div class="pos-center-align" style="font-weight:bold;font-size: 20px;">
+                    Order : <t t-esc="order.name.split('-')[2]"/>
+                </div>
+
+                <br/>
+                <table width="100%">
+                    <tr>
+                        <td width="50%" style="text-align: left;">
+                            <span>Receipt     : <t t-esc="order.name.split('Order ')[1]"/></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="text-align: left;">
+                            <span>Cashier     : <t t-esc="widget.pos.get_cashier().name"/></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="50%" style="text-align: left;">
+                            <span>Date &amp; Time : <t t-esc="order.formatted_validation_date"/></span>
+                        </td>
+                    </tr>
+                </table>
+
+                <br/>
+                <div class="pos-center-align">Take Out</div>
+
+                <br/>
+                <table width='100%' class='receipt-orderlines'>
+                    <tr style="font-weight:bold;">
+                        <td width='8%'>No.</td>
+                        <td width='38%'>Description</td>
+                        <td width='10%' class="pos-right-align">Qty</td>
+                        <td width='22%' class="pos-right-align">Unit Price</td>
+                        <td width='22%' class="pos-right-align">Total (<t t-esc="pos.currency.name"/>)</td>
+                    </tr>
+                </table>
+                <table width='100%' class='receipt-orderlines'>
+                    <colgroup>
+                        <col width='8%' />
+                        <col width='38%' />
+                        <col width='10%' />
+                        <col width='22%' />
+                        <col width='22%' />
+                    </colgroup>
+                    <t t-set="count" t-value="1"/>
+                    <t t-foreach="orderlines" t-as="orderline">
+                        <tr>
+                            <td style="vertical-align: top;text-align: left;"><t t-esc="count"/> </td>
+                            <td style="text-align: left;"><t t-esc="orderline.product.display_name"/></td>
+                            <td class="pos-right-align"><t t-esc="orderline.quantity"/></td>
+                            <td class="pos-right-align">
+                                <t t-esc="widget.format_currency_no_symbol(orderline.unmodified_price or orderline.price)"/>
+
+                            </td>
+                            <td class="pos-right-align"><t t-esc="widget.format_currency_no_symbol((orderline.unmodified_price or orderline.price) * orderline.quantity)"/></td>
+                            <t t-set="count" t-value="count + 1"/>
+                        </tr>
+                        <tr t-if="orderline.is_combo">
+                            <td colspan="5">
+                                <table width='100%' class='receipt-orderlines'>
+                                    <colgroup>
+                                        <col width='46%' />
+                                        <col width='10%' />
+                                        <col width='22%' />
+                                        <col width='22%' />
+                                    </colgroup>
+                                    <t t-foreach="orderline.menus" t-as="menu">
+                                        <tr>
+                                            <td style="padding-left:8%;font-weight: bold;">
+                                                <t t-esc="menu.product_id[1]"/>
+                                            </td>
+                                            <td class="pos-right-align">
+                                                <t t-esc="'0'"/>
+                                            </td>
+                                            <td class="pos-right-align">
+                                                <t t-esc="widget.format_currency_no_symbol(0)"/>
+                                            </td>
+                                            <td class="pos-right-align">
+                                                <t t-esc="widget.format_currency_no_symbol(0)"/>
+                                            </td>
+                                        </tr>
+                                        <tr t-if="orderline.ingredients">
+                                            <td colspan="4">
+                                                <table width='100%' class='receipt-orderlines'>
+                                                    <colgroup>
+                                                        <col width='46%' />
+                                                        <col width='10%' />
+                                                        <col width='22%' />
+                                                        <col width='22%' />
+                                                    </colgroup>
+                                                    <tr t-foreach="orderline.ingredients" t-as="ingredient">
+                                                        <t t-if="(ingredient.is_extra or ingredient.qty == 0) and menu.product_id[0] == ingredient.menu_id">
+                                                            <td style="padding-left:8%;">
+                                                                <t t-if="ingredient.is_extra">Extra :</t>
+                                                                <t t-if="ingredient.qty == 0">No </t>
+                                                                <t t-esc="ingredient.product_id[1]"/>
+                                                            </td>
+                                                            <td class="pos-right-align">
+                                                                <t t-esc="ingredient.qty or 0"/>
+                                                            </td>
+                                                            <td class="pos-right-align">
+                                                                <t t-esc="widget.format_currency_no_symbol(ingredient.qty and ingredient.extra_price / ingredient.qty or 0)"/>
+                                                            </td>
+                                                            <td class="pos-right-align">
+                                                                <t t-esc="widget.format_currency_no_symbol(ingredient.extra_price)"/>
+                                                            </td>
+                                                        </t>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr t-if="orderline.ingredients and orderline.is_combo == false">
+                            <td colspan="5">
+                                <table width='100%' class='receipt-orderlines'>
+                                    <colgroup>
+                                        <col width='46%' />
+                                        <col width='10%' />
+                                        <col width='22%' />
+                                        <col width='22%' />
+                                    </colgroup>
+                                    <tr t-foreach="orderline.ingredients" t-as="ingredient">
+                                        <t t-if="ingredient.is_extra or ingredient.qty == 0">
+                                            <td style="padding-left:8%;">
+                                                <t t-if="ingredient.is_extra">Extra :</t>
+                                                <t t-if="ingredient.qty == 0">No </t>
+                                                <t t-esc="ingredient.product_id[1]"/>
+                                            </td>
+                                            <td class="pos-right-align">
+                                                <t t-esc="ingredient.qty or 0"/>
+                                            </td>
+                                            <td class="pos-right-align">
+                                                <t t-esc="widget.format_currency_no_symbol(ingredient.qty and ingredient.extra_price / ingredient.qty or 0.0)"/>
+                                            </td>
+                                            <td class="pos-right-align">
+                                                <t t-esc="widget.format_currency_no_symbol(ingredient.extra_price)"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </t>
+                </table>
+                <br/>
+                <br/>
+                <!-- total section -->
+                <table width='100%' class='receipt-orderlines'>
+                    <colgroup>
+                        <col width='8%' />
+                        <col width='38%' />
+                        <col width='10%' />
+                        <col width='22%' />
+                        <col width='22%' />
+                    </colgroup>
+                    <tr>
+                        <td colspan="4" class="pos-right-align" style="font-weight:bold;">
+                            Sub Total
+                        </td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency_no_symbol(order.get_total_without_tax())"/>
+                        </td>
+                    </tr>
+                    <tr t-foreach="order.get_tax_details()" t-as="taxdetail">
+                        <td colspan="4" class="pos-right-align" style="font-weight:bold;">
+                            <t t-esc="taxdetail.name" />
+                        </td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency_no_symbol(taxdetail.amount)" />
+                        </td>
+                    </tr>
+                    <t t-set="rounding_amount" t-value="-1 * widget.format_currency_no_symbol(order.get_rounding_amount(order.get_total_with_tax(), 0))"/>
+                    <tr>
+                        <td colspan="4" class="pos-right-align" style="font-weight:bold;">
+                            Rounding Adj
+                        </td>
+                        <td class="pos-right-align">
+                            <t t-esc="rounding_amount"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="pos-right-align" style="font-weight:bold;">
+                            Total
+                        </td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency_no_symbol(order.get_total_with_tax() + rounding_amount)"/>
+                        </td>
+                    </tr>
+                    <tr t-foreach="paymentlines" t-as="line" t-if="!line.cashregister.journal.is_rounding_method">
+                          <td colspan="4" class="pos-right-align" style="font-weight:bold;">
+                              <t t-esc="line.name"/>
+                          </td>
+                          <td class="pos-right-align">
+                              <t t-esc="widget.format_currency_no_symbol(line.get_amount())"/>
+                          </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" colspan="4" class="pos-right-align" style="font-weight:bold;">
+                            <span>Reference</span>
+                        </td>
+                        <td class="pos-right-align">
+                            0000
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="pos-right-align" style="font-weight:bold;">
+                            Change Due
+                        </td>
+                        <td class="pos-right-align">
+                            <t t-esc="widget.format_currency_no_symbol(order.get_change())"/>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <br/>
+                <br/>
+
+                <br />
+                <div style='text-align:center; font-weight:bold;'>
+                    WIFI CODE: 123456789
+                </div>
+
+                <br />
+                <div style='text-align:center;'>
+                    SURVEY CODE: XXXXX
+                </div>
+
+                <div style='text-align:center;'>
+                    SURVEY LINK: HTTPS://SURVEY.TIMHORTONS.COM
+                </div>
+                <t t-if="pos.company.pos_footer_mesage">
+                    <br />
+                    <div style='text-align:center; font-weight:bold;'>
+                        <t t-esc="pos.company.pos_footer_mesage" />
+                    </div>
+                </t>
+
+
+
+            </div>
+        </t>
+    </t>
+
+</templates>

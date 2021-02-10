@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="th_outlet_ordering_history_template_tree_view" model="ir.ui.view">
+        <field name="name">TH Outlet Ordering History Template Tree VIew</field>
+        <field name="model">outlet.ordering.history.template</field>
+        <field name="inherit_id" ref="th_purchase_requisition.view_purchase_requisition_template_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree[1]" position="attributes">
+                <attribute name="string">Outlet Ordering History Template</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="th_outlet_ordering_history_template_form_view" model="ir.ui.view">
+        <field name="name">TH Outlet Ordering History Template Form VIew</field>
+        <field name="model">outlet.ordering.history.template</field>
+        <field name="inherit_id" ref="th_purchase_requisition.view_purchase_requisition_template_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form[1]" position="attributes">
+                <attribute name="string">Outlet Ordering History Template</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='last_number']" position="attributes">
+                <attribute name="attrs">{'required':[('date_type','=','request_date')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='last_period']" position="attributes">
+                <attribute name="attrs">{'required':[('date_type','=','request_date')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='start_date']" position="attributes">
+                <attribute name="attrs">{'invisible':['|',('date_type','=','request_date'),('date_type','=',False)], 'required':[('date_type','=','specific_date')]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='end_date']" position="attributes">
+                <attribute name="attrs">{'invisible':['|',('date_type','=','request_date'),('date_type','=',False)], 'required':[('date_type','=','specific_date')]}</attribute>
+            </xpath>
+            <xpath expr="//sheet[1]/group[2]" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', ('date_type', '!=', 'specific_date'), ('date_type','=',False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="th_outlet_ordering_history_template_action" model="ir.actions.act_window">
+        <field name="name">History Template</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">outlet.ordering.history.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+         (0, 0, {'view_mode': 'tree', 'view_id': ref('th_outlet_ordering_history_template_tree_view')}),
+         (0, 0, {'view_mode': 'form', 'view_id': ref('th_outlet_ordering_history_template_form_view')})]"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="th_outlet_ordering_config_parent_menuitem"
+              name="Outlet Ordering" parent="stock.menu_stock_config_settings" sequence="35"/>
+
+    <menuitem id="th_outlet_ordering_history_template_menuitem"
+              name="History Template" parent="th_outlet_ordering_config_parent_menuitem"
+              sequence="5" action="th_outlet_ordering_history_template_action"/>
+
+</odoo>

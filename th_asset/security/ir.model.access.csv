@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_outlet_opening_checklist,outlet.opening.checklist,model_outlet_opening_checklist,,1,1,1,1
+access_opening_checklist_line,opening.checklist.line,model_opening_checklist_line,,1,1,1,1
+access_opening_checklist_wizard,opening.checklist.wizard,model_opening_checklist_wizard,,1,1,1,1

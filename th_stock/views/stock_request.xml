@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Stock Transfer sequences -->
+        <record id="sequence_stock_transfer" model="ir.sequence">
+            <field name="name">Stock Transfer Sequence</field>
+            <field name="code">stock.transfer</field>
+            <field name="prefix">SR/</field>
+            <field name="padding">5</field>
+            <field eval="1" name="number_increment"/>
+            <field eval="1" name="number_next"/>
+        </record>
+    </data>
+
+    <!-- base form view for stock picking -->
+    <record model="ir.ui.view" id="view_picking_form_extend">
+        <field name="name">view.picking.form.extend</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="is_stock_transfer" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    <!-- base tree view for stock picking -->
+    <record model="ir.ui.view" id="view_stock_transfer_tree">
+        <field name="name">view.stock.transfer.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='picking_type_id']" position="after">
+                <field name="is_stock_transfer" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- primary form view for stock request -->
+    <record model="ir.ui.view" id="view_stock_transfer_form">
+        <field name="name">view.stock.transfer.form</field>
+        <field name="model">stock.picking</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- customize buttons -->
+            <xpath expr="//button[@name='action_confirm']" position="replace">
+                <button name="action_confirm"
+                        attrs="{'invisible': [('state', '!=', 'approve')]}"
+                        string="Mark as Todo" type="object"
+                        class="oe_highlight" groups="base.group_user"/>
+                <button name="action_submit"
+                        attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('is_stock_transfer', '!=', True)]}"
+                        string="Submit for Approval" type="object"
+                        class="oe_highlight"/>
+                <button name="action_sender_approve"
+                        attrs="{'invisible': [('state', '!=', 'pending')]}"
+                        string="Approve by Sender" type="object"
+                        class="oe_highlight" groups="th_stock.group_allow_approve_stock_request"/>
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="attrs">
+                    {'invisible': [('state', 'not in', ('assigned', 'confirmed', 'partially_available', 'draft', 'waiting', 'pending', 'approve'))]}
+                </attribute>
+            </xpath>
+            <xpath expr="//button[@name='do_unreserve']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(stock.act_stock_return_picking)d']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_scrap']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_toggle_is_locked']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_validate'][1]" position="attributes">
+                <attribute name="groups">th_stock.group_allow_validate_stock_request</attribute>
+            </xpath>
+            <xpath expr="//button[@name='button_validate'][2]" position="attributes">
+                <attribute name="groups">th_stock.group_allow_validate_stock_request</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(stock.action_stock_report)d']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <!-- customize fields -->
+            <xpath expr="//field[@name='state']" position="replace">
+                <field name="state" widget="statusbar"
+                       statusbar_visible="draft,pending,approve,confirmed,assigned,done"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_id']" position="before">
+                <field name="sender_outlet"/>
+            </xpath>
+            <xpath expr="//field[@name='location_dest_id']" position="before">
+                <field name="requested_outlet"/>
+            </xpath>
+            <xpath expr="//field[@name='location_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='location_dest_id']" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_done']" position="after">
+                <field name="create_date"/>
+            </xpath>
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="approve_by"/>
+                <field name="create_uid" string="Request By"/>
+            </xpath>
+            <xpath expr="//field[@name='havi_origin']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='havi_delivery_file']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='picking_type_id']" position="attributes">
+                <attribute name="domain">[('warehouse_id', '=', sender_outlet)]</attribute>
+            </xpath>
+
+            <!-- customize 'Operations' tab tree view -->
+            <xpath expr="//field[@name='adn_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='adn_uom']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='account_analytic_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- inherit base action for stock picking -->
+    <record id="stock.action_picking_tree_all" model="ir.actions.act_window">
+        <field name="domain">[('is_stock_transfer', '!=', True)]</field>
+    </record>
+
+    <!-- action for stock transfer -->
+    <record model="ir.actions.act_window" id="action_stock_transfer_view">
+        <field name="name">Stock Request</field>
+        <field name="res_model">stock.picking</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_type">form</field>
+        <field name="context">{'default_is_stock_transfer': True}</field>
+        <field name="domain">[('is_stock_transfer', '=', True)]</field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+               (0, 0, {'view_mode': 'tree', 'view_id': ref('stock.vpicktree')}),
+               (0, 0, {'view_mode': 'form', 'view_id': ref('view_stock_transfer_form')})]"/>
+    </record>
+
+    <!-- new menu for stock transfer -->
+    <menuitem id="menu_stock_transfer_root"
+              parent="stock.menu_stock_warehouse_mgmt"
+              action="action_stock_transfer_view"
+              name="Stock Request"
+              sequence="6"/>
+</odoo>

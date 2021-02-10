@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="staff_planning_send_form_view">
+            <field name="name">planning.send.form.view</field>
+            <field name="model">planning.send</field>
+            <field name="arch" type="xml">
+                <form string="Planning Send">
+                    <group>
+                        <group>
+                            <field name="start_date" />
+                            <field name="end_date" />
+                        </group>
+                        <group>
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                    <field name="note" placeholder="Additional message" />
+                    <footer>
+                        <button string="PUBLISH &amp; SEND" name="send_schedule" type="object" class="btn-primary"/>
+                        <button string="DISCARD" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="staff_planning_send_list_view" model="ir.ui.view">
+            <field name="name">staff.planning.send.list</field>
+            <field name="model">planning.send</field>
+            <field name="arch" type="xml">
+                <tree string="Category" >
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_staff_planning_send_form" model="ir.actions.act_window">
+            <field name="name">Planning Send</field>
+            <field name="res_model">planning.send</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="staff_planning_send_list_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p><p>
+            </p>
+            </field>
+        </record>
+    </data>
+</odoo>

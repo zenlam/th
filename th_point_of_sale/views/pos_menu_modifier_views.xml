@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- From View : UpSell Options -->
+    <record id="th_menu_product_upsell_form_view" model="ir.ui.view">
+        <field name="name">th.menu.product.from</field>
+        <field name="model">th.menu.product</field>
+        <field name="priority" eval="99"/>
+        <field name="arch" type="xml">
+            <form string="UpSell Options">
+                <sheet>
+                    <group>
+                        <field name="product_id" readonly="1"/>
+                        <field name="pos_categ_id" readonly="1"/>
+                    </group>
+                    <group string="UpSell Config">
+                        <field name="menu_upsell_ids" nolabel="1">
+                            <tree string="UpSell Config" editable="bottom">
+                                <field name="pos_categ_id" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="auto_compute_surcharge"/>
+                                <field name="fixed_surcharge" attrs="{'invisible': [('auto_compute_surcharge', '=', True)]}"/>
+                                <field name="from_date"/>
+                                <field name="to_date"/>
+                            </tree>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View : Modifier Options -->
+    <record id="th_modifier_options_tree_view" model="ir.ui.view">
+        <field name="name">th.modifier.options.tree</field>
+        <field name="model">th.modifier.options</field>
+        <field name="arch" type="xml">
+            <tree string="Modifier Options">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="description"/>
+                <field name="is_basic" invisible="1"/>
+                <field name="remove_extra" invisible="1"/>
+                <field name="special_modifier"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View : Modifier Options -->
+    <record id="th_modifier_options_form_view" model="ir.ui.view">
+        <field name="name">th.modifier.options.form</field>
+        <field name="model">th.modifier.options</field>
+        <field name="arch" type="xml">
+            <form string="Modifier Options">
+                <sheet>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Modifier Option Name"/>
+                        <h1><field name="name" placeholder="Name"/></h1>
+                    </div>
+                    <group>
+                        <field name="description"/>
+                        <field name="special_modifier"/>
+                        <field name="is_basic" invisible="1"/>
+                        <field name="remove_extra" invisible="1"/>
+                        <field name="sequence" invisible="1"/>
+                    </group>
+                    <group>
+                        <group attrs="{'invisible': [('special_modifier', '=', True)]}">
+                            <field name="qty_multiplier"/>
+                            <field name="price_multiplier"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View: Modifier Options -->
+    <record id="th_modifier_options_search_view" model="ir.ui.view">
+        <field name="name">th.modifier.options.search</field>
+        <field name="model">th.modifier.options</field>
+        <field name="arch" type="xml">
+            <search string="Search Modifiers Options">
+                <field name="name"/>
+                <field name="special_modifier"/>
+                <separator/>
+                <filter string="Special Modifier" name="special_modifier" domain="[('special_modifier','=',True)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Tree View : Modifier Group -->
+    <record id="th_modifier_group_tree_view" model="ir.ui.view">
+        <field name="name">th.modifier.group.tree</field>
+        <field name="model">th.modifier.group</field>
+        <field name="arch" type="xml">
+            <tree string="Modifier Groups">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View : Modifier Group -->
+    <record id="th_modifier_group_form_view" model="ir.ui.view">
+        <field name="name">th.modifier.group.form</field>
+        <field name="model">th.modifier.group</field>
+        <field name="arch" type="xml">
+            <form string="Modifier Groups">
+                <sheet>
+                    <field name="sequence" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <label class="oe_edit_only" for="name" string="Modifier Category"/>
+                        <h1><field name="name" placeholder="Name"/></h1>
+                    </div>
+                    <group>
+                        <field name="modifier_option_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="display_on_receipt"/>
+                            <field name="font_color" widget="color"/>
+                            <field name="background_color" widget="color"/>
+                        </group>
+                        <group string="Multi Selection Option">
+                            <field name="allow_multiple_selection"/>
+                            <field name="max_selection" attrs="{'invisible': [('allow_multiple_selection', '=', False)],
+                            'required': [('allow_multiple_selection', '=', True)]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Ingredient Options" name="ingredient_options">
+                            <field name="product_option_ids" context="{'default_font_color': font_color,
+                            'default_background_color': background_color}">
+                                <tree string="Modifier Options" editable="bottom">
+                                    <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="code_name"/>
+                                    <field name="qty"/>
+                                    <field name="recovery"/>
+                                    <field name="inv_deduction_qty"/>
+                                    <field name="uom_id"/>
+                                    <!--<field name="weight"/>-->
+                                    <field name="extra_price"/>
+                                    <field name="max_selection_qty"/>
+                                    <field name="font_color" widget="color"/>
+                                    <field name="background_color" widget="color"/>
+                                </tree>
+                                <form string="Modifier Options">
+                                    <group col="4">
+                                        <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+                                        <field name="code_name"/>
+                                        <field name="qty"/>
+                                        <field name="recovery"/>
+                                        <field name="inv_deduction_qty"/>
+                                        <field name="uom_id"/>
+                                        <!--<field name="weight"/>-->
+                                        <field name="extra_price"/>
+                                        <field name="max_selection_qty"/>
+                                        <field name="font_color" widget="color"/>
+                                        <field name="background_color" widget="color"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View: Modifier Group -->
+    <record id="th_modifier_group_search_view" model="ir.ui.view">
+        <field name="name">th.modifier.group.search</field>
+        <field name="model">th.modifier.group</field>
+        <field name="arch" type="xml">
+            <search string="Search Modifiers">
+                <field name="name"/>
+                <field name="active"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action : Modifier Group -->
+    <record id="menu_th_modifier_group_action" model="ir.actions.act_window">
+        <field name="name">Modifier Groups</field>
+        <field name="res_model">th.modifier.group</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Action : Modifier Options -->
+    <record id="menu_th_modifier_options_action" model="ir.actions.act_window">
+        <field name="name">Modifier Options</field>
+        <field name="res_model">th.modifier.options</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!-- Form View : Special Modifier Options -->
+    <record id="th_special_modifier_options_form_view" model="ir.ui.view">
+        <field name="name">th.special.modifier.options.form</field>
+        <field name="model">th.special.modifier.options</field>
+        <field name="arch" type="xml">
+            <form string="Special Modifier Conf">
+                <sheet>
+                    <group>
+                        <field name="modifier_option_id" readonly="1"/>
+                        <field name="menu_id" invisible="1"/>
+                    </group>
+                    <group string="Ingredients">
+                        <field name="modifier_product_ids" nolabel="1">
+                            <tree string="Modifier Products" editable="bottom">
+                                <field name="product_id" options="{'no_create': True, 'no_open': True}"
+                                       context="{'special_modifier_option': True, 'menu_id': parent.menu_id}"/>
+                                <field name="qty_multiplier"/>
+                                <field name="qty" invisible="1"/>
+                                <field name="recovery" invisible="1"/>
+                                <field name="inv_deduction_qty" invisible="1"/>
+                                <field name="uom_id" invisible="1"/>
+                                <field name="extra_price"/>
+                            </tree>
+                            <form string="Modifier Products">
+                                <group col="4">
+                                    <field name="product_id" options="{'no_create': True, 'no_open': True}"
+                                           context="{'special_modifier_option': True, 'menu_id': parent.menu_id}"/>
+                                    <field name="qty_multiplier"/>
+                                    <field name="qty" invisible="1"/>
+                                    <field name="recovery" invisible="1"/>
+                                    <field name="inv_deduction_qty" invisible="1"/>
+                                    <field name="uom_id" invisible="1"/>
+                                    <field name="extra_price"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

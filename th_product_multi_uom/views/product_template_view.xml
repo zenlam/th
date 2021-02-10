@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="product_template_form_view_inherit_invisible_field"
+                model="ir.ui.view">
+            <field name="name">Invisible field uom_id, uom_po_id</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='uom_id']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='uom_po_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="product_template_only_form_view_customize" model="ir.ui.view">
+            <field name="name">product.template.product.form.customize</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="%(inactive_multi_uom_action)d" type="action" string="Historical UOMs"
+                            icon="fa-history" class="oe_stat_button"/>
+                </xpath>
+                <xpath expr="//page[@name='inventory']" position="after">
+                    <page string="UOMs">
+                        <group>
+                            <field name="uom_id" required="1"/>
+                        </group>
+                        <field name="multi_uom_ids" required="1">
+                            <tree string="UOM" editable="bottom" class="tree_no_open">
+                                <field name="sequence"/>
+                                <field name="is_default"/>
+                                <field name="name" attrs="{'readonly': ['|', ('id', '>', 0), ('is_default', '=', True)]}"
+                                       force_save="1" required="1"/>
+                                <field name="factor_inv" attrs="{'readonly': [('is_default', '=', True)]}" force_save="1"/>
+                                <field name="factor" invisible="1"/>
+                                <field name="barcode" attrs="{'required': [('parent.is_asset', '=', False)]}"/>
+                                <field name="vendor_id"/>
+                                <field name="distribution"/>
+                                <!--<field name="default_distribution"/>-->
+								<field name="purchase" string="Pur. UOM"/>
+								<field name="storage" />
+								<field name="outlet_ordering" />
+                                <button name="button_deactivate" type="object" icon="fa-times-circle" string="Archive"/>
+                                <field name="description"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--<record id="product_template_search_view_inherit" model="ir.ui.view">-->
+            <!--<field name="name">Add search by multi uom barcode</field>-->
+            <!--<field name="model">product.template</field>-->
+            <!--<field name="inherit_id" ref="product.product_template_search_view"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='name']" position="after">-->
+                    <!--<field name="multi_uom_barcode"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
+
+    </data>
+</odoo>

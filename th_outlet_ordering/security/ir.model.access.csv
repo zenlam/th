@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_outlet_ordering_delivery_cycle_user,outlet.ordering.delivery_cycle for user,model_outlet_ordering_delivery_cycle,base.group_user,1,1,1,1
+access_outlet_ordering_delivery_cycle_line_user,outlet.ordering.delivery_cycle.line for user,model_outlet_ordering_delivery_cycle_line,base.group_user,1,1,1,1
+access_outlet_ordering_history_template_base_user,Access Outlet Ordering History Template for Base User,model_outlet_ordering_history_template,base.group_user,1,1,1,1
+access_outlet_ordering_product_deny_user,outlet.ordering.product.deny for user,model_outlet_ordering_product_deny,base.group_user,1,1,1,1
+
+access_outlet_ordering_template_user,outlet.ordering.template for user,model_outlet_ordering_template,base.group_user,1,1,1,1
+access_outlet_ordering_template_product_user,outlet.ordering.template.product for user,model_outlet_ordering_template_product,base.group_user,1,1,1,1
+access_outlet_ordering_user,outlet.ordering for user,model_outlet_ordering,base.group_user,1,1,1,1
+access_outlet_ordering_line_user,outlet.ordering.line for user,model_outlet_ordering_line,base.group_user,1,1,1,1

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_recall_picking_view_action" model="ir.actions.act_window">
+            <field name="name">Recall Transfer</field>
+            <field name="res_model">stock.picking</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('recall_id', '!=', False)]</field>
+            <field name="context">{}</field>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem name="Recall Transfer"
+                  id="th_recall_picking_menuitem"
+                  parent="th_stock_recall_parent_menu"
+                  action="th_recall_picking_view_action"
+                  sequence="10"/>
+    </data>
+</odoo>

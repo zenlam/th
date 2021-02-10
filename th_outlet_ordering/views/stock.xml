@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_picking_form_inherit_havi_extend" model="ir.ui.view">
+            <field name="name">TH Stock Picking - Form view Inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="mode">primary</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='havi_delivery_file']" position="after">
+                    <field name="outlet_ordering_id" readonly="1"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">draft,in_transit,assigned,done</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='barcode']" position="attributes">
+                    <attribute name="attrs">{'column_invisible': [('parent.outlet_ordering_id', '=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='adn_qty']" position="attributes">
+                    <attribute name="attrs">{'column_invisible': [('parent.outlet_ordering_id', '=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='adn_uom']" position="attributes">
+                    <attribute name="attrs">{'column_invisible': [('parent.outlet_ordering_id', '=', False)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

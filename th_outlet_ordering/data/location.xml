@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="th_havi_location" model="stock.location">
+            <field name="name">HAVI Stock</field>
+            <field name="location_id" ref="stock.stock_location_locations"/>
+            <field name="usage">internal</field>
+        </record>
+    </data>
+</odoo>

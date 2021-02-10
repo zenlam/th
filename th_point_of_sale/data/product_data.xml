@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="product_category_menu_all" model="product.category">
+            <field name="name">All Menu</field>
+        </record>
+
+        <record id="th_modifier_options_no" model="th.modifier.options">
+            <field name="name">NO</field>
+            <field name="description">To Remove Basic Ingredient</field>
+            <field name="is_basic">True</field>
+            <field name="remove_extra">False</field>
+            <field name="qty_multiplier">0</field>
+            <field name="price_multiplier">1</field>
+        </record>
+
+        <record id="th_modifier_options_clear" model="th.modifier.options">
+            <field name="name">CLEAR</field>
+            <field name="description">To Remove Extra Ingredient</field>
+            <field name="is_basic">True</field>
+            <field name="remove_extra">True</field>
+            <field name="qty_multiplier">0</field>
+            <field name="price_multiplier">1</field>
+        </record>
+
+        <record id="th_modifier_options_extra" model="th.modifier.options">
+            <field name="name">EXTRA</field>
+            <field name="description">To Add New Ingredient or Increase Qty of Existing Ingredient</field>
+            <field name="is_basic">True</field>
+            <field name="remove_extra">False</field>
+            <field name="qty_multiplier">1</field>
+            <field name="price_multiplier">1</field>
+        </record>
+    </data>
+</odoo>
